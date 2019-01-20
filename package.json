@@ -1,0 +1,24 @@
+{
+  "name": "CRender_Guide",
+  "version": "1.0.0",
+  "author": "JiaMing <743192023@qq.com>",
+  "scripts": {
+    "build": "vuepress build docs",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vuepress dev docs"
+  },
+  "dependencies": {
+    "@jiaminghi/transition": "^1.0.1",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "canvas",
+    "render",
+    "graph"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "https://github.com/jiaming743/CRender_Guide.git"
+}
