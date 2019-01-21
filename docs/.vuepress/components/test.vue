@@ -73,6 +73,9 @@ export default {
           this.animationEnd()
 
           this.animationTo('style', { shadowColor: '#999', shadowBlur: 1 })
+        },
+        async onClick () {
+          this.attr('inVisible', !this.inVisible)
         }
       })
 

@@ -164,12 +164,22 @@ export function mouseMove ({ offsetX, offsetY, movementX, movementY }) {
 }
 
 export function mouseDown (e) {
+  if (this.hoverElement) this.hoverElementMouseDownTimer = (new Date()).getTime()
+
   this.hoverElement &&
     this.hoverElement.drag &&
       (this.hoverElement.dragging = true)
 }
 
 export function mouseUp (e) {
+  const timer = (new Date()).getTime()
+
+  this.hoverElement &&
+    this.hoverElementMouseDownTimer &&
+      (timer - this.hoverElementMouseDownTimer < 100) &&
+        typeof this.hoverElement.onClick === 'function' &&
+          this.hoverElement.onClick()
+
   this.hoverElement && (this.hoverElement.dragging = false)
 }
 
