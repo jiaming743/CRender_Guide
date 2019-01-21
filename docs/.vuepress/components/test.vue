@@ -21,20 +21,65 @@ export default {
 
       await initCanvas('canvas')
 
-      const cr = new CRender(this.ctx, this.canvasWH)
+      const cr = new CRender(this.$refs['canvas'])
 
       const circle = cr.add({
         name: 'circle',
-        animationDelay: 1000,
-        animationCurve: 'easeOutBack',
+        animationCurve: 'easeInOutBack',
         shape: {
-          rx: 350,
-          ry: 150,
-          r: 20
+          rx: 100,
+          ry: 100,
+          r: 50
+        },
+        style: {
+          fill: '#66d7ee',
+          hoverCursor: 'pointer',
+        },
+        hover: true,
+        drag: true,
+        index: 999,
+        mouseEnter () {
+          this.animationEnd()
+
+          this.animationTo('style', { shadowColor: '#ffe793', shadowBlur: 50 })
+        },
+        mouseOuter () {
+          this.animationEnd()
+
+          this.animationTo('style', { shadowColor: '#999', shadowBlur: 1 })
         }
       })
 
-      circle.animationTo('shape', { r: 60 })
+      const circle2 = cr.add({
+        name: 'circle',
+        animationCurve: 'easeInOutBack',
+        shape: {
+          rx: 300,
+          ry: 300,
+          r: 50
+        },
+        style: {
+          fill: '#66d7ee',
+          hoverCursor: 'pointer',
+        },
+        hover: true,
+        drag: true,
+        mouseEnter () {
+          this.animationEnd()
+
+          this.animationTo('style', { shadowColor: '#eb3941', shadowBlur: 50 })
+        },
+        mouseOuter () {
+          this.animationEnd()
+
+          this.animationTo('style', { shadowColor: '#999', shadowBlur: 1 })
+        }
+      })
+
+      circle.attr('style', { shadowColor: '#999', shadowBlur: 1 })
+      circle2.attr('style', { shadowColor: '#999', shadowBlur: 1 })
+
+      console.log(cr)
     }
   },
   mounted () {
