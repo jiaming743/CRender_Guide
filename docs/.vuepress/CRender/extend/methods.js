@@ -26,3 +26,16 @@ export function deepClone (object, recursionType = false) {
 
   return clonedObj
 }
+
+export function getTwoPointDistance ([xa, ya], [xb, yb]) {
+  const { abs, sqrt } = Math
+
+  const minusX = abs(xa - xb)
+  const minusY = abs(ya - yb)
+
+  return sqrt(minusX * minusX + minusY * minusY)
+}
+
+export default {
+  deepClone
+}
