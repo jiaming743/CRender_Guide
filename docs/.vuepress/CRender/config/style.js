@@ -1,6 +1,8 @@
+import { tranRgbaValue } from '../extend/color'
+
 export default {
   fill: '#000',
-  stroke: null,
+  stroke: 'transparent',
   opacity: 1,
   lineDash: null,
   lineDashOffset: null,
@@ -34,4 +36,37 @@ export default {
   textScale: null,
   textRotate: null,
   textHoverCursor: 'default'
+}
+
+export const styleColorAttr = [
+  'fill',
+  'stroke',
+  'shadowColor',
+  'textFill',
+  'textStroke',
+  'textShadowColor'
+]
+
+export function tranColorAttrToRgbaValue (style) {
+  const styleKeys = Object.keys(style)
+
+  const tranKeys = styleKeys.filter(k => styleColorAttr.find(attr => attr === k))
+
+  tranKeys.forEach(k => {
+    const currentColor = style[k]
+
+    if (!currentColor || currentColor === 'transparent') return
+
+    style[k] = tranRgbaValue(currentColor)
+  })
+}
+
+export function rgbaValueToColor (value, opacity) {
+  if (!value) return ''
+
+  if (value === 'transparent') return 'transparent'
+
+  const mixinOpacity = value.map((v, i) => i === 3 ? v * opacity : v)
+
+  return 'rgba(' + mixinOpacity.join(',') + ')'
 }

@@ -1,10 +1,14 @@
 export default {
-  hover: false,
   inVisible: true,
   animationDelay: 0,
   animationFrame: 30,
   animationCurve: 'linear',
   drag: false,
+  hover: false,
+  index: 1,
+
+  // config able not
   pause: false,
-  index: 1
+  hovered: false,
+  dragging: false
 }

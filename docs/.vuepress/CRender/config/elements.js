@@ -1,3 +1,5 @@
+import { getTwoPointDistance } from '../extend/methods'
+
 export const circle = {
   shape: {
     rx: 0,
@@ -16,6 +18,21 @@ export const circle = {
     ctx.stroke()
 
     ctx.closePath()
+  },
+
+  hoverCheck (pos, shape, style) {
+    const { rx, ry, r } = shape
+
+    const distance = getTwoPointDistance(pos, [rx, ry])
+
+    return distance <= r
+  },
+
+  doDrag ([x, y], shape, style) {
+    this.attr('shape', {
+      rx: shape.rx + x,
+      ry: shape.ry + y
+    })
   }
 }
 
