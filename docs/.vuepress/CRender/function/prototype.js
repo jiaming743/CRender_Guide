@@ -143,7 +143,15 @@ export function rankElementsByIndex () {
   })
 }
 
-export function mouseMove ({ offsetX, offsetY, movementX, movementY }) {
+export function mouseMove (e) {
+  this.hoverElement &&
+    this.hoverElement.drag &&
+      this.hoverElement.dragging &&
+        typeof this.hoverElement.doDrag === 'function' &&
+          this.hoverElement.doDrag(e, this.hoverElement.shape, this.hoverElement.style)
+
+  const { offsetX, offsetY } = e
+
   const { elements } = this
 
   const mousePos = [offsetX, offsetY]
@@ -154,13 +162,13 @@ export function mouseMove ({ offsetX, offsetY, movementX, movementY }) {
 
   this.lastMousePosition = mousePos
 
-  const currentHoverElement = this.setCurrentHoverElement(hoverElement)
+  this.setCurrentHoverElement(hoverElement)
 
-  currentHoverElement &&
-    currentHoverElement.drag &&
-      currentHoverElement.dragging &&
-        typeof currentHoverElement.doDrag === 'function' &&
-          currentHoverElement.doDrag([movementX, movementY], currentHoverElement.shape, currentHoverElement.style)
+  // currentHoverElement &&
+  //   currentHoverElement.drag &&
+  //     currentHoverElement.dragging &&
+  //       typeof currentHoverElement.doDrag === 'function' &&
+  //         currentHoverElement.doDrag(e, currentHoverElement.shape, currentHoverElement.style)
 }
 
 export function mouseDown (e) {

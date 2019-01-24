@@ -28,10 +28,10 @@ export const circle = {
     return distance <= r
   },
 
-  doDrag ([x, y], shape, style) {
+  doDrag ({offsetX, offsetY}, shape, style) {
     this.attr('shape', {
-      rx: shape.rx + x,
-      ry: shape.ry + y
+      rx: offsetX,
+      ry: offsetY
     })
   }
 }
