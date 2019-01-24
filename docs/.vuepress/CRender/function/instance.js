@@ -1,6 +1,6 @@
 import transition from '@jiaminghi/transition'
 
-import { tranColorAttrToRgbaValue, rgbaValueToColor } from '../config/style'
+import { tranColorAttrToRgbaValue } from '../config/style'
 
 function attr (attrName, change) {
   if (!attrName || (!change && change !== false) || attrName === 'attr') return false
@@ -18,36 +18,16 @@ function attr (attrName, change) {
 }
 
 function doDraw () {
-  const { render: { ctx }, initGraphStyle, style } = this
+  const { render, style } = this
 
-  this.initGraphStyle(ctx, style)
+  render.initTransform(style)
+  render.initGraphStyle(style)
 
   const { drawBefore, shape, draw } = this
 
   typeof drawBefore === 'function' && this.drawBefore(ctx, shape, style)
 
-  draw(ctx, shape, style, draw)
-}
-
-function initGraphStyle (ctx, style) {
-  const { fill, stroke, shadowColor, opacity } = style
-
-  ctx.fillStyle = rgbaValueToColor(fill, opacity)
-  ctx.strokeStyle = rgbaValueToColor(stroke, opacity)
-  ctx.shadowColor = rgbaValueToColor(shadowColor, opacity)
-
-  const { lineDash, lineDashOffset, shadowBlur } = style
-
-  ctx.setLineDash(lineDash || [10, 0])
-  ctx.lineDashOffset = lineDashOffset
-  ctx.shadowBlur = shadowBlur > 0 ? shadowBlur : 0.1
-
-  const { shadowOffsetX, shadowOffsetY, lineWidth } = style
-
-  ctx.shadowOffsetX = shadowOffsetX
-  ctx.shadowOffsetY = shadowOffsetY
-
-  ctx.lineWidth = lineWidth
+  draw(render.ctx, shape, style, draw)
 }
 
 function turnToNextFrame () {
@@ -146,7 +126,6 @@ export function animationEnd () {
 export default {
   attr,
   doDraw,
-  initGraphStyle,
   turnToNextFrame,
   animationTo,
   animationEnd

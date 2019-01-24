@@ -1,6 +1,6 @@
 import { deepClone } from '../extend/methods'
 
-import { tranColorAttrToRgbaValue } from '../config/style'
+import { tranColorAttrToRgbaValue, rgbaValueToColor } from '../config/style'
 
 import style from '../config/style'
 
@@ -133,7 +133,7 @@ function animations (callback) {
   requestAnimationFrame(this.animations.bind(this, callback))
 }
 
-export function rankElementsByIndex () {
+function rankElementsByIndex () {
   const { elements } = this
 
   elements.sort((a, b) => {
@@ -143,7 +143,7 @@ export function rankElementsByIndex () {
   })
 }
 
-export function mouseMove (e) {
+function mouseMove (e) {
   this.hoverElement &&
     this.hoverElement.drag &&
       this.hoverElement.dragging &&
@@ -163,15 +163,9 @@ export function mouseMove (e) {
   this.lastMousePosition = mousePos
 
   this.setCurrentHoverElement(hoverElement)
-
-  // currentHoverElement &&
-  //   currentHoverElement.drag &&
-  //     currentHoverElement.dragging &&
-  //       typeof currentHoverElement.doDrag === 'function' &&
-  //         currentHoverElement.doDrag(e, currentHoverElement.shape, currentHoverElement.style)
 }
 
-export function mouseDown (e) {
+function mouseDown (e) {
   if (this.hoverElement) this.hoverElementMouseDownTimer = (new Date()).getTime()
 
   this.hoverElement &&
@@ -179,19 +173,19 @@ export function mouseDown (e) {
       (this.hoverElement.dragging = true)
 }
 
-export function mouseUp (e) {
+function mouseUp (e) {
   const timer = (new Date()).getTime()
 
   this.hoverElement &&
     this.hoverElementMouseDownTimer &&
-      (timer - this.hoverElementMouseDownTimer < 100) &&
+      (timer - this.hoverElementMouseDownTimer < 200) &&
         typeof this.hoverElement.onClick === 'function' &&
           this.hoverElement.onClick()
 
   this.hoverElement && (this.hoverElement.dragging = false)
 }
 
-export function setCurrentHoverElement (hoverElement = false) {
+function setCurrentHoverElement (hoverElement = false) {
   if (hoverElement && hoverElement.hovered) return hoverElement
 
   if ((!hoverElement && this.hoverElement) || (hoverElement && this.hoverElement)) {
@@ -217,6 +211,43 @@ export function setCurrentHoverElement (hoverElement = false) {
   return hoverElement
 }
 
+function initGraphStyle (style) {
+  const { ctx } = this
+
+  const { fill, stroke, shadowColor, opacity } = style
+
+  ctx.fillStyle = rgbaValueToColor(fill, opacity)
+  ctx.strokeStyle = rgbaValueToColor(stroke, opacity)
+  ctx.shadowColor = rgbaValueToColor(shadowColor, opacity)
+
+  const { lineDash, lineDashOffset, shadowBlur } = style
+
+  ctx.setLineDash(lineDash || [10, 0])
+  ctx.lineDashOffset = lineDashOffset
+  ctx.shadowBlur = shadowBlur > 0 ? shadowBlur : 0.1
+
+  const { shadowOffsetX, shadowOffsetY, lineWidth } = style
+
+  ctx.shadowOffsetX = shadowOffsetX
+  ctx.shadowOffsetY = shadowOffsetY
+
+  ctx.lineWidth = lineWidth
+}
+
+function initTransform (style) {
+  const { ctx } = this
+
+  const { graphOrigin, rotate, scale } = style
+
+  if (!(graphOrigin instanceof Array)) return
+
+  if (rotate) ctx.rotate(parseInt(rotate) * Math.PI / 180)
+  
+  if (scale instanceof Array) ctx.scale(...scale)
+
+  ctx.moveTo(...graphOrigin)
+}
+
 const prototypes = {
   add,
   initAttribute,
@@ -228,7 +259,9 @@ const prototypes = {
   mouseMove,
   mouseDown,
   mouseUp,
-  setCurrentHoverElement
+  setCurrentHoverElement,
+  initGraphStyle,
+  initTransform
 }
 
 export default function extendPrototype (cl) {

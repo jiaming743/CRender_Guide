@@ -50,17 +50,19 @@ export default {
         }
       })
 
-      const circle2 = cr.add({
-        name: 'circle',
+      const ellipse = cr.add({
+        name: 'ellipse',
         animationCurve: 'easeInOutBack',
         shape: {
           rx: 300,
           ry: 300,
-          r: 50
+          hr: 50,
+          vr: 20
         },
         style: {
           fill: '#66d7ee',
           hoverCursor: 'pointer',
+          rotate: 20
         },
         hover: true,
         drag: true,
@@ -73,14 +75,11 @@ export default {
           this.animationEnd()
 
           this.animationTo('style', { shadowColor: '#999', shadowBlur: 1 })
-        },
-        async onClick () {
-          this.attr('inVisible', !this.inVisible)
         }
       })
 
       circle.attr('style', { shadowColor: '#999', shadowBlur: 1 })
-      circle2.attr('style', { shadowColor: '#999', shadowBlur: 1 })
+      ellipse.attr('style', { shadowColor: '#999', shadowBlur: 1 })
 
       console.log(cr)
     }
