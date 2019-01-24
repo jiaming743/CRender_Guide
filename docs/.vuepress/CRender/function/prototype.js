@@ -88,7 +88,7 @@ function clearArea () {
 function drawAllGraph () {
   const { elements } = this
 
-  const visibleElements = elements.filter(ele => ele.inVisible)
+  const visibleElements = elements.filter(ele => ele.inVisible).reverse()
 
   this.clearArea()
 
