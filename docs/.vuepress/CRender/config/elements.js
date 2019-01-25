@@ -28,10 +28,16 @@ export const circle = {
     return distance <= r
   },
 
-  doDrag ({offsetX, offsetY}, shape, style) {
+  setGraphOrigin (shape, style) {
+    const { rx, ry } = shape
+
+    style.graphOrigin = [rx, ry]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
     this.attr('shape', {
-      rx: offsetX,
-      ry: offsetY
+      rx: shape.rx + movementX,
+      ry: shape.ry + movementY
     })
   }
 }
@@ -47,7 +53,7 @@ export const ellipse = {
   draw (ctx, shape, style) {
     ctx.beginPath()
 
-    const { rx, ry, hr, vr } = shape
+    let { rx, ry, hr, vr } = shape
 
     ctx.ellipse(rx, ry, hr, vr, 0, 0, Math.PI * 2)
 
@@ -55,8 +61,6 @@ export const ellipse = {
     ctx.stroke()
 
     ctx.closePath()
-
-    style.graphOrigin = [rx, ry]
   },
 
   hoverCheck (pos, shape, style) {
@@ -75,10 +79,16 @@ export const ellipse = {
     return distance <= 2 * a
   },
 
-  doDrag ({offsetX, offsetY}, shape, style) {
+  setGraphOrigin (shape, style) {
+    const { rx, ry } = shape
+
+    style.graphOrigin = [rx, ry]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
     this.attr('shape', {
-      rx: offsetX,
-      ry: offsetY
+      rx: shape.rx + movementX,
+      ry: shape.ry + movementY
     })
   }
 }
