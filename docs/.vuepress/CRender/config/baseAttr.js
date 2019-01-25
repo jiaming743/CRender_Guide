@@ -3,8 +3,8 @@ export default {
   animationDelay: 0,
   animationFrame: 30,
   animationCurve: 'linear',
-  drag: false,
-  hover: false,
+  dragAble: false,
+  hoverAble: false,
   index: 1,
 
   // config able not
