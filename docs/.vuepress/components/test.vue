@@ -35,8 +35,8 @@ export default {
           fill: '#66d7ee',
           hoverCursor: 'pointer',
         },
-        hover: true,
-        drag: true,
+        hoverAble: true,
+        dragAble: true,
         index: 999,
         mouseEnter () {
           this.animationEnd()
@@ -62,19 +62,19 @@ export default {
         style: {
           fill: '#66d7ee',
           hoverCursor: 'pointer',
-          rotate: 20
+          rotate: 0
         },
-        hover: true,
-        drag: true,
+        hoverAble: true,
+        dragAble: true,
         mouseEnter () {
           this.animationEnd()
 
-          this.animationTo('style', { shadowColor: '#eb3941', shadowBlur: 50 })
+          this.animationTo('style', { rotate: 90 })
         },
         mouseOuter () {
           this.animationEnd()
 
-          this.animationTo('style', { shadowColor: '#999', shadowBlur: 1 })
+          this.animationTo('style', { rotate: 0 })
         }
       })
 

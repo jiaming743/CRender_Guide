@@ -33,6 +33,8 @@ function add (config = {}) {
 
   addElementExtend(mixinElement)
 
+  mixinElement.init()
+
   this.elements.push(mixinElement)
 
   this.drawAllGraph()
@@ -145,10 +147,10 @@ function rankElementsByIndex () {
 
 function mouseMove (e) {
   this.hoverElement &&
-    this.hoverElement.drag &&
+    this.hoverElement.dragAble &&
       this.hoverElement.dragging &&
         typeof this.hoverElement.doDrag === 'function' &&
-          this.hoverElement.doDrag(e, this.hoverElement.shape, this.hoverElement.style)
+          this.hoverElement.doDrag(e)
 
   const { offsetX, offsetY } = e
 
@@ -156,9 +158,9 @@ function mouseMove (e) {
 
   const mousePos = [offsetX, offsetY]
 
-  const hoverAbleElements = elements.filter(ele => ele.hover && ele.hoverCheck)
+  const hoverAbleElements = elements.filter(ele => ele.hoverAble && ele.hoverCheck)
 
-  const hoverElement = hoverAbleElements.find(ele => ele.hoverCheck(mousePos, ele.shape, ele.style))
+  const hoverElement = hoverAbleElements.find(ele => ele.doHoverCheck(mousePos))
 
   this.lastMousePosition = mousePos
 
@@ -169,7 +171,7 @@ function mouseDown (e) {
   if (this.hoverElement) this.hoverElementMouseDownTimer = (new Date()).getTime()
 
   this.hoverElement &&
-    this.hoverElement.drag &&
+    this.hoverElement.dragAble &&
       (this.hoverElement.dragging = true)
 }
 
@@ -237,15 +239,25 @@ function initGraphStyle (style) {
 function initTransform (style) {
   const { ctx } = this
 
+  ctx.save()
+
   const { graphOrigin, rotate, scale } = style
 
   if (!(graphOrigin instanceof Array)) return
 
-  if (rotate) ctx.rotate(parseInt(rotate) * Math.PI / 180)
-  
+  ctx.translate(...graphOrigin)
+
+  if (rotate) ctx.rotate(rotate * Math.PI / 180)
+
   if (scale instanceof Array) ctx.scale(...scale)
 
-  ctx.moveTo(...graphOrigin)
+  ctx.translate(-graphOrigin[0], -graphOrigin[1])
+}
+
+function restoreTransform (style) {
+  const { ctx } = this
+
+  ctx.restore()
 }
 
 const prototypes = {
@@ -261,7 +273,8 @@ const prototypes = {
   mouseUp,
   setCurrentHoverElement,
   initGraphStyle,
-  initTransform
+  initTransform,
+  restoreTransform
 }
 
 export default function extendPrototype (cl) {

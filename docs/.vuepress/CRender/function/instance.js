@@ -2,6 +2,14 @@ import transition from '@jiaminghi/transition'
 
 import { tranColorAttrToRgbaValue } from '../config/style'
 
+import { getRotatePointPos, getScalePointPos } from '../extend/methods'
+
+function init () {
+  const { shape, style, setGraphOrigin } = this
+
+  typeof setGraphOrigin === 'function' && setGraphOrigin(shape, style)
+}
+
 function attr (attrName, change) {
   if (!attrName || (!change && change !== false) || attrName === 'attr') return false
 
@@ -28,6 +36,29 @@ function doDraw () {
   typeof drawBefore === 'function' && this.drawBefore(ctx, shape, style)
 
   draw(render.ctx, shape, style, draw)
+
+  render.restoreTransform(style)
+}
+
+function doHoverCheck (pos) {
+  const { style, shape, hoverCheck } = this
+
+  const { graphOrigin, rotate, scale } = style
+
+  if (graphOrigin) {
+    if (rotate) pos = getRotatePointPos(-rotate, pos, graphOrigin)
+    if (scale) pos = getScalePointPos(scale.map(s => 1 / s), pos, graphOrigin)
+  }
+
+  return hoverCheck(pos, shape, style)
+}
+
+function doDrag (e) {
+  const { shape, style, setGraphOrigin } = this
+
+  this.drag(e, shape, style)
+
+  typeof setGraphOrigin === 'function' && setGraphOrigin(shape, style)
 }
 
 function turnToNextFrame () {
@@ -106,7 +137,7 @@ async function delay (time) {
   })
 }
 
-export function animationEnd () {
+function animationEnd () {
   const { animationFrameState, animationKeys, animationRoot, render } = this
 
   animationRoot.forEach((r, i) => {
@@ -124,9 +155,12 @@ export function animationEnd () {
 }
 
 export default {
+  init,
   attr,
   doDraw,
   turnToNextFrame,
   animationTo,
-  animationEnd
+  animationEnd,
+  doHoverCheck,
+  doDrag
 }
