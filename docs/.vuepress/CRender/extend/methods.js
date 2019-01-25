@@ -36,6 +36,48 @@ export function getTwoPointDistance ([xa, ya], [xb, yb]) {
   return sqrt(minusX * minusX + minusY * minusY)
 }
 
+export function getRotatePointPos (rotate = 0, point, origin = [0, 0]) {
+  if (!point) return false
+
+  if (rotate % 360 === 0) return point
+
+  const { sin, cos, PI } = Math
+
+  const [x, y] = point
+
+  const [ox, oy] = origin
+
+  rotate *= PI / 180
+
+  return [
+    (x - ox) * cos(rotate) - (y - oy) * sin(rotate) + ox,
+    (x - ox) * sin(rotate) + (y - oy) * cos(rotate) + oy
+  ]
+}
+
+export function getScalePointPos (scale = [1, 1], point, origin = [0, 0]) {
+  if (!point) return false
+
+  if (scale === 1) return point
+
+  const [x, y] = point
+
+  const [ox, oy] = origin
+
+  const [xs, ys] = scale
+
+  const relativePosX = x - ox
+  const relativePosY = y - oy
+
+  return [
+    relativePosX * xs + ox,
+    relativePosY * ys + oy
+  ]
+}
+
 export default {
-  deepClone
+  deepClone,
+  getTwoPointDistance,
+  getRotatePointPos,
+  getScalePointPos
 }
