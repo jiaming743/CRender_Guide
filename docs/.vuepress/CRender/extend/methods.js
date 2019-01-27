@@ -9,7 +9,7 @@ export function deepClone (object, recursionType = false) {
 
     for (let key in object) {
 
-      if(object.hasOwnProperty(key)){
+      if (object.hasOwnProperty(key)) {
 
           if (object[object] && typeof object[key] === 'object'){
 
@@ -75,9 +75,44 @@ export function getScalePointPos (scale = [1, 1], point, origin = [0, 0]) {
   ]
 }
 
+export function checkPointIsInPolygon (point, polygon) {
+  if (!point || !polygon || polygon.length < 3) return false
+
+  const [x, y] = point
+
+  const lastIndex = polygon.length - 1
+
+  const lines = polygon.map((point, i) => {
+    const isLast = lastIndex === i
+
+    const next = isLast ? polygon[0] : polygon[i + 1]
+
+    return [point, next]
+  })
+
+  const yAxisLine = lines.filter(line => {
+    const lineB = line[0]
+    const lineE = line[1]
+
+    return (lineB[1] > y && lineE[1] < y) || (lineE[1] > y && lineB[1] < y)
+  })
+
+  const xAxisLine = yAxisLine.filter(line => {
+    const lineB = line[0]
+    const lineE = line[1]
+
+    const xPos = (y - lineB[1]) / (lineE[1] - lineB[1]) * (lineE[0] - lineB[0]) + lineB[0]
+
+    return xPos > x
+  })
+
+  return xAxisLine.length % 2 === 1
+}
+
 export default {
   deepClone,
   getTwoPointDistance,
   getRotatePointPos,
-  getScalePointPos
+  getScalePointPos,
+  checkPointIsInPolygon
 }
