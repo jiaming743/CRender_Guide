@@ -23,21 +23,23 @@ export default {
 
       const cr = new CRender(this.$refs['canvas'])
 
-      const circle = cr.add({
-        name: 'circle',
+      const item = cr.add({
+        name: 'polygon',
         animationCurve: 'easeInOutBack',
         shape: {
-          rx: 100,
-          ry: 100,
-          r: 50
+          points: [
+            [30, 20],
+            [130, 100],
+            [120, 150],
+            [10, 200]
+          ]
         },
         style: {
           fill: '#66d7ee',
-          hoverCursor: 'pointer',
+          hoverCursor: 'pointer'
         },
         hoverAble: true,
         dragAble: true,
-        index: 999,
         mouseEnter () {
           this.animationEnd()
 
@@ -50,36 +52,7 @@ export default {
         }
       })
 
-      const ellipse = cr.add({
-        name: 'ellipse',
-        animationCurve: 'easeInOutBack',
-        shape: {
-          rx: 300,
-          ry: 300,
-          hr: 50,
-          vr: 20
-        },
-        style: {
-          fill: '#66d7ee',
-          hoverCursor: 'pointer',
-          rotate: 0
-        },
-        hoverAble: true,
-        dragAble: true,
-        mouseEnter () {
-          this.animationEnd()
-
-          this.animationTo('style', { rotate: 90 })
-        },
-        mouseOuter () {
-          this.animationEnd()
-
-          this.animationTo('style', { rotate: 0 })
-        }
-      })
-
-      circle.attr('style', { shadowColor: '#999', shadowBlur: 1 })
-      ellipse.attr('style', { shadowColor: '#999', shadowBlur: 1 })
+      item.attr('style', { shadowColor: '#999', shadowBlur: 1 })
 
       console.log(cr)
     }

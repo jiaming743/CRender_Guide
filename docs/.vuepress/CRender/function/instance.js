@@ -96,7 +96,7 @@ async function animationTo (attrName, change, wait = false) {
 
   const changeKeys = Object.keys(change)
   
-  const objectAttr = changeKeys.filter(k => typeof change[k] === 'object')
+  // const objectAttr = changeKeys.filter(k => typeof change[k] === 'object')
 
   const beforeState = {}
 
@@ -104,13 +104,13 @@ async function animationTo (attrName, change, wait = false) {
 
   const { animationFrame, animationCurve, animationDelay } = this
 
-  const animationFrameState = transition(animationCurve, beforeState, change, animationFrame)
+  const animationFrameState = transition(animationCurve, beforeState, change, animationFrame, true)
 
-  const objectAttrFrameState = objectAttr.map(k =>
-      transition(animationCurve, changeRoot[k], change[k], animationFrame))
+  // const objectAttrFrameState = objectAttr.map(k =>
+  //     transition(animationCurve, changeRoot[k], change[k], animationFrame))
 
-  animationFrameState.forEach((frameState, i) =>
-    objectAttr.forEach((k, j) => (frameState[k] = objectAttrFrameState[j][i])))
+  // animationFrameState.forEach((frameState, i) =>
+  //   objectAttr.forEach((k, j) => (frameState[k] = objectAttrFrameState[j][i])))
 
   this.animationRoot.push(changeRoot)
 
