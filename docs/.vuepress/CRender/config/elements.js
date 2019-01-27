@@ -1,4 +1,4 @@
-import { getTwoPointDistance } from '../extend/methods'
+import { getTwoPointDistance, checkPointIsInPolygon } from '../extend/methods'
 
 export const circle = {
   shape: {
@@ -93,7 +93,107 @@ export const ellipse = {
   }
 }
 
+export const rect = {
+  shape: {
+    x: 0,
+    y: 0,
+    w: 20,
+    h: 5
+  },
+
+  draw (ctx, shape, style) {
+    ctx.beginPath()
+
+    let { x, y, w, h } = shape
+
+    ctx.rect(x, y, w, h)
+
+    ctx.fill()
+    ctx.stroke()
+
+    ctx.closePath()
+  },
+
+  hoverCheck ([px, py], shape, style) {
+    let { x, y, w, h } = shape
+
+    if (px < x) return false
+    if (py < y) return false
+
+    if (px > x + w) return false
+    if (py > y + h) return false
+
+    return true
+  },
+
+  setGraphOrigin (shape, style) {
+    const { x, y } = shape
+
+    style.graphOrigin = [x, y]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
+    this.attr('shape', {
+      x: shape.x + movementX,
+      y: shape.y + movementY
+    })
+  }
+}
+
+export const polygon = {
+  shape: {
+    points: [
+      [0, 0],
+      [10, 10],
+      [20, 20]
+    ]
+  },
+
+  draw (ctx, shape, style) {
+    ctx.beginPath()
+
+    let { points } = shape
+
+    points.forEach((point, i) => {
+      if (i === 0) {
+        ctx.moveTo(...point)
+      } else {
+        ctx.lineTo(...point)
+      }
+    })
+
+    ctx.closePath()
+
+    ctx.fill()
+    ctx.stroke()
+  },
+
+  hoverCheck (point, shape, style) {
+    let { points } = shape
+
+    return checkPointIsInPolygon(point, points)
+  },
+
+  setGraphOrigin (shape, style) {
+    const { points } = shape
+
+    style.graphOrigin = points[0]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
+    const { points } = shape
+
+    const moveAfterPoints = points.map(([x, y]) => [x + movementX, y + movementY])
+
+    this.attr('shape', {
+      points: moveAfterPoints
+    })
+  }
+}
+
 export default new Map([
   ['circle', circle],
-  ['ellipse', ellipse]
+  ['ellipse', ellipse],
+  ['rect', rect],
+  ['polygon', polygon]
 ])
