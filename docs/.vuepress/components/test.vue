@@ -24,19 +24,17 @@ export default {
       const cr = new CRender(this.$refs['canvas'])
 
       const item = cr.add({
-        name: 'polygon',
+        name: 'ring',
         animationCurve: 'easeInOutBack',
         shape: {
-          points: [
-            [30, 20],
-            [130, 100],
-            [120, 150],
-            [10, 200]
-          ]
+          rx: 150,
+          ry: 150,
+          r: 50
         },
         style: {
-          fill: '#66d7ee',
-          hoverCursor: 'pointer'
+          stroke: '#66d7ee',
+          hoverCursor: 'pointer',
+          lineWidth: 20
         },
         hoverAble: true,
         dragAble: true,

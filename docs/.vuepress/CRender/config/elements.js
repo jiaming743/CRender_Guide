@@ -42,6 +42,54 @@ export const circle = {
   }
 }
 
+export const ring = {
+  shape: {
+    rx: 0,
+    ry: 0,
+    r: 50
+  },
+
+  draw (ctx, shape, style) {
+    ctx.beginPath()
+
+    const { rx, ry, r } = shape
+
+    ctx.arc(rx, ry, r, 0, Math.PI * 2)
+
+    ctx.stroke()
+
+    ctx.closePath()
+  },
+
+  hoverCheck (pos, shape, style) {
+    const { rx, ry, r } = shape
+
+    const { lineWidth } = style
+
+    const halfLineWidth = lineWidth / 2
+
+    const minDistance = r - halfLineWidth
+    const maxDistance = r + halfLineWidth
+
+    const distance = getTwoPointDistance(pos, [rx, ry])
+
+    return (distance >= minDistance && distance <= maxDistance)
+  },
+
+  setGraphOrigin (shape, style) {
+    const { rx, ry } = shape
+
+    style.graphOrigin = [rx, ry]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
+    this.attr('shape', {
+      rx: shape.rx + movementX,
+      ry: shape.ry + movementY
+    })
+  }
+}
+
 export const ellipse = {
   shape: {
     rx: 0,
@@ -195,5 +243,6 @@ export default new Map([
   ['circle', circle],
   ['ellipse', ellipse],
   ['rect', rect],
-  ['polygon', polygon]
+  ['polygon', polygon],
+  ['ring', ring]
 ])
