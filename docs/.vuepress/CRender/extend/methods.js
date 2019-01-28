@@ -109,6 +109,25 @@ export function checkPointIsInPolygon (point, polygon) {
   return xAxisLine.length % 2 === 1
 }
 
+export function getDistanceBetweenPointAndLine (point, lineBegin, lineEnd) {
+  if (!point || !lineBegin || !lineEnd) return false
+
+  const [x, y] = point
+  const [x1, y1] = lineBegin
+  const [x2, y2] = lineEnd
+
+  const a = y2 - y1
+  const b = x1 - x2
+  const c = y1 * (x2 - x1) - x1 * (y2 - y1)
+
+  const { sqrt, abs } = Math
+
+  const molecule = abs(a * x + b * y + c)
+  const denominator = sqrt(a * a + b * b)
+
+  return molecule / denominator
+}
+
 export default {
   deepClone,
   getTwoPointDistance,
