@@ -1,4 +1,4 @@
-import { getTwoPointDistance, checkPointIsInPolygon } from '../extend/methods'
+import { getTwoPointDistance, checkPointIsInPolygon, getDistanceBetweenPointAndLine } from '../extend/methods'
 
 export const circle = {
   shape: {
@@ -239,10 +239,73 @@ export const polygon = {
   }
 }
 
+export const polyline = {
+  shape: {
+    points: [
+      [0, 0],
+      [10, 10],
+      [30, 30]
+    ]
+  },
+
+  draw (ctx, shape, style) {
+    ctx.beginPath()
+
+    let { points } = shape
+
+    points.forEach((point, i) => {
+      if (i === 0) {
+        ctx.moveTo(...point)
+      } else {
+        ctx.lineTo(...point)
+      }
+    })
+
+    ctx.stroke()
+
+    ctx.closePath()
+  },
+
+  hoverCheck (point, shape, style) {
+    let { points } = shape
+
+    const lineNum = points.length - 1
+
+    const { lineWidth } = style
+
+    const minus = lineWidth / 2
+
+    if (lineNum === 0) return false
+
+    const lines = new Array(lineNum).fill('').map((t, i) => [points[i], points[i + 1]])
+
+    const result = lines.find(line => getDistanceBetweenPointAndLine(point, ...line) <= minus)
+
+    return result
+  },
+
+  setGraphOrigin (shape, style) {
+    const { points } = shape
+
+    style.graphOrigin = points[0]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
+    const { points } = shape
+
+    const moveAfterPoints = points.map(([x, y]) => [x + movementX, y + movementY])
+
+    this.attr('shape', {
+      points: moveAfterPoints
+    })
+  }
+}
+
 export default new Map([
   ['circle', circle],
   ['ellipse', ellipse],
   ['rect', rect],
   ['polygon', polygon],
-  ['ring', ring]
+  ['ring', ring],
+  ['polyline', polyline]
 ])
