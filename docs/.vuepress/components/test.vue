@@ -24,12 +24,14 @@ export default {
       const cr = new CRender(this.$refs['canvas'])
 
       const item = cr.add({
-        name: 'ring',
+        name: 'polyline',
         animationCurve: 'easeInOutBack',
         shape: {
-          rx: 150,
-          ry: 150,
-          r: 50
+          points: [
+            [100, 100],
+            [210, 180],
+            [382, 200]
+          ]
         },
         style: {
           stroke: '#66d7ee',
