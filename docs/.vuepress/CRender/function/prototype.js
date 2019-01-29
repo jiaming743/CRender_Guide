@@ -29,6 +29,12 @@ function add (config = {}) {
 
   const mixinElement = getMixinElement(element, config)
 
+  if (typeof mixinElement.validator === 'function' && !mixinElement.validator()) {
+    console.warn('Invalid configuration!')
+
+    return
+  }
+
   this.initAttribute(mixinElement)
 
   addElementExtend(mixinElement)
@@ -222,16 +228,19 @@ function initGraphStyle (style) {
   ctx.strokeStyle = rgbaValueToColor(stroke, opacity)
   ctx.shadowColor = rgbaValueToColor(shadowColor, opacity)
 
-  const { lineDash, lineDashOffset, shadowBlur } = style
+  const { lineCap, lineDash, lineDashOffset } = style
 
+  ctx.lineCap = lineCap
   ctx.setLineDash(lineDash || [10, 0])
   ctx.lineDashOffset = lineDashOffset
+
+  const { shadowBlur, shadowOffsetX, shadowOffsetY } = style
+
   ctx.shadowBlur = shadowBlur > 0 ? shadowBlur : 0.1
-
-  const { shadowOffsetX, shadowOffsetY, lineWidth } = style
-
   ctx.shadowOffsetX = shadowOffsetX
   ctx.shadowOffsetY = shadowOffsetY
+
+  const { lineWidth } = style
 
   ctx.lineWidth = lineWidth
 }
