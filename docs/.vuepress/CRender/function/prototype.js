@@ -29,11 +29,7 @@ function add (config = {}) {
 
   const mixinElement = getMixinElement(element, config)
 
-  if (typeof mixinElement.validator === 'function' && !mixinElement.validator()) {
-    console.warn('Invalid configuration!')
-
-    return
-  }
+  if (!validatorCheck(mixinElement)) return
 
   this.initAttribute(mixinElement)
 
@@ -53,12 +49,15 @@ function add (config = {}) {
 function getMixinElement (element, config) {
   const clonedElement = deepClone(element, true)
 
+  const clonedShape = deepClone(element.shape)
   const clonedStyle = deepClone(style)
 
   const clonedBaseAttr = deepClone(baseAttr)
 
+  Object.assign(clonedShape, config.shape || {})
   Object.assign(clonedStyle, config.style || {})
 
+  config.shape = clonedShape
   config.style = clonedStyle
 
   const mixinElement = {}
@@ -68,6 +67,18 @@ function getMixinElement (element, config) {
   tranColorAttrToRgbaValue(mixinElement.style)
 
   return mixinElement
+}
+
+function validatorCheck (element) {
+  const { shape, style } = element
+
+  if (typeof element.validator === 'function' && !element.validator(shape, style)) {
+    console.warn('Invalid configuration!')
+
+    return false
+  }
+
+  return true
 }
 
 function initAttribute (element) {

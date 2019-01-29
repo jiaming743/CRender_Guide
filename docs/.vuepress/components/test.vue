@@ -24,19 +24,20 @@ export default {
       const cr = new CRender(this.$refs['canvas'])
 
       const item = cr.add({
-        name: 'polyline',
+        name: 'sector',
         animationCurve: 'easeInOutBack',
         shape: {
-          points: [
-            [100, 100],
-            [210, 180],
-            [382, 200]
-          ]
+          rx: 300,
+          ry: 150,
+          r: 100,
+          // clockWise: false,
+          startAngle: -Math.PI * 0.5,
+          endAngle: Math.PI * 0.6
         },
         style: {
-          stroke: '#66d7ee',
-          hoverCursor: 'pointer',
-          lineWidth: 20
+          fill: '#ffe793',
+          // stroke: '#66d7ee',
+          hoverCursor: 'pointer'
         },
         hoverAble: true,
         dragAble: true,
