@@ -4,6 +4,7 @@ export default {
   fill: '#000',
   stroke: 'transparent',
   opacity: 1,
+  lineCap: null,
   lineDash: null,
   lineDashOffset: null,
   shadowBlur: 0,
