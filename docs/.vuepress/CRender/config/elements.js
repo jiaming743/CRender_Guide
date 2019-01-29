@@ -275,11 +275,27 @@ export const polyline = {
 
     const minus = lineWidth / 2
 
+    const [x, y] = point
+
+    const { max, min } = Math
+
     if (lineNum === 0) return false
 
     const lines = new Array(lineNum).fill('').map((t, i) => [points[i], points[i + 1]])
 
-    const result = lines.find(line => getDistanceBetweenPointAndLine(point, ...line) <= minus)
+    const result = lines.find(line => {
+      const xB = line[0][0]
+      const xE = line[1][0]
+
+      const yB = line[0][1]
+      const yE = line[1][1]
+
+      if (x > max(xB, xE) || x < min(xB, xE)) return false
+
+      if (y > max(yB, yE) || y < min(yB, yE)) return false
+
+      return getDistanceBetweenPointAndLine(point, ...line) < minus
+    })
 
     return result
   },
