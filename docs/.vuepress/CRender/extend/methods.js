@@ -36,6 +36,10 @@ export function getTwoPointDistance ([xa, ya], [xb, yb]) {
   return sqrt(minusX * minusX + minusY * minusY)
 }
 
+export function checkPointIsInCircle (rx, ry, r, point) {
+  return getTwoPointDistance(point, [rx, ry]) <= r
+}
+
 export function getRotatePointPos (rotate = 0, point, origin = [0, 0]) {
   if (!point) return false
 
@@ -128,10 +132,57 @@ export function getDistanceBetweenPointAndLine (point, lineBegin, lineEnd) {
   return molecule / denominator
 }
 
+export function getCircleRadianPoint (x, y, radius, radian) {
+  const { sin, cos } = Math
+
+  return [x + cos(radian) * radius, y + sin(radian) * radius]
+}
+
+export function checkPointIsInSector (point, rx, ry, r, startAngle, endAngle, clockWise) {
+  if (!point) return false
+
+  if (getTwoPointDistance(point, [rx, ry]) > r) return false
+
+  if (!clockWise) [startAngle, endAngle] = deepClone([endAngle, startAngle])
+
+  const minus = endAngle - startAngle
+
+  if (minus >= Math.PI * 2) return true
+
+  const [x, y] = point
+
+  const [bx, by] = getCircleRadianPoint(rx, ry, r, startAngle)
+  const [ex, ey] = getCircleRadianPoint(rx, ry, r, endAngle)
+
+  const vPoint = [x - rx, y - ry]
+  let vBArm = [bx - rx, by - ry]
+  let vEArm = [ex - rx, ey - ry]
+
+  const reverse = minus > Math.PI
+
+  if (reverse) [vBArm, vEArm] = deepClone([vEArm, vBArm])
+
+  let inSector = areClockWise(vBArm, vPoint) && !areClockWise(vEArm, vPoint)
+
+  if (reverse) inSector = !inSector
+
+  return inSector
+}
+
+function areClockWise (vArm, vPoint) {
+  const [ax, ay] = vArm
+  const [px, py] = vPoint
+
+  return -ay * px + ax * py > 0
+}
+
 export default {
   deepClone,
   getTwoPointDistance,
+  checkPointIsInCircle,
   getRotatePointPos,
   getScalePointPos,
-  checkPointIsInPolygon
+  checkPointIsInPolygon,
+  checkPointIsInSector,
+  getCircleRadianPoint
 }
