@@ -1,10 +1,24 @@
-import { getTwoPointDistance, checkPointIsInPolygon, getDistanceBetweenPointAndLine } from '../extend/methods'
+import { checkPointIsInCircle, checkPointIsInPolygon, getDistanceBetweenPointAndLine } from '../extend/methods'
+
+import { checkPointIsInSector } from '../extend/methods'
 
 export const circle = {
   shape: {
     rx: 0,
     ry: 0,
-    r: 10
+    r: 0
+  },
+
+  validator (shape, style) {
+    const { rx, ry, r } = shape
+
+    if (typeof rx !== 'number' || typeof ry !== 'number' || typeof r !== 'number') {
+      console.warn('Shape configuration is abnormal!')
+
+      return false
+    }
+
+    return true
   },
 
   draw (ctx, shape, style) {
@@ -23,9 +37,7 @@ export const circle = {
   hoverCheck (pos, shape, style) {
     const { rx, ry, r } = shape
 
-    const distance = getTwoPointDistance(pos, [rx, ry])
-
-    return distance <= r
+    return checkPointIsInCircle(rx, ry, r, pos)
   },
 
   setGraphOrigin (shape, style) {
@@ -46,7 +58,19 @@ export const ring = {
   shape: {
     rx: 0,
     ry: 0,
-    r: 50
+    r: 0
+  },
+
+  validator (shape, style) {
+    const { rx, ry, r } = shape
+
+    if (typeof rx !== 'number' || typeof ry !== 'number' || typeof r !== 'number') {
+      console.warn('Shape configuration is abnormal!')
+
+      return false
+    }
+
+    return true
   },
 
   draw (ctx, shape, style) {
@@ -94,8 +118,20 @@ export const ellipse = {
   shape: {
     rx: 0,
     ry: 0,
-    hr: 10,
-    vr: 5
+    hr: 0,
+    vr: 0
+  },
+
+  validator (shape, style) {
+    const { rx, ry, hr, vr } = shape
+
+    if (typeof rx !== 'number' || typeof ry !== 'number' || typeof hr !== 'number' || typeof vr !== 'number') {
+      console.warn('Shape configuration is abnormal!')
+
+      return false
+    }
+
+    return true
   },
 
   draw (ctx, shape, style) {
@@ -145,8 +181,20 @@ export const rect = {
   shape: {
     x: 0,
     y: 0,
-    w: 20,
-    h: 5
+    w: 0,
+    h: 0
+  },
+
+  validator (shape, style) {
+    const { x, y, w, h } = shape
+
+    if (typeof x !== 'number' || typeof y !== 'number' || typeof w !== 'number' || typeof h !== 'number') {
+      console.warn('Shape configuration is abnormal!')
+
+      return false
+    }
+
+    return true
   },
 
   draw (ctx, shape, style) {
@@ -190,11 +238,25 @@ export const rect = {
 
 export const polygon = {
   shape: {
-    points: [
-      [0, 0],
-      [10, 10],
-      [20, 20]
-    ]
+    points: []
+  },
+
+  validator (shape, style) {
+    const { points } = shape
+
+    if (!(points instanceof Array)) {
+      console.warn('Points should be an array!')
+
+      return false
+    }
+
+    if (points.length < 3) {
+      console.warn('The length of points should be no less than 3!')
+
+      return false
+    }
+
+    return true
   },
 
   draw (ctx, shape, style) {
@@ -241,11 +303,19 @@ export const polygon = {
 
 export const polyline = {
   shape: {
-    points: [
-      [0, 0],
-      [10, 10],
-      [30, 30]
-    ]
+    points: []
+  },
+
+  validator (shape, style) {
+    const { points } = shape
+
+    if (!(points instanceof Array)) {
+      console.warn('Points should be an array!')
+
+      return false
+    }
+
+    return true
   },
 
   draw (ctx, shape, style) {
@@ -317,11 +387,73 @@ export const polyline = {
   }
 }
 
+export const sector = {
+  shape: {
+    rx: 0,
+    ry: 0,
+    r: 0,
+    startAngle: 0,
+    endAngle: 0,
+    clockWise: true
+  },
+
+  validator (shape, style) {
+    const { rx, ry, r, startAngle, endAngle } = shape
+
+    const keys = ['rx', 'ry', 'r', 'startAngle', 'endAngle']
+
+    if (keys.find(key => typeof shape[key] !== 'number')) {
+      console.warn('Shape configuration is abnormal!')
+
+      return false
+    }
+
+    return true
+  },
+
+  draw (ctx, shape, style) {
+    ctx.beginPath()
+
+    const { rx, ry, r, startAngle, endAngle, clockWise } = shape
+
+    ctx.arc(rx, ry, r, startAngle, endAngle, !clockWise)
+
+    ctx.lineTo(rx, ry)
+
+    ctx.closePath()
+
+    ctx.stroke()
+    ctx.fill()
+  },
+
+  hoverCheck (point, shape, style) {
+    const { rx, ry, r, startAngle, endAngle, clockWise } = shape
+
+    return checkPointIsInSector(point, rx, ry, r, startAngle, endAngle, clockWise)
+  },
+
+  setGraphOrigin (shape, style) {
+    const { rx, ry } = shape
+
+    style.graphOrigin = [rx, ry]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
+    const { rx, ry } = shape
+
+    this.attr('shape', {
+      rx: rx + movementX,
+      ry: ry + movementY
+    })
+  }
+}
+
 export default new Map([
   ['circle', circle],
   ['ellipse', ellipse],
   ['rect', rect],
   ['polygon', polygon],
   ['ring', ring],
-  ['polyline', polyline]
+  ['polyline', polyline],
+  ['sector', sector]
 ])
