@@ -35,7 +35,7 @@ function doDraw () {
 
   typeof drawBefore === 'function' && this.drawBefore(ctx, shape, style)
 
-  draw(render.ctx, shape, style, draw)
+  draw(render.ctx, shape, style, this)
 
   render.restoreTransform(style)
 }
@@ -50,7 +50,7 @@ function doHoverCheck (pos) {
     if (scale) pos = getScalePointPos(scale.map(s => 1 / s), pos, graphOrigin)
   }
 
-  return hoverCheck(pos, shape, style)
+  return hoverCheck(pos, shape, style, this)
 }
 
 function doDrag (e) {

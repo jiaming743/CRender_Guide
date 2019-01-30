@@ -24,18 +24,17 @@ export default {
       const cr = new CRender(this.$refs['canvas'])
 
       const item = cr.add({
-        name: 'arc',
+        name: 'regPolygon',
         animationCurve: 'easeInOutBack',
         shape: {
           rx: 300,
           ry: 150,
           r: 50,
-          // clockWise: false,
-          startAngle: -Math.PI * 0.5,
-          endAngle: Math.PI * 0.6
+          side: 3
         },
         style: {
           stroke: '#66d7ee',
+          fill: '#ffe793',
           lineWidth: 30,
           hoverCursor: 'pointer'
         },
