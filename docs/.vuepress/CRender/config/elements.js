@@ -1,6 +1,8 @@
-import { checkPointIsInCircle, checkPointIsInPolygon, getDistanceBetweenPointAndLine } from '../extend/methods'
+import { checkPointIsInCircle, checkPointIsInPolygon, getDistanceBetweenPointAndLine, getCircleRadianPoint } from '../extend/methods'
 
-import { checkPointIsInSector } from '../extend/methods'
+import { checkPointIsInSector, getRegularPolygonPoints } from '../extend/methods'
+
+import { drawPolylinePath } from '../extend/canvas'
 
 export const circle = {
   shape: {
@@ -264,13 +266,7 @@ export const polygon = {
 
     let { points } = shape
 
-    points.forEach((point, i) => {
-      if (i === 0) {
-        ctx.moveTo(...point)
-      } else {
-        ctx.lineTo(...point)
-      }
-    })
+    drawPolylinePath(ctx, points)
 
     ctx.closePath()
 
@@ -323,13 +319,7 @@ export const polyline = {
 
     let { points } = shape
 
-    points.forEach((point, i) => {
-      if (i === 0) {
-        ctx.moveTo(...point)
-      } else {
-        ctx.lineTo(...point)
-      }
-    })
+    drawPolylinePath(ctx, points)
 
     ctx.stroke()
 
@@ -512,6 +502,74 @@ export const arc = {
   }
 }
 
+export const regPolygon = {
+  shape: {
+    rx: 0,
+    ry: 0,
+    r: 0,
+    side: 0
+  },
+
+  validator (shape, style) {
+    const { rx, ry, r, side } = shape
+
+    const keys = ['rx', 'ry', 'r', 'side']
+
+    if (keys.find(key => typeof shape[key] !== 'number')) {
+      console.warn('Shape configuration is abnormal!')
+
+      return false
+    }
+
+    if (side < 3) {
+      console.warn('At least trigon!')
+
+      return false
+    }
+
+    return true
+  },
+
+  draw (ctx, shape, style, element) {
+    ctx.beginPath()
+
+    const { rx, ry, r, side } = shape
+
+    const { drawData } = element
+
+    if (!drawData || drawData.rx !== rx || drawData.ry !== ry || drawData.r !== r || drawData.side !== side ) {
+
+      const points = getRegularPolygonPoints(rx, ry, r, side)
+
+      element.drawData = { points, rx, ry, r, side }
+    }
+
+    const { drawData: { points } } = element
+
+    drawPolylinePath(ctx, points)
+
+    ctx.closePath()
+
+    ctx.stroke()
+    ctx.fill()
+  },
+
+  hoverCheck (point, shape, style, element) {
+    let { drawData: { points } } = element
+
+    return checkPointIsInPolygon(point, points)
+  },
+
+  drag ({movementX, movementY}, shape, style) {
+    const { rx, ry } = shape
+
+    this.attr('shape', {
+      rx: rx + movementX,
+      ry: ry + movementY
+    })
+  }
+}
+
 export default new Map([
   ['circle', circle],
   ['ellipse', ellipse],
@@ -520,5 +578,6 @@ export default new Map([
   ['ring', ring],
   ['polyline', polyline],
   ['sector', sector],
-  ['arc', arc]
+  ['arc', arc],
+  ['regPolygon', regPolygon]
 ])
