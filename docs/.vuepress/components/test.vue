@@ -24,19 +24,19 @@ export default {
       const cr = new CRender(this.$refs['canvas'])
 
       const item = cr.add({
-        name: 'sector',
+        name: 'arc',
         animationCurve: 'easeInOutBack',
         shape: {
           rx: 300,
           ry: 150,
-          r: 100,
+          r: 50,
           // clockWise: false,
           startAngle: -Math.PI * 0.5,
           endAngle: Math.PI * 0.6
         },
         style: {
-          fill: '#ffe793',
-          // stroke: '#66d7ee',
+          stroke: '#66d7ee',
+          lineWidth: 30,
           hoverCursor: 'pointer'
         },
         hoverAble: true,
