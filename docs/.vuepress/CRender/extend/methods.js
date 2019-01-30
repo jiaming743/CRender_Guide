@@ -176,6 +176,14 @@ function areClockWise (vArm, vPoint) {
   return -ay * px + ax * py > 0
 }
 
+export function getRegularPolygonPoints (rx, ry, r, side, minus = Math.PI * -0.5) {
+  const radianGap = Math.PI * 2 / side
+
+  const radians = new Array(side).fill('').map((t, i) => i * radianGap + minus)
+
+  return radians.map(radian => getCircleRadianPoint(rx, ry, r, radian))
+}
+
 export default {
   deepClone,
   getTwoPointDistance,
@@ -184,5 +192,6 @@ export default {
   getScalePointPos,
   checkPointIsInPolygon,
   checkPointIsInSector,
-  getCircleRadianPoint
+  getCircleRadianPoint,
+  getRegularPolygonPoints
 }
