@@ -39,7 +39,10 @@ module.exports = {
         ],
         sidebar: {
           '/guide/': [
-            ''
+            '',
+            'prototype',
+            'instance',
+            'graph'
           ],
           '/extend/': [
             ''

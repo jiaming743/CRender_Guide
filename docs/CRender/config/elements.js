@@ -225,9 +225,9 @@ export const rect = {
   },
 
   setGraphOrigin (shape, style) {
-    const { x, y } = shape
+    const { x, y, w, h } = shape
 
-    style.graphOrigin = [x, y]
+    style.graphOrigin = [x + w / 2, y + h / 2]
   },
 
   drag ({movementX, movementY}, shape, style) {

@@ -1,5 +1,9 @@
 import extendPrototype from './function/prototype'
 
+export { extendNewElement } from './config/elements'
+
+export { injectNewCurve } from '@jiaminghi/transition'
+
 export default class CRender {
 
   constructor (canvas) {

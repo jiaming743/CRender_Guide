@@ -181,7 +181,7 @@ function mouseMove (e) {
 
   this.lastMousePosition = mousePos
 
-  this.setCurrentHoverElement(hoverElement)
+  this.setCurrentHoverElement(hoverElement, e)
 }
 
 function mouseDown (e) {
@@ -199,16 +199,16 @@ function mouseUp (e) {
     this.hoverElementMouseDownTimer &&
       (timer - this.hoverElementMouseDownTimer < 200) &&
         typeof this.hoverElement.onClick === 'function' &&
-          this.hoverElement.onClick()
+          this.hoverElement.onClick(e)
 
   this.hoverElement && (this.hoverElement.dragging = false)
 }
 
-function setCurrentHoverElement (hoverElement = false) {
+function setCurrentHoverElement (hoverElement = false, e) {
   if (hoverElement && hoverElement.hovered) return hoverElement
 
   if ((!hoverElement && this.hoverElement) || (hoverElement && this.hoverElement)) {
-    typeof this.hoverElement.mouseOuter === 'function' && this.hoverElement.mouseOuter()
+    typeof this.hoverElement.mouseOuter === 'function' && this.hoverElement.mouseOuter(e)
 
     this.hoverElement.hovered = false
 
@@ -221,7 +221,7 @@ function setCurrentHoverElement (hoverElement = false) {
 
   hoverElement.hovered = true
 
-  typeof hoverElement.mouseEnter === 'function' && hoverElement.mouseEnter()
+  typeof hoverElement.mouseEnter === 'function' && hoverElement.mouseEnter(e)
 
   this.hoverElement = hoverElement
 
