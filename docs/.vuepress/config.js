@@ -29,12 +29,19 @@ module.exports = {
             link: '/guide/'
           },
           {
+            text: '扩展',
+            link: '/extend/'
+          },
+          {
             text: 'GitHub',
             link: 'https://github.com/jiaming743/CRender_Guide'
           }
         ],
         sidebar: {
           '/guide/': [
+            ''
+          ],
+          '/extend/': [
             ''
           ]
         }
