@@ -1,6 +1,6 @@
 import { checkPointIsInCircle, checkPointIsInPolygon, getDistanceBetweenPointAndLine, getCircleRadianPoint } from '../extend/methods'
 
-import { checkPointIsInSector, getRegularPolygonPoints } from '../extend/methods'
+import { checkPointIsInSector, getRegularPolygonPoints, getTwoPointDistance } from '../extend/methods'
 
 import { drawPolylinePath } from '../extend/canvas'
 
@@ -560,6 +560,12 @@ export const regPolygon = {
     return checkPointIsInPolygon(point, points)
   },
 
+  setGraphOrigin (shape, style) {
+    const { rx, ry } = shape
+
+    style.graphOrigin = [rx, ry]
+  },
+
   drag ({movementX, movementY}, shape, style) {
     const { rx, ry } = shape
 
@@ -570,7 +576,7 @@ export const regPolygon = {
   }
 }
 
-export default new Map([
+const elements = new Map([
   ['circle', circle],
   ['ellipse', ellipse],
   ['rect', rect],
@@ -581,3 +587,15 @@ export default new Map([
   ['arc', arc],
   ['regPolygon', regPolygon]
 ])
+
+export default elements
+
+export function extendNewElement (name, config) {
+  if (!name || !curve) {
+    console.warn('extendNewElement Missing Parameters!')
+
+    return
+  }
+
+  config.set(name, config)
+}
