@@ -11,11 +11,11 @@ export default function (render) {
       side: 6
     },
     style: {
-      fill: '#ffe793',
+      fill: '#9ce5f4',
       hoverCursor: 'pointer',
       shadowBlur: 0,
       rotate: 0,
-      shadowColor: '#46bd87'
+      shadowColor: '#66eece'
     },
     hoverAble: true,
     dragAble: true,

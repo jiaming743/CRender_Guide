@@ -14,20 +14,21 @@ export default function (render) {
       h: rectHeight
     },
     style: {
-      fill: '#ffe793',
-      hoverCursor: 'pointer',
+      fill: '#9ce5f4',
       shadowBlur: 0,
-      shadowColor: '#46bd87'
+      shadowColor: '#66eece',
+      hoverCursor: 'pointer',
+      translate: [0, 0]
     },
     hoverAble: true,
     dragAble: true,
     mouseEnter (e) {
-      this.animationTo('shape', { w: 300 }, true)
-      this.animationTo('style', { w: 250, shadowBlur: 20 })
+      this.animationTo('shape', { w: 400 }, true)
+      this.animationTo('style', { shadowBlur: 20, translate: [-100, 0] })
     },
     mouseOuter (e) {
       this.animationTo('shape', { w: 200 }, true)
-      this.animationTo('style', { shadowBlur: 0 })
+      this.animationTo('style', { shadowBlur: 0, translate: [0, 0] })
     }
   }
 }

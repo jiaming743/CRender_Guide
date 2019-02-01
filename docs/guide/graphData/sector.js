@@ -12,11 +12,11 @@ export default function (render) {
       endAngle: Math.PI / 3
     },
     style: {
-      fill: '#ffe793',
-      hoverCursor: 'pointer',
+      fill: '#9ce5f4',
       shadowBlur: 0,
       rotate: 0,
-      shadowColor: '#46bd87'
+      shadowColor: '#66eece',
+      hoverCursor: 'pointer'
     },
     hoverAble: true,
     dragAble: true,

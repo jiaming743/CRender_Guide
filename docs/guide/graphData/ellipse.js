@@ -11,11 +11,11 @@ export default function (render) {
       vr: 30
     },
     style: {
-      fill: '#ffe793',
-      hoverCursor: 'pointer',
+      fill: '#9ce5f4',
       shadowBlur: 0,
-      shadowColor: '#46bd87',
-      scale: [1, 1]
+      shadowColor: '#66eece',
+      scale: [1, 1],
+      hoverCursor: 'pointer'
     },
     hoverAble: true,
     dragAble: true,

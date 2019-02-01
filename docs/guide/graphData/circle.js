@@ -10,15 +10,15 @@ export default function (render) {
       r: 50
     },
     style: {
-      fill: '#ffe793',
-      hoverCursor: 'pointer',
+      fill: '#9ce5f4',
       shadowBlur: 0,
-      shadowColor: '#46bd87'
+      shadowColor: '#66eece',
+      hoverCursor: 'pointer'
     },
     hoverAble: true,
     dragAble: true,
     mouseEnter (e) {
-      this.animationTo('shape', { r: 60 }, true)
+      this.animationTo('shape', { r: 70 }, true)
       this.animationTo('style', { shadowBlur: 20 })
     },
     mouseOuter (e) {

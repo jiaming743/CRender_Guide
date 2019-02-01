@@ -12,12 +12,12 @@ export default function (render) {
       endAngle: Math.PI / 3
     },
     style: {
-      stroke: '#ffe793',
+      stroke: '#9ce5f4',
       lineWidth: 20,
-      hoverCursor: 'pointer',
       shadowBlur: 0,
       rotate: 0,
-      shadowColor: '#46bd87'
+      shadowColor: '#66eece',
+      hoverCursor: 'pointer'
     },
     hoverAble: true,
     dragAble: true,

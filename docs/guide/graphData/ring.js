@@ -10,21 +10,19 @@ export default function (render) {
       r: 50
     },
     style: {
-      stroke: '#ffe793',
+      stroke: '#9ce5f4',
       lineWidth: 20,
       hoverCursor: 'pointer',
       shadowBlur: 0,
-      shadowColor: '#46bd87'
+      shadowColor: '#66eece'
     },
     hoverAble: true,
     dragAble: true,
     mouseEnter (e) {
-      this.animationTo('shape', { r: 60 }, true)
-      this.animationTo('style', { shadowBlur: 20 })
+      this.animationTo('style', { shadowBlur: 20, lineWidth: 30 })
     },
     mouseOuter (e) {
-      this.animationTo('shape', { r: 50 }, true)
-      this.animationTo('style', { shadowBlur: 0 })
+      this.animationTo('style', { shadowBlur: 0, lineWidth: 20 })
     }
   }
 }
