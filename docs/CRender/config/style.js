@@ -15,9 +15,9 @@ export default {
   strokeNoScale: false,
   graphOrigin: null,
   graphRect: null,
-  transform: null,
   scale: null,
   rotate: null,
+  translate: null,
   hoverCursor: 'default',
 
   text: null,
