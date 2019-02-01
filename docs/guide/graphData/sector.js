@@ -21,11 +21,11 @@ export default function (render) {
     hoverAble: true,
     dragAble: true,
     mouseEnter (e) {
-      this.animationTo('shape', { endAngle: Math.PI }, true)
+      this.animationTo('shape', { endAngle: Math.PI, r: 70 }, true)
       this.animationTo('style', { shadowBlur: 20, rotate: -30, lineWidth: 30 })
     },
     mouseOuter (e) {
-      this.animationTo('shape', { endAngle: Math.PI / 3 }, true)
+      this.animationTo('shape', { endAngle: Math.PI / 3, r: 60 }, true)
       this.animationTo('style', { shadowBlur: 0, rotate: 0, lineWidth: 20 })
     }
   }
