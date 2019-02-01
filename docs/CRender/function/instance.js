@@ -2,7 +2,7 @@ import transition from '@jiaminghi/transition'
 
 import { tranColorAttrToRgbaValue } from '../config/style'
 
-import { getRotatePointPos, getScalePointPos } from '../extend/methods'
+import { getRotatePointPos, getScalePointPos, getTranslatePointPos } from '../extend/methods'
 
 function init () {
   const { shape, style, setGraphOrigin } = this
@@ -43,11 +43,12 @@ function doDraw () {
 function doHoverCheck (pos) {
   const { style, shape, hoverCheck } = this
 
-  const { graphOrigin, rotate, scale } = style
+  const { graphOrigin, rotate, scale, translate } = style
 
   if (graphOrigin) {
     if (rotate) pos = getRotatePointPos(-rotate, pos, graphOrigin)
     if (scale) pos = getScalePointPos(scale.map(s => 1 / s), pos, graphOrigin)
+    if (translate) pos = getTranslatePointPos(translate.map(v => v * -1), pos)
   }
 
   return hoverCheck(pos, shape, style, this)

@@ -79,6 +79,15 @@ export function getScalePointPos (scale = [1, 1], point, origin = [0, 0]) {
   ]
 }
 
+export function getTranslatePointPos (translate, point) {
+  if (!translate || !point) return false
+
+  const [x, y] = point
+  const [tx, ty] = translate
+
+  return [x + tx, y + ty]
+}
+
 export function checkPointIsInPolygon (point, polygon) {
   if (!point || !polygon || polygon.length < 3) return false
 
@@ -184,12 +193,17 @@ export function getRegularPolygonPoints (rx, ry, r, side, minus = Math.PI * -0.5
   return radians.map(radian => getCircleRadianPoint(rx, ry, r, radian))
 }
 
+export function filterNull (arr) {
+  return arr.filter(v => (v || v === 0))
+}
+
 export default {
   deepClone,
   getTwoPointDistance,
   checkPointIsInCircle,
   getRotatePointPos,
   getScalePointPos,
+  getTranslatePointPos,
   checkPointIsInPolygon,
   checkPointIsInSector,
   getCircleRadianPoint,

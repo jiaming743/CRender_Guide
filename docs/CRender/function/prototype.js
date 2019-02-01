@@ -261,7 +261,7 @@ function initTransform (style) {
 
   ctx.save()
 
-  const { graphOrigin, rotate, scale } = style
+  const { graphOrigin, rotate, scale, translate } = style
 
   if (!(graphOrigin instanceof Array)) return
 
@@ -270,6 +270,8 @@ function initTransform (style) {
   if (rotate) ctx.rotate(rotate * Math.PI / 180)
 
   if (scale instanceof Array) ctx.scale(...scale)
+
+  if (translate) ctx.translate(...translate)
 
   ctx.translate(-graphOrigin[0], -graphOrigin[1])
 }
