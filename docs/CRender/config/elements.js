@@ -2,7 +2,7 @@ import { checkPointIsInCircle, checkPointIsInPolygon, getDistanceBetweenPointAnd
 
 import { checkPointIsInSector, getRegularPolygonPoints, getTwoPointDistance } from '../extend/methods'
 
-import { drawPolylinePath } from '../extend/canvas'
+import { drawPolylinePath, drawSmoothlinePath } from '../extend/canvas'
 
 export const circle = {
   shape: {
@@ -576,6 +576,89 @@ export const regPolygon = {
   }
 }
 
+export const smoothline = {
+  shape: {
+    points: []
+  },
+
+  validator (shape, style) {
+    const { points } = shape
+
+    if (!(points instanceof Array)) {
+      console.warn('Points should be an array!')
+
+      return false
+    }
+
+    return true
+  },
+
+  draw (ctx, shape, style) {
+    ctx.beginPath()
+
+    let { points } = shape
+
+    const first = points.find(point => point)
+
+    drawSmoothlinePath(ctx, points, first)
+
+    ctx.stroke()
+
+    ctx.closePath()
+  },
+
+  hoverCheck (point, shape, style) {
+    let { points } = shape
+
+    const lineNum = points.length - 1
+
+    const { lineWidth } = style
+
+    const minus = lineWidth / 2
+
+    const [x, y] = point
+
+    const { max, min } = Math
+
+    if (lineNum === 0) return false
+
+    const lines = new Array(lineNum).fill('').map((t, i) => [points[i], points[i + 1]])
+
+    const result = lines.find(line => {
+      const xB = line[0][0]
+      const xE = line[1][0]
+
+      const yB = line[0][1]
+      const yE = line[1][1]
+
+      if (x > max(xB, xE) || x < min(xB, xE)) return false
+
+      if (y > max(yB, yE) || y < min(yB, yE)) return false
+
+      return getDistanceBetweenPointAndLine(point, ...line) < minus
+    })
+
+    return result
+  },
+
+  setGraphOrigin (shape, style) {
+    const { points } = shape
+
+    style.graphOrigin = points[0]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
+    const { points } = shape
+
+    const moveAfterPoints = points.map(([x, y]) => [x + movementX, y + movementY])
+
+    this.attr('shape', {
+      points: moveAfterPoints
+    })
+  }
+}
+
+
 const elements = new Map([
   ['circle', circle],
   ['ellipse', ellipse],
@@ -585,7 +668,8 @@ const elements = new Map([
   ['polyline', polyline],
   ['sector', sector],
   ['arc', arc],
-  ['regPolygon', regPolygon]
+  ['regPolygon', regPolygon],
+  ['smoothline', smoothline]
 ])
 
 export default elements
