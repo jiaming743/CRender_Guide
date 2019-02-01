@@ -60,7 +60,19 @@
 
 ## 折线
 
+<demo :config="polyline" />
+
+<fold-box>
+<<< @/docs/guide/graphData/polyline.js
+</fold-box>
+
 ## 光滑曲线
+
+<demo :config="smoothline" />
+
+<fold-box>
+<<< @/docs/guide/graphData/smoothline.js
+</fold-box>
 
 ## 贝塞尔曲线
 
@@ -75,6 +87,8 @@ import ring from './graphData/ring.js'
 import arc from './graphData/arc.js'
 import sector from './graphData/sector.js'
 import regPolygon from './graphData/regPolygon.js'
+import polyline from './graphData/polyline.js'
+import smoothline from './graphData/smoothline.js'
 
 export default {
   data () {
@@ -85,7 +99,9 @@ export default {
       ring,
       arc,
       sector,
-      regPolygon
+      regPolygon,
+      polyline,
+      smoothline
     }
   }
 }
