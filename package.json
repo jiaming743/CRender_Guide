@@ -1,6 +1,6 @@
 {
   "name": "CRender_Guide",
-  "version": "1.0.0",
+  "version": "0.1.3",
   "author": "JiaMing <743192023@qq.com>",
   "scripts": {
     "build": "vuepress build docs",
