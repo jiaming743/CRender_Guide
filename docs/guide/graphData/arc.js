@@ -8,7 +8,7 @@ export default function (render) {
       rx: w / 2,
       ry: h / 2,
       r: 60,
-      beginAngle: 0,
+      startAngle: 0,
       endAngle: Math.PI / 3
     },
     style: {
