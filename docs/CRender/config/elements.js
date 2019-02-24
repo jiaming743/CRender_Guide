@@ -2,7 +2,7 @@ import { checkPointIsInCircle, checkPointIsInPolygon, getDistanceBetweenPointAnd
 
 import { checkPointIsInSector, getRegularPolygonPoints, getTwoPointDistance } from '../extend/methods'
 
-import { drawPolylinePath, drawSmoothlinePath } from '../extend/canvas'
+import { drawPolylinePath, drawSmoothlinePath, drawBezierCurvePath } from '../extend/canvas'
 
 export const circle = {
   shape: {
@@ -658,6 +658,118 @@ export const smoothline = {
   }
 }
 
+export const bezierCurve = {
+  shape: {
+    points: []
+  },
+
+  validator (shape, style) {
+    const { points } = shape
+
+    if (!(points instanceof Array)) {
+      console.warn('Points should be an array!')
+
+      return false
+    }
+
+    return true
+  },
+
+  draw (ctx, shape, style) {
+    ctx.beginPath()
+
+    let { points } = shape
+
+    const firstPoint = points[0]
+
+    const pointsNum = points.length
+
+    drawBezierCurvePath(ctx, points.slice(1, pointsNum), firstPoint)
+
+    ctx.stroke()
+
+    ctx.closePath()
+  },
+
+  hoverCheck (point, shape, style) {
+    return false
+  },
+
+  setGraphOrigin (shape, style) {
+    const { points } = shape
+
+    style.graphOrigin = points[0]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
+    const { points } = shape
+
+    const moveAfterPoints = points.map(point =>
+      point.map(([x, y]) =>
+        [x + movementX, y + movementY]))
+
+    this.attr('shape', {
+      points: moveAfterPoints
+    })
+  }
+}
+
+export const bezierGraph = {
+  shape: {
+    points: []
+  },
+
+  validator (shape, style) {
+    const { points } = shape
+
+    if (!(points instanceof Array)) {
+      console.warn('Points should be an array!')
+
+      return false
+    }
+
+    return true
+  },
+
+  draw (ctx, shape, style) {
+    ctx.beginPath()
+
+    let { points } = shape
+
+    const firstPoint = points[0]
+
+    const pointsNum = points.length
+
+    drawBezierCurvePath(ctx, points.slice(1, pointsNum), firstPoint)
+
+    ctx.closePath()
+
+    ctx.stroke()
+    ctx.fill()
+  },
+
+  hoverCheck (point, shape, style) {
+    return false
+  },
+
+  setGraphOrigin (shape, style) {
+    const { points } = shape
+
+    style.graphOrigin = points[0]
+  },
+
+  drag ({movementX, movementY}, shape, style) {
+    const { points } = shape
+
+    const moveAfterPoints = points.map(point =>
+      point.map(([x, y]) =>
+        [x + movementX, y + movementY]))
+
+    this.attr('shape', {
+      points: moveAfterPoints
+    })
+  }
+}
 
 const elements = new Map([
   ['circle', circle],
@@ -669,7 +781,9 @@ const elements = new Map([
   ['sector', sector],
   ['arc', arc],
   ['regPolygon', regPolygon],
-  ['smoothline', smoothline]
+  ['smoothline', smoothline],
+  ['bezierCurve', bezierCurve],
+  ['bezierGraph', bezierGraph]
 ])
 
 export default elements
