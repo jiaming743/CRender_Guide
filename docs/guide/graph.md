@@ -4,7 +4,7 @@
 
 ## 圆形
 
-<demo :config="circle" />
+<!-- <demo :config="circle" /> -->
 
 <fold-box>
 <<< @/docs/guide/graphData/circle.js
@@ -12,7 +12,7 @@
 
 ## 椭圆形
 
-<demo :config="ellipse" />
+<!-- <demo :config="ellipse" /> -->
 
 <fold-box>
 <<< @/docs/guide/graphData/ellipse.js
@@ -20,7 +20,7 @@
 
 ## 矩形
 
-<demo :config="rect" />
+<!-- <demo :config="rect" /> -->
 
 <fold-box>
 <<< @/docs/guide/graphData/rect.js
@@ -28,7 +28,7 @@
 
 ## 环形
 
-<demo :config="ring" />
+<!-- <demo :config="ring" /> -->
 
 <fold-box>
 <<< @/docs/guide/graphData/ring.js
@@ -36,7 +36,7 @@
 
 ## 弧形
 
-<demo :config="arc" />
+<!-- <demo :config="arc" /> -->
 
 <fold-box>
 <<< @/docs/guide/graphData/arc.js
@@ -44,7 +44,7 @@
 
 ## 扇形
 
-<demo :config="sector" />
+<!-- <demo :config="sector" /> -->
 
 <fold-box>
 <<< @/docs/guide/graphData/sector.js
@@ -52,7 +52,7 @@
 
 ## 正多边形
 
-<demo :config="regPolygon" />
+<!-- <demo :config="regPolygon" /> -->
 
 <fold-box>
 <<< @/docs/guide/graphData/regPolygon.js
@@ -60,7 +60,7 @@
 
 ## 折线
 
-<demo :config="polyline" />
+<!-- <demo :config="polyline" /> -->
 
 <fold-box>
 <<< @/docs/guide/graphData/polyline.js
@@ -68,13 +68,15 @@
 
 ## 光滑曲线
 
-<demo :config="smoothline" />
+<!-- <demo :config="smoothline" /> -->
 
 <fold-box>
 <<< @/docs/guide/graphData/smoothline.js
 </fold-box>
 
 ## 贝塞尔曲线
+
+<demo :config="bezierCurve" />
 
 ## 贝塞尔闭合图形
 
@@ -89,6 +91,7 @@ import sector from './graphData/sector.js'
 import regPolygon from './graphData/regPolygon.js'
 import polyline from './graphData/polyline.js'
 import smoothline from './graphData/smoothline.js'
+import bezierCurve from './graphData/bezierCurve.js'
 
 export default {
   data () {
@@ -101,7 +104,8 @@ export default {
       sector,
       regPolygon,
       polyline,
-      smoothline
+      smoothline,
+      bezierCurve
     }
   }
 }
