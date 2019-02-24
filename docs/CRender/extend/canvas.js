@@ -9,7 +9,7 @@ export function drawPolylinePath (ctx, points, beginPath = false, closePath = fa
   if (closePath) ctx.closePath()
 }
 
-export function drawBezierCurveLinePath (ctx, points, moveTo = false, beginPath = false, closePath = false) {
+export function drawBezierCurvePath (ctx, points, moveTo = false, beginPath = false, closePath = false) {
   if (!ctx || !points) return false
 
   if (beginPath) ctx.beginPath()
@@ -41,7 +41,7 @@ export function drawSmoothlinePath (ctx, points, moveTo = false, beginPath = fal
   const bezierCurvePoints = new Array(bezierCurveLineNum).fill(0).map((t, i) =>
     [...getBezierCurveLineControlPoints(canDrawPoints, i), canDrawPoints[i + 1]])
 
-  drawBezierCurveLinePath(ctx, bezierCurvePoints, moveTo)
+  drawBezierCurvePath(ctx, bezierCurvePoints, moveTo)
 
   if (closePath) ctx.closePath()
 }
@@ -79,7 +79,7 @@ export function getBezierCurveLineControlPoints (points, index, close = false, o
 
 export default {
   drawPolylinePath,
-  drawBezierCurveLinePath,
+  drawBezierCurvePath,
   drawSmoothlinePath,
   getBezierCurveLineControlPoints
 }
