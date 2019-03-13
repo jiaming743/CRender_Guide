@@ -80,6 +80,8 @@
 
 ## 贝塞尔闭合图形
 
+<demo :config="bezierGraph" />
+
 <script>
 
 import circle from './graphData/circle.js'
@@ -92,6 +94,7 @@ import regPolygon from './graphData/regPolygon.js'
 import polyline from './graphData/polyline.js'
 import smoothline from './graphData/smoothline.js'
 import bezierCurve from './graphData/bezierCurve.js'
+import bezierGraph from './graphData/bezierGraph.js'
 
 export default {
   data () {
@@ -105,7 +108,8 @@ export default {
       regPolygon,
       polyline,
       smoothline,
-      bezierCurve
+      bezierCurve,
+      bezierGraph
     }
   }
 }
