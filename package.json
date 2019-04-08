@@ -8,6 +8,8 @@
     "dev": "vuepress dev docs"
   },
   "dependencies": {
+    "@jiaminghi/bezier-curve": "^0.0.3",
+    "@jiaminghi/color": "^0.0.2",
     "@jiaminghi/transition": "^1.1.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
