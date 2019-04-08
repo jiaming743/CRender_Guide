@@ -3,7 +3,7 @@ export default function (render) {
 
   return {
     name: 'bezierGraph',
-    animationCurve: 'easeOutBack',
+    animationCurve: 'easeInOutElastic',
     shape: {
       points: [
         [20, 20],

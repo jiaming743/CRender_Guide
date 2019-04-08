@@ -2,6 +2,9 @@
 
 插件内置了丰富的基础图形，在这里将一一为你展示
 
+## 测试
+<demo :config="circle" />
+
 ## 圆形
 
 <!-- <demo :config="circle" /> -->
@@ -76,11 +79,11 @@
 
 ## 贝塞尔曲线
 
-<demo :config="bezierCurve" />
+<!-- <demo :config="bezierCurve" /> -->
 
 ## 贝塞尔闭合图形
 
-<demo :config="bezierGraph" />
+<!-- <demo :config="bezierGraph" /> -->
 
 <script>
 

@@ -25,8 +25,22 @@ export default {
       const render = new CRender(this.$refs['canvas'])
 
       if (!config) return
+      console.error(render)
 
-      const item = render.add(config(render))
+      // const item = render.add(config(render))
+      const item = render.add({
+        name: 'circle',
+        shape: {
+          rx: 100,
+          ry: 50,
+          r: 20
+        },
+        style: {
+          fill: '#666'
+        }
+      })
+
+      console.error(item)
     }
   },
   mounted () {

@@ -3,21 +3,26 @@ export default function (render) {
 
   return {
     name: 'bezierCurve',
-    animationCurve: 'easeOutBack',
+    animationCurve: 'test',
     shape: {
       points: [
-        [20, 20],
-        [
-          [20, 100], [200, 100], [200, 20]
-        ]
+        [20,70],
+        [[-12.5,60],[30,30],[50,30]],
+        [[70,30],[75,70],[100,70]],
+        [[125,70],[130,30],[150,30]],
+        [[170,30],[212.5,60],[180,70]],
+        [[147.5,80],[52.5,80],[20,70]]
       ]
+      
     },
     style: {
-      lineWidth: 10,
+      lineWidth: 2,
       stroke: '#9ce5f4',
       shadowBlur: 0,
       shadowColor: '#66eece',
-      hoverCursor: 'pointer'
+      hoverCursor: 'pointer',
+      lineDash: [0, 999],
+      // lineCap: 'round'
     },
     hoverAble: true,
     dragAble: true,
