@@ -1,3 +1,5 @@
+import { deepClone } from '../../CRender/lib/util'
+
 export default function (render) {
   const { area: [w, h] } = render
 
@@ -16,10 +18,11 @@ export default function (render) {
     hover: true,
     drag: true,
     shape: {
-      points
+      points,
+      close: true
     },
     style: {
-      stroke: '#9ce5f4',
+      fill: '#9ce5f4',
       shadowBlur: 0,
       lineWidth: 10,
       shadowColor: '#66eece',
@@ -27,9 +30,15 @@ export default function (render) {
     },
     mouseEnter (e) {
       this.animation('style', { lineWidth: 20, shadowBlur: 20 })
+      const pointsCloned = deepClone(this.shape.points)
+      pointsCloned[2][1] += 60
+      this.animation('shape', { points: pointsCloned })
     },
     mouseOuter (e) {
       this.animation('style', { lineWidth: 10, shadowBlur: 0 })
+      const pointsCloned = deepClone(this.shape.points)
+      pointsCloned[2][1] -= 60
+      this.animation('shape', { points: pointsCloned })
     }
   }
 }

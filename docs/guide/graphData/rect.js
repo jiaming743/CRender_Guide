@@ -7,6 +7,8 @@ export default function (render) {
   return {
     name: 'rect',
     animationCurve: 'easeOutBack',
+    hover: true,
+    drag: true,
     shape: {
       x: w / 2 - rectWidth / 2,
       y: h / 2 - rectHeight / 2,
@@ -20,15 +22,13 @@ export default function (render) {
       hoverCursor: 'pointer',
       translate: [0, 0]
     },
-    hoverAble: true,
-    dragAble: true,
     mouseEnter (e) {
-      this.animationTo('shape', { w: 400 }, true)
-      this.animationTo('style', { shadowBlur: 20, translate: [-100, 0] })
+      this.animation('shape', { w: 400 }, true)
+      this.animation('style', { shadowBlur: 20, translate: [-100, 0] })
     },
     mouseOuter (e) {
-      this.animationTo('shape', { w: 200 }, true)
-      this.animationTo('style', { shadowBlur: 0, translate: [0, 0] })
+      this.animation('shape', { w: 200 }, true)
+      this.animation('style', { shadowBlur: 0, translate: [0, 0] })
     }
   }
 }

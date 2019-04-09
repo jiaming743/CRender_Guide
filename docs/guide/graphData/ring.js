@@ -4,6 +4,8 @@ export default function (render) {
   return {
     name: 'ring',
     animationCurve: 'easeOutBack',
+    hover: true,
+    drag: true,
     shape: {
       rx: w / 2,
       ry: h / 2,
@@ -16,13 +18,11 @@ export default function (render) {
       shadowBlur: 0,
       shadowColor: '#66eece'
     },
-    hoverAble: true,
-    dragAble: true,
     mouseEnter (e) {
-      this.animationTo('style', { shadowBlur: 20, lineWidth: 30 })
+      this.animation('style', { shadowBlur: 20, lineWidth: 30 })
     },
     mouseOuter (e) {
-      this.animationTo('style', { shadowBlur: 0, lineWidth: 20 })
+      this.animation('style', { shadowBlur: 0, lineWidth: 20 })
     }
   }
 }

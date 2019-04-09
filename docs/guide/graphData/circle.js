@@ -4,6 +4,8 @@ export default function (render) {
   return {
     name: 'circle',
     animationCurve: 'easeOutBack',
+    hover: true,
+    drag: true,
     shape: {
       rx: w / 2,
       ry: h / 2,
@@ -15,15 +17,13 @@ export default function (render) {
       shadowColor: '#66eece',
       hoverCursor: 'pointer'
     },
-    hoverAble: true,
-    dragAble: true,
     mouseEnter (e) {
-      this.animationTo('shape', { r: 70 }, true)
-      this.animationTo('style', { shadowBlur: 20 })
+      this.animation('shape', { r: 70 }, true)
+      this.animation('style', { shadowBlur: 20 })
     },
     mouseOuter (e) {
-      this.animationTo('shape', { r: 50 }, true)
-      this.animationTo('style', { shadowBlur: 0 })
+      this.animation('shape', { r: 50 }, true)
+      this.animation('style', { shadowBlur: 0 })
     }
   }
 }

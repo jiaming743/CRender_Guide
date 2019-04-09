@@ -13,6 +13,8 @@ export default function (render) {
   return {
     name: 'polyline',
     animationCurve: 'easeOutBack',
+    hover: true,
+    drag: true,
     shape: {
       points
     },
@@ -23,13 +25,11 @@ export default function (render) {
       shadowColor: '#66eece',
       hoverCursor: 'pointer'
     },
-    hoverAble: true,
-    dragAble: true,
     mouseEnter (e) {
-      this.animationTo('style', { lineWidth: 20, shadowBlur: 20 })
+      this.animation('style', { lineWidth: 20, shadowBlur: 20 })
     },
     mouseOuter (e) {
-      this.animationTo('style', { lineWidth: 10, shadowBlur: 0 })
+      this.animation('style', { lineWidth: 10, shadowBlur: 0 })
     }
   }
 }

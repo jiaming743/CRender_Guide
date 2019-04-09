@@ -4,6 +4,8 @@ export default function (render) {
   return {
     name: 'ellipse',
     animationCurve: 'easeOutBack',
+    hover: true,
+    drag: true,
     shape: {
       rx: w / 2,
       ry: h / 2,
@@ -17,13 +19,11 @@ export default function (render) {
       scale: [1, 1],
       hoverCursor: 'pointer'
     },
-    hoverAble: true,
-    dragAble: true,
     mouseEnter (e) {
-      this.animationTo('style', { scale: [2, 2], shadowBlur: 20 })
+      this.animation('style', { scale: [1.5, 1.5], shadowBlur: 20 })
     },
     mouseOuter (e) {
-      this.animationTo('style', { scale: [1, 1], shadowBlur: 0 })
+      this.animation('style', { scale: [1, 1], shadowBlur: 0 })
     }
   }
 }

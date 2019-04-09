@@ -1,36 +1,38 @@
 export default function (render) {
   const { area: [w, h] } = render
 
+  const offsetX = w / 2
+  const offsetY = h / 2
+
+  const points = [
+    [-100 + offsetX, -50 + offsetY],
+    [
+      [0  + offsetX, -50 + offsetY],
+      [0  + offsetX, 50 + offsetY],
+      [100  + offsetX, 50 + offsetY]
+    ]
+  ]
+
   return {
     name: 'bezierCurve',
-    animationCurve: 'test',
+    animationCurve: 'easeOutBack',
+    hover: true,
+    drag: true,
     shape: {
-      points: [
-        [20,70],
-        [[-12.5,60],[30,30],[50,30]],
-        [[70,30],[75,70],[100,70]],
-        [[125,70],[130,30],[150,30]],
-        [[170,30],[212.5,60],[180,70]],
-        [[147.5,80],[52.5,80],[20,70]]
-      ]
-      
+      points
     },
     style: {
-      lineWidth: 2,
+      lineWidth: 10,
       stroke: '#9ce5f4',
       shadowBlur: 0,
       shadowColor: '#66eece',
-      hoverCursor: 'pointer',
-      lineDash: [0, 999],
-      // lineCap: 'round'
+      hoverCursor: 'pointer'
     },
-    hoverAble: true,
-    dragAble: true,
     mouseEnter (e) {
-      this.animationTo('style', { lineWidth: 20, shadowBlur: 20 })
+      this.animation('style', { lineWidth: 20, shadowBlur: 20 })
     },
     mouseOuter (e) {
-      this.animationTo('style', { lineWidth: 10, shadowBlur: 0 })
+      this.animation('style', { lineWidth: 10, shadowBlur: 0 })
     }
   }
 }
