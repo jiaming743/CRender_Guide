@@ -1,3 +1,5 @@
+const { abs, sqrt, sin, cos, max, min, PI } = Math
+
 export function deepClone (object, recursionType = false) {
   const { parse, stringify } = JSON
 
@@ -11,7 +13,7 @@ export function deepClone (object, recursionType = false) {
 
       if (object.hasOwnProperty(key)) {
 
-          if (object[object] && typeof object[key] === 'object'){
+          if (object[key] && typeof object[key] === 'object'){
 
             clonedObj[key] = deepClone(object[key], true)
 
@@ -28,8 +30,6 @@ export function deepClone (object, recursionType = false) {
 }
 
 export function getTwoPointDistance ([xa, ya], [xb, yb]) {
-  const { abs, sqrt } = Math
-
   const minusX = abs(xa - xb)
   const minusY = abs(ya - yb)
 
@@ -44,8 +44,6 @@ export function getRotatePointPos (rotate = 0, point, origin = [0, 0]) {
   if (!point) return false
 
   if (rotate % 360 === 0) return point
-
-  const { sin, cos, PI } = Math
 
   const [x, y] = point
 
@@ -133,8 +131,6 @@ export function getDistanceBetweenPointAndLine (point, lineBegin, lineEnd) {
   const b = x1 - x2
   const c = y1 * (x2 - x1) - x1 * (y2 - y1)
 
-  const { sqrt, abs } = Math
-
   const molecule = abs(a * x + b * y + c)
   const denominator = sqrt(a * a + b * b)
 
@@ -142,8 +138,6 @@ export function getDistanceBetweenPointAndLine (point, lineBegin, lineEnd) {
 }
 
 export function getCircleRadianPoint (x, y, radius, radian) {
-  const { sin, cos } = Math
-
   return [x + cos(radian) * radius, y + sin(radian) * radius]
 }
 
@@ -160,7 +154,7 @@ export function checkPointIsInSector (point, rx, ry, r, startAngle, endAngle, cl
 
   const minus = endAngle - startAngle
 
-  if (minus >= Math.PI * 2) return true
+  if (minus >= PI * 2) return true
 
   const [x, y] = point
 
@@ -171,7 +165,7 @@ export function checkPointIsInSector (point, rx, ry, r, startAngle, endAngle, cl
   let vBArm = [bx - rx, by - ry]
   let vEArm = [ex - rx, ey - ry]
 
-  const reverse = minus > Math.PI
+  const reverse = minus > PI
 
   if (reverse) [vBArm, vEArm] = deepClone([vEArm, vBArm])
 
@@ -191,12 +185,49 @@ function areClockWise (vArm, vPoint) {
   return -ay * px + ax * py > 0
 }
 
-export function getRegularPolygonPoints (rx, ry, r, side, minus = Math.PI * -0.5) {
-  const radianGap = Math.PI * 2 / side
+export function getRegularPolygonPoints (rx, ry, r, side, minus = PI * -0.5) {
+  const radianGap = PI * 2 / side
 
   const radians = new Array(side).fill('').map((t, i) => i * radianGap + minus)
 
   return radians.map(radian => getCircleRadianPoint(rx, ry, r, radian))
+}
+
+// export function checkPointIsNearPolyline (point, polyline, lineWidth) {
+//   const lineNum = polyline.length - 1
+
+//   const minus = lineWidth / 2
+
+//   const [x, y] = point
+
+//   if (lineNum === 0) return false
+
+//   const lines = new Array(lineNum).fill('').map((t, i) => [polyline[i], polyline[i + 1]])
+
+//   return lines.find(line => {
+//     const xB = line[0][0]
+//     const xE = line[1][0]
+
+//     const yB = line[0][1]
+//     const yE = line[1][1]
+
+//     if (x > max(xB, xE) || x < min(xB, xE)) return false
+
+//     if (y > max(yB, yE) || y < min(yB, yE)) return false
+
+//     return getDistanceBetweenPointAndLine(point, ...line) < minus
+//   })
+// }
+
+export function checkPointIsNearPolyline (point, polyline, lineWidth) {
+  const halfLineWidth = lineWidth / 2
+
+  const moveUpPolyline = polyline.map(([x, y]) => [x, y - halfLineWidth])
+  const moveDownPolyline = polyline.map(([x, y]) => [x, y + halfLineWidth])
+
+  const polygon = [...moveUpPolyline, ...moveDownPolyline.reverse()]
+
+  return checkPointIsInPolygon(point, polygon)
 }
 
 export function filterNull (arr) {
@@ -205,13 +236,15 @@ export function filterNull (arr) {
 
 export default {
   deepClone,
-  getTwoPointDistance,
   checkPointIsInCircle,
+  checkPointIsInPolygon,
+  checkPointIsInSector,
+  checkPointIsNearPolyline,
+  getTwoPointDistance,
   getRotatePointPos,
   getScalePointPos,
   getTranslatePointPos,
-  checkPointIsInPolygon,
-  checkPointIsInSector,
   getCircleRadianPoint,
-  getRegularPolygonPoints
+  getRegularPolygonPoints,
+  getDistanceBetweenPointAndLine
 }

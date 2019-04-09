@@ -2,12 +2,12 @@
 
 插件内置了丰富的基础图形，在这里将一一为你展示
 
-## 测试
-<demo :config="circle" />
+<!-- ## 测试 -->
+<!-- <demo :config="circle" /> -->
 
 ## 圆形
 
-<!-- <demo :config="circle" /> -->
+<demo :config="circle" />
 
 <fold-box>
 <<< @/docs/guide/graphData/circle.js
@@ -15,7 +15,7 @@
 
 ## 椭圆形
 
-<!-- <demo :config="ellipse" /> -->
+<demo :config="ellipse" />
 
 <fold-box>
 <<< @/docs/guide/graphData/ellipse.js
@@ -23,7 +23,7 @@
 
 ## 矩形
 
-<!-- <demo :config="rect" /> -->
+<demo :config="rect" />
 
 <fold-box>
 <<< @/docs/guide/graphData/rect.js
@@ -31,7 +31,7 @@
 
 ## 环形
 
-<!-- <demo :config="ring" /> -->
+<demo :config="ring" />
 
 <fold-box>
 <<< @/docs/guide/graphData/ring.js
@@ -39,7 +39,7 @@
 
 ## 弧形
 
-<!-- <demo :config="arc" /> -->
+<demo :config="arc" />
 
 <fold-box>
 <<< @/docs/guide/graphData/arc.js
@@ -47,7 +47,7 @@
 
 ## 扇形
 
-<!-- <demo :config="sector" /> -->
+<demo :config="sector" />
 
 <fold-box>
 <<< @/docs/guide/graphData/sector.js
@@ -55,7 +55,7 @@
 
 ## 正多边形
 
-<!-- <demo :config="regPolygon" /> -->
+<demo :config="regPolygon" />
 
 <fold-box>
 <<< @/docs/guide/graphData/regPolygon.js
@@ -63,27 +63,51 @@
 
 ## 折线
 
-<!-- <demo :config="polyline" /> -->
+<demo :config="polyline" />
 
 <fold-box>
 <<< @/docs/guide/graphData/polyline.js
 </fold-box>
 
+## 折线（闭合）
+
+<demo :config="polylineClosed" />
+
+<fold-box>
+<<< @/docs/guide/graphData/polylineClosed.js
+</fold-box>
+
 ## 光滑曲线
 
-<!-- <demo :config="smoothline" /> -->
+<demo :config="smoothline" />
 
 <fold-box>
 <<< @/docs/guide/graphData/smoothline.js
 </fold-box>
 
+## 光滑曲线（闭合）
+
+<demo :config="smoothlineClosed" />
+
+<fold-box>
+<<< @/docs/guide/graphData/smoothlineClosed.js
+</fold-box>
+
 ## 贝塞尔曲线
 
-<!-- <demo :config="bezierCurve" /> -->
+<demo :config="bezierCurve" />
 
-## 贝塞尔闭合图形
+<fold-box>
+<<< @/docs/guide/graphData/bezierCurve.js
+</fold-box>
 
-<!-- <demo :config="bezierGraph" /> -->
+## 贝塞尔曲线（闭合）
+
+<demo :config="bezierCurveClosed" />
+
+<fold-box>
+<<< @/docs/guide/graphData/bezierCurveClosed.js
+</fold-box>
 
 <script>
 
@@ -95,9 +119,11 @@ import arc from './graphData/arc.js'
 import sector from './graphData/sector.js'
 import regPolygon from './graphData/regPolygon.js'
 import polyline from './graphData/polyline.js'
+import polylineClosed from './graphData/polylineClosed.js'
 import smoothline from './graphData/smoothline.js'
+import smoothlineClosed from './graphData/smoothlineClosed.js'
 import bezierCurve from './graphData/bezierCurve.js'
-import bezierGraph from './graphData/bezierGraph.js'
+import bezierCurveClosed from './graphData/bezierCurveClosed.js'
 
 export default {
   data () {
@@ -110,9 +136,11 @@ export default {
       sector,
       regPolygon,
       polyline,
+      polylineClosed,
       smoothline,
+      smoothlineClosed,
       bezierCurve,
-      bezierGraph
+      bezierCurveClosed
     }
   }
 }

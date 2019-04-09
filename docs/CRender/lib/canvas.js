@@ -79,7 +79,5 @@ export function getBezierCurveLineControlPoints (points, index, close = false, o
 
 export default {
   drawPolylinePath,
-  drawBezierCurvePath,
-  drawSmoothlinePath,
-  getBezierCurveLineControlPoints
+  drawBezierCurvePath
 }
