@@ -2,7 +2,7 @@ import { getRgbaValue, getColorFromRgbValue } from '@jiaminghi/color'
 
 export default class Style {
   constructor (style) {
-    style = this.colorProcessor(style)
+    this.colorProcessor(style)
 
     const defaultStyle = {
       /**
@@ -118,7 +118,7 @@ export default class Style {
        * @type {String}
        * @example hoverCursor = 'default'|'pointer'
        */
-      hoverCursor: 'default',
+      hoverCursor: 'pointer',
       /**
        * @description Font of Ctx
        * @type {String}
@@ -146,9 +146,9 @@ export default class Style {
 const colorProcessorKeys = ['fill', 'stroke', 'shadowColor']
 
 /**
- * @description Set colors to rgba value
- * @param {Object} style style config
- * @return {Object} style config after process
+ * @description        Set colors to rgba value
+ * @param {Object}     style style config
+ * @return {Undefined} No return
  */
 Style.prototype.colorProcessor = function (style) {
   const allKeys = Object.keys(style)
@@ -156,8 +156,6 @@ Style.prototype.colorProcessor = function (style) {
   const colorKeys = allKeys.filter(key => colorProcessorKeys.find(k => k === key))
 
   colorKeys.forEach(key => (style[key] = getRgbaValue(style[key])))
-
-  return style
 }
 
 Style.prototype.initStyle = function(ctx) {
@@ -214,4 +212,14 @@ function initGraphStyle (ctx, style) {
   if (lineDash) ctx.setLineDash(lineDash)
 
   if (typeof shadowBlur === 'number') ctx.shadowBlur = shadowBlur > 0 ? shadowBlur : 0.001
+}
+
+Style.prototype.restoreTransform = function (ctx) {
+  ctx.restore()
+}
+
+Style.prototype.update = function (change) {
+  this.colorProcessor(change)
+
+  Object.assign(this, change)
 }

@@ -1,3 +1,5 @@
+import color from '@jiaminghi/color'
+
 import allGraph from '../config/graphs'
 
 import Graph from './graph.class'
@@ -25,8 +27,12 @@ export default class CRender {
 
     this.area = area
 
+    this.color = color
+
     // all graphs of added
     this.graphs = []
+
+    this.animationStatus = false
 
     // bind event handler
     canvas.addEventListener('mousedown', mouseDown.bind(this))
@@ -59,23 +65,11 @@ CRender.prototype.add = function (config = {}) {
     return
   }
 
-  const defaultConfig = {
-    visible: true,
-    animationDelay: 0,
-    animationFrame: 30,
-    animationCurve: 'linear',
-    drag: false,
-    hover: false,
-    index: 1
-  }
-
-  const configAbleNot = {
-    status: 'static'
-  }
-
-  Object.assign(config, defaultConfig, configAbleNot)
-
   const graph = new Graph(graphConfig, config)
+
+  if (!graph.validator(graph)) return
+
+  graph.render = this
 
   this.graphs.unshift(graph)
 
@@ -96,32 +90,158 @@ CRender.prototype.rankGraphsByIndex = function () {
   })
 }
 
+CRender.prototype.delGraph = function (graph) {
+  const { graphs } = this
+
+  const index = graphs.findIndex(g => g === graph)
+
+  if (index === -1) return
+
+  graphs.splice(index, 1)
+
+  this.drawAllGraph()
+}
+
+CRender.prototype.delAllGraphs = function () {
+  this.graphs = []
+
+  this.drawAllGraph()
+}
+
 CRender.prototype.drawAllGraph = function () {
+  this.clearArea()
+
   this.graphs.forEach(graph => graph.drawProcessor(this, graph))
 }
 
-function mouseDown () {
+CRender.prototype.animationProcessor = function () {
+  const { animationStatus } = this
 
+  if (animationStatus) return
+
+  this.animationStatus = true
+
+  return new Promise(resolve => {
+    this.animation(() => {
+      this.animationStatus = false
+
+      resolve()
+    })
+  })
+}
+
+CRender.prototype.animation = function (callback) {
+  const { graphs } = this
+
+  if (!animationAble(graphs)) {
+    callback()
+
+    return
+  }
+
+  graphs.forEach(graph => graph.turnNextAnimationFrame())
+
+  this.drawAllGraph()
+
+  requestAnimationFrame(this.animation.bind(this, callback))
+}
+
+function animationAble (graphs) {
+  return graphs.find(graph => !graph.animationPause && graph.animationFrameState.length)
+}
+
+function mouseDown (e) {
+  const { graphs } = this
+
+  const hoverGraph = graphs.find(graph => graph.status === 'hover')
+
+  if (!hoverGraph || !hoverGraph.drag) return
+
+  hoverGraph.status = 'active'
 }
 
 function mouseMove (e) {
-  console.error(e)
+  const { offsetX, offsetY } = e
+  const position = [offsetX, offsetY]
 
   const { graphs } = this
 
   const activeGraph = graphs.find(graph => (graph.status === 'active' || graph.status === 'drag'))
 
   if (activeGraph) {
-    activeGraph.drag(e)
+    if (typeof activeGraph.move !== 'function') {
+      console.error('No move method is provided, cannot be dragged!')
 
-    if (typeof activeGraph.setGraphCenter === 'function') activeGraph.setGraphCenter()
+      return
+    }
 
-    activeGraph.status = 'move'
+    activeGraph.move(e, activeGraph)
+
+    if (typeof activeGraph.setGraphCenter === 'function') activeGraph.setGraphCenter(activeGraph)
+
+    activeGraph.status = 'drag'
+
+    return
   }
 
-  const hoverAbleGraphs = graphs.filter(graph => (graph.hover && graph.hoverCheck === 'function'))
+  const hoverGraph = graphs.find(graph => graph.status === 'hover')
 
+  const hoverAbleGraphs = graphs.filter(graph => (graph.hover && typeof graph.hoverCheck === 'function'))
 
+  const hoveredGraph = hoverAbleGraphs.find(graph => graph.hoverCheckProcessor(position, graph))
+
+  if (hoveredGraph) {
+    document.body.style.cursor = hoveredGraph.style.hoverCursor
+  } else {
+    document.body.style.cursor = 'default'
+  }
+
+  let [hoverGraphMouseOuterIsFun, hoveredGraphMouseEnterIsFun] = [false, false]
+
+  if (hoverGraph) hoverGraphMouseOuterIsFun = typeof hoverGraph.mouseOuter === 'function'
+  if (hoveredGraph) hoveredGraphMouseEnterIsFun = typeof hoveredGraph.mouseEnter === 'function'
+
+  if (!hoveredGraph && !hoverGraph) return
+
+  if (!hoveredGraph && hoverGraph) {
+    if (hoverGraphMouseOuterIsFun) hoverGraph.mouseOuter(e)
+
+    hoverGraph.status = 'static'
+
+    return
+  }
+
+  if (hoveredGraph && hoveredGraph === hoverGraph) return
+
+  if (hoveredGraph && !hoverGraph) {
+    if (hoveredGraphMouseEnterIsFun) hoveredGraph.mouseEnter(e)
+
+    hoveredGraph.status = 'hover'
+
+    return
+  }
+
+  if (hoveredGraph && hoverGraph && hoveredGraph !== hoverGraph) {
+    if (hoverGraphMouseOuterIsFun) hoverGraph.mouseOuter(e)
+
+    hoverGraph.status = 'static'
+
+    if (hoveredGraphMouseEnterIsFun) hoveredGraph.mouseEnter(e)
+
+    hoveredGraph.status = 'hover'
+  }
 }
 
-function mouseUp () {}
+function mouseUp (e) {
+  const { graphs } = this
+
+  const activeGraph = graphs.find(graph => graph.status === 'active')
+  const dragGraph = graphs.find(graph => graph.status === 'drag')
+
+  if (activeGraph && typeof activeGraph.click === 'function') activeGraph.click(e, activeGraph)
+
+  graphs.forEach(graph => (graph.status = 'static'))
+
+  if (activeGraph) activeGraph.status = 'hover'
+  if (dragGraph) dragGraph.status = 'hover'
+}
