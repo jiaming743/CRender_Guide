@@ -90,12 +90,6 @@ export default class Style {
        */
       graphCenter: null,
       /**
-       * @description Hover rectangle detection area
-       * @type {Array}
-       * @example hoverRect = [10, 10, 100, 100] | [startPointX, startPointY, width, height]
-       */
-      hoverRect: null,
-      /**
        * @description Graph magnification
        * @type {Array}
        * @example scale = [1.5, 1.5]
@@ -120,11 +114,35 @@ export default class Style {
        */
       hoverCursor: 'pointer',
       /**
-       * @description Font of Ctx
+       * @description Font style of Ctx
        * @type {String}
-       * @example font = 'font'
+       * @example fontStyle = 'normal'|'italic'|'oblique'
        */
-      font: null,
+      fontStyle: 'normal',
+      /**
+       * @description Font varient of Ctx
+       * @type {String}
+       * @example fontVarient = 'normal'|'small-caps'
+       */
+      fontVarient: 'normal',
+      /**
+       * @description Font weight of Ctx
+       * @type {String|Number}
+       * @example fontWeight = 'normal'|'bold'|'bolder'|'lighter'|Number
+       */
+      fontWeight: 'normal',
+      /**
+       * @description Font size of Ctx
+       * @type {Number}
+       * @example fontSize = 10
+       */
+      fontSize: 10,
+      /**
+       * @description Font family of Ctx
+       * @type {Number}
+       * @example fontFamily = 'Arial'
+       */
+      fontFamily: 'Arial',
       /**
        * @description TextAlign of Ctx
        * @type {String}
@@ -185,7 +203,7 @@ function initTransform (ctx, style) {
 const autoSetStyleKeys = [
   'lineCap', 'lineJoin', 'lineDashOffset',
   'shadowOffsetX', 'shadowOffsetY', 'lineWidth',
-  'font', 'textAlign', 'textBaseline'
+  'textAlign', 'textBaseline'
 ]
 
 function initGraphStyle (ctx, style) {
@@ -212,6 +230,10 @@ function initGraphStyle (ctx, style) {
   if (lineDash) ctx.setLineDash(lineDash)
 
   if (typeof shadowBlur === 'number') ctx.shadowBlur = shadowBlur > 0 ? shadowBlur : 0.001
+
+  const { fontStyle, fontVarient, fontWeight, fontSize, fontFamily } = style
+
+  ctx.font = fontStyle + ' ' + fontVarient + ' ' + fontWeight + ' ' + fontSize + 'px' + ' ' + fontFamily
 }
 
 Style.prototype.restoreTransform = function (ctx) {
