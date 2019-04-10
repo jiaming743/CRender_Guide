@@ -1,16 +1,21 @@
-import { deepClone } from '../../CRender/lib/util'
+import { getCircleRadianPoint } from '../../CRender/lib/util'
+
+function getPoints (radius, centerPoint, pointNum) {
+  const PIDived = Math.PI * 2 / pointNum
+
+  const points = new Array(pointNum).fill('')
+    .map((foo, i) =>
+      getCircleRadianPoint(...centerPoint, radius, PIDived * i)
+    )
+
+  return points
+}
 
 export default function (render) {
   const { area: [w, h] } = render
 
-  const top = h / 3
-  const bottom = h / 3 * 2
-  const gap = w / 10
-
-  const beginX = w / 2 - gap * 2
-
-  const points = new Array(5).fill('').map((t, i) =>
-    [beginX + gap * i, i % 2 === 0 ? top : bottom])
+  const radius = h / 3
+  const centerPoint = [w / 2, h / 2]
 
   return {
     name: 'smoothline',
@@ -18,7 +23,7 @@ export default function (render) {
     hover: true,
     drag: true,
     shape: {
-      points,
+      points: getPoints(radius, centerPoint, 3),
       close: true
     },
     style: {
@@ -29,16 +34,20 @@ export default function (render) {
       hoverCursor: 'pointer'
     },
     mouseEnter (e) {
-      this.animation('style', { lineWidth: 20, shadowBlur: 20 })
-      const pointsCloned = deepClone(this.shape.points)
-      pointsCloned[2][1] += 60
-      this.animation('shape', { points: pointsCloned })
+      this.animation('style', { lineWidth: 20, shadowBlur: 20, rotate: 120 })
     },
     mouseOuter (e) {
-      this.animation('style', { lineWidth: 10, shadowBlur: 0 })
-      const pointsCloned = deepClone(this.shape.points)
-      pointsCloned[2][1] -= 60
-      this.animation('shape', { points: pointsCloned })
+      this.animation('style', { lineWidth: 10, shadowBlur: 0, rotate: 0 })
+    },
+    setGraphCenter (e, { style }) {
+      if (e) {
+        const { movementX, movementY } = e
+        const [cx, cy] = style.graphCenter
+
+        style.graphCenter = [cx + movementX, cy + movementY]
+      } else {
+        style.graphCenter = [...centerPoint]
+      }
     }
   }
 }
