@@ -6,7 +6,8 @@ import {
   deepClone,
   getRotatePointPos,
   getScalePointPos,
-  getTranslatePointPos
+  getTranslatePointPos,
+  checkPointIsInRect
 } from '../lib/util'
 
 export default class Graph {
@@ -19,6 +20,7 @@ export default class Graph {
       animationFrame: 30,
       animationCurve: 'linear',
       animationPause: false,
+      hoverRect: null,
       drag: false,
       hover: false,
       index: 1
@@ -64,7 +66,7 @@ Graph.prototype.drawProcessor = function (render, graph) {
   graph.style.restoreTransform(render.ctx)
 }
 
-Graph.prototype.hoverCheckProcessor = function (position, { style, hoverCheck }) {
+Graph.prototype.hoverCheckProcessor = function (position, { hoverRect, style, hoverCheck }) {
   const { graphCenter, rotate, scale, translate } = style
 
   if (graphCenter) {
@@ -73,13 +75,19 @@ Graph.prototype.hoverCheckProcessor = function (position, { style, hoverCheck })
     if (translate) position = getTranslatePointPos(translate.map(v => v * -1), position)
   }
 
+  if (hoverRect) return checkPointIsInRect(position, ...hoverRect)
+
   return hoverCheck(position, this)
 }
 
 Graph.prototype.moveProcessor = function (e) {
   this.move(e, this)
 
+  if (typeof this.beforeMove === 'function') this.beforeMove(e, this)
+
   if (typeof this.setGraphCenter === 'function') this.setGraphCenter(e, this)
+
+  if (typeof this.moved === 'function') this.moved(e, this)
 }
 
 Graph.prototype.attr = function (attrName, change = undefined) {
