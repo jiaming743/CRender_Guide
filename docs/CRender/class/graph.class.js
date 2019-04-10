@@ -44,8 +44,16 @@ export default class Graph {
     this.shape = shape
     this.style = new Style(config.style)
 
-    if (typeof this.setGraphCenter === 'function') this.setGraphCenter(this)
+    this.addedProcessor()
   }
+}
+
+
+Graph.prototype.addedProcessor = function () {
+  if (typeof this.setGraphCenter === 'function') this.setGraphCenter(null, this)
+
+  // The life cycle 'added"
+  if (typeof this.added === 'function') this.added(this)
 }
 
 Graph.prototype.drawProcessor = function (render, graph) {
@@ -66,6 +74,12 @@ Graph.prototype.hoverCheckProcessor = function (position, { style, hoverCheck })
   }
 
   return hoverCheck(position, this)
+}
+
+Graph.prototype.moveProcessor = function (e) {
+  this.move(e, this)
+
+  if (typeof this.setGraphCenter === 'function') this.setGraphCenter(e, this)
 }
 
 Graph.prototype.attr = function (attrName, change = undefined) {

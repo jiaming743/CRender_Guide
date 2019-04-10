@@ -111,7 +111,7 @@ CRender.prototype.delAllGraphs = function () {
 CRender.prototype.drawAllGraph = function () {
   this.clearArea()
 
-  this.graphs.forEach(graph => graph.drawProcessor(this, graph))
+  this.graphs.filter(graph => graph.visible).forEach(graph => graph.drawProcessor(this, graph))
 }
 
 CRender.prototype.animationProcessor = function () {
@@ -175,9 +175,7 @@ function mouseMove (e) {
       return
     }
 
-    activeGraph.move(e, activeGraph)
-
-    if (typeof activeGraph.setGraphCenter === 'function') activeGraph.setGraphCenter(activeGraph)
+    activeGraph.moveProcessor(e)
 
     activeGraph.status = 'drag'
 
@@ -204,7 +202,7 @@ function mouseMove (e) {
   if (!hoveredGraph && !hoverGraph) return
 
   if (!hoveredGraph && hoverGraph) {
-    if (hoverGraphMouseOuterIsFun) hoverGraph.mouseOuter(e)
+    if (hoverGraphMouseOuterIsFun) hoverGraph.mouseOuter(e, hoverGraph)
 
     hoverGraph.status = 'static'
 
@@ -214,7 +212,7 @@ function mouseMove (e) {
   if (hoveredGraph && hoveredGraph === hoverGraph) return
 
   if (hoveredGraph && !hoverGraph) {
-    if (hoveredGraphMouseEnterIsFun) hoveredGraph.mouseEnter(e)
+    if (hoveredGraphMouseEnterIsFun) hoveredGraph.mouseEnter(e, hoveredGraph)
 
     hoveredGraph.status = 'hover'
 
@@ -222,11 +220,11 @@ function mouseMove (e) {
   }
 
   if (hoveredGraph && hoverGraph && hoveredGraph !== hoverGraph) {
-    if (hoverGraphMouseOuterIsFun) hoverGraph.mouseOuter(e)
+    if (hoverGraphMouseOuterIsFun) hoverGraph.mouseOuter(e, hoverGraph)
 
     hoverGraph.status = 'static'
 
-    if (hoveredGraphMouseEnterIsFun) hoveredGraph.mouseEnter(e)
+    if (hoveredGraphMouseEnterIsFun) hoveredGraph.mouseEnter(e, hoveredGraph)
 
     hoveredGraph.status = 'hover'
   }
