@@ -184,7 +184,8 @@ function mouseMove (e) {
 
   const hoverGraph = graphs.find(graph => graph.status === 'hover')
 
-  const hoverAbleGraphs = graphs.filter(graph => (graph.hover && typeof graph.hoverCheck === 'function'))
+  const hoverAbleGraphs = graphs.filter(graph =>
+    (graph.hover && (typeof graph.hoverCheck === 'function' || graph.hoverRect)))
 
   const hoveredGraph = hoverAbleGraphs.find(graph => graph.hoverCheckProcessor(position, graph))
 
