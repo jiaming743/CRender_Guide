@@ -87,37 +87,33 @@ export function getTranslatePointPos (translate, point) {
 }
 
 export function checkPointIsInPolygon (point, polygon) {
-  if (!point || !polygon || polygon.length < 3) return false
+  let counter = 0
 
   const [x, y] = point
 
-  const lastIndex = polygon.length - 1
+  const pointNum = polygon.length
 
-  const lines = polygon.map((point, i) => {
-    const isLast = lastIndex === i
+  for (let i = 1, p1 = polygon[0]; i <= pointNum; i++) {
+    const p2 = polygon[i % pointNum]
 
-    const next = isLast ? polygon[0] : polygon[i + 1]
+    if (x > min(p1[0], p2[0]) && x <= max(p1[0], p2[0])) {
 
-    return [point, next]
-  })
+      if (y <= max(p1[1], p2[1])) {
 
-  const yAxisLine = lines.filter(line => {
-    const lineB = line[0]
-    const lineE = line[1]
+        if (p1[0] != p2[0]) {
+          const xinters = (x - p1[0]) * (p2[1] - p1[1]) / (p2[0] - p1[0]) + p1[1]
 
-    return (lineB[1] > y && lineE[1] < y) || (lineE[1] > y && lineB[1] < y)
-  })
+          if (p1[1] == p2[1] || y <= xinters) {
+            counter++
+          }
+        }
+      }
+    }
 
-  const xAxisLine = yAxisLine.filter(line => {
-    const lineB = line[0]
-    const lineE = line[1]
+    p1 = p2
+  }
 
-    const xPos = (y - lineB[1]) / (lineE[1] - lineB[1]) * (lineE[0] - lineB[0]) + lineB[0]
-
-    return xPos > x
-  })
-
-  return xAxisLine.length % 2 === 1
+  return counter % 2 === 1
 }
 
 export function getDistanceBetweenPointAndLine (point, lineBegin, lineEnd) {
@@ -192,32 +188,6 @@ export function getRegularPolygonPoints (rx, ry, r, side, minus = PI * -0.5) {
 
   return radians.map(radian => getCircleRadianPoint(rx, ry, r, radian))
 }
-
-// export function checkPointIsNearPolyline (point, polyline, lineWidth) {
-//   const lineNum = polyline.length - 1
-
-//   const minus = lineWidth / 2
-
-//   const [x, y] = point
-
-//   if (lineNum === 0) return false
-
-//   const lines = new Array(lineNum).fill('').map((t, i) => [polyline[i], polyline[i + 1]])
-
-//   return lines.find(line => {
-//     const xB = line[0][0]
-//     const xE = line[1][0]
-
-//     const yB = line[0][1]
-//     const yE = line[1][1]
-
-//     if (x > max(xB, xE) || x < min(xB, xE)) return false
-
-//     if (y > max(yB, yE) || y < min(yB, yE)) return false
-
-//     return getDistanceBetweenPointAndLine(point, ...line) < minus
-//   })
-// }
 
 export function checkPointIsNearPolyline (point, polyline, lineWidth) {
   const halfLineWidth = lineWidth / 2
