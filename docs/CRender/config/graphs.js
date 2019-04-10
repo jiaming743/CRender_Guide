@@ -53,7 +53,7 @@ export const circle = {
     return checkPointIsInCircle(rx, ry, r, position)
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { rx, ry } = shape
 
     style.graphCenter = [rx, ry]
@@ -116,7 +116,7 @@ export const ellipse = {
     return distance <= 2 * a
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { rx, ry } = shape
 
     style.graphCenter = [rx, ry]
@@ -175,7 +175,7 @@ export const rect = {
     return true
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { x, y, w, h } = shape
 
     style.graphCenter = [x + w / 2, y + h / 2]
@@ -235,7 +235,7 @@ export const ring = {
     return (distance >= minDistance && distance <= maxDistance)
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { rx, ry } = shape
 
     style.graphCenter = [rx, ry]
@@ -297,7 +297,7 @@ export const arc = {
     checkPointIsInSector(position, rx, ry, outsideRadius, startAngle, endAngle, clockWise)
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { rx, ry } = shape
 
     style.graphCenter = [rx, ry]
@@ -354,7 +354,7 @@ export const sector = {
     return checkPointIsInSector(position, rx, ry, r, startAngle, endAngle, clockWise)
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { rx, ry } = shape
 
     style.graphCenter = [rx, ry]
@@ -425,7 +425,7 @@ export const regPolygon = {
     return checkPointIsInPolygon(position, points)
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { rx, ry } = shape
 
     style.graphCenter = [rx, ry]
@@ -495,7 +495,7 @@ export const polyline = {
     }
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { points } = shape
 
     style.graphCenter = points[0]
@@ -576,7 +576,7 @@ export const smoothline = {
     }
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { points } = shape
 
     style.graphCenter = points[0]
@@ -627,7 +627,7 @@ export const bezierCurve = {
     let { points, close } = shape
 
     if (!cache.points || cache.points.toString() !== points.toString()) {
-      const hoverPoints = bezierCurveToPolyline(points)
+      const hoverPoints = bezierCurveToPolyline(points, 20)
 
       Object.assign(cache, {
         points: deepClone(points, true),
@@ -665,7 +665,7 @@ export const bezierCurve = {
     }
   },
 
-  setGraphCenter ({ shape, style }) {
+  setGraphCenter (e, { shape, style }) {
     const { points } = shape
 
     style.graphCenter = points[0]
