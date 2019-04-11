@@ -1,13 +1,14 @@
 import color from '@jiaminghi/color'
+import bezierCurve from '@jiaminghi/bezier-curve'
 
 import allGraph from '../config/graphs'
 
 import Graph from './graph.class'
 
 /**
- * @description     Class of CRender
- * @param {Object}  canvas Canvas DOM
- * @return {Object} Instance of CRender
+ * @description           Class of CRender
+ * @param {Object} canvas Canvas DOM
+ * @return {CRender}      Instance of CRender
  */
 export default class CRender {
   constructor (canvas) {
@@ -23,16 +24,42 @@ export default class CRender {
 
     const area = [clientWidth, clientHeight]
 
+    /**
+     * @description Context of the canvas
+     * @type {Object}
+     * @example ctx = canvas.getContext('2d')
+     */
     this.ctx = ctx
-
+    /**
+     * @description Width and height of the canvas
+     * @type {Array}
+     * @example area = [300，100]
+     */
     this.area = area
-
-    this.color = color
-
-    // all graphs of added
-    this.graphs = []
-
+    /**
+     * @description Whether render is in animation rendering
+     * @type {Boolean}
+     * @example animationStatus = true|false
+     */
     this.animationStatus = false
+    /**
+     * @description Added graph
+     * @type {[Graph]}
+     * @example graphs = [Graph, Graph, ...]
+     */
+    this.graphs = []
+    /**
+     * @description Color plugin
+     * @type {Object}
+     * @link https://github.com/jiaming743/color
+     */
+    this.color = color
+    /**
+     * @description Bezier Curve plugin
+     * @type {Object}
+     * @link https://github.com/jiaming743/BezierCurve
+     */
+    this.bezierCurve = bezierCurve
 
     // bind event handler
     canvas.addEventListener('mousedown', mouseDown.bind(this))
@@ -42,12 +69,21 @@ export default class CRender {
 
 }
 
+/**
+ * @description        Clear canvas drawing area
+ * @return {Undefined} Void
+ */
 CRender.prototype.clearArea = function () {
   const { area } = this
 
   this.ctx.clearRect(0, 0, ...area)
 }
 
+/**
+ * @description           Add graph to render
+ * @param {Object} config Graph configuration
+ * @return {Graph}        Graph instance
+ */
 CRender.prototype.add = function (config = {}) {
   const { name } = config
 
@@ -73,14 +109,18 @@ CRender.prototype.add = function (config = {}) {
 
   this.graphs.unshift(graph)
 
-  this.rankGraphsByIndex()
+  this.sortGraphsByIndex()
 
   this.drawAllGraph()
 
   return graph
 }
 
-CRender.prototype.rankGraphsByIndex = function () {
+/**
+ * @description Sort the graph by index
+ * @return {Undefined} Void
+ */
+CRender.prototype.sortGraphsByIndex = function () {
   const { graphs } = this
 
   graphs.sort((a, b) => {
@@ -90,31 +130,45 @@ CRender.prototype.rankGraphsByIndex = function () {
   })
 }
 
+/**
+ * @description         Delete graph in render
+ * @param {Graph} graph The graph to be deleted
+ * @return {Undefined}  Void
+ */
 CRender.prototype.delGraph = function (graph) {
-  const { graphs } = this
+  if (typeof graph.delProcessor !== 'function') return
 
-  const index = graphs.findIndex(g => g === graph)
-
-  if (index === -1) return
-
-  graphs.splice(index, 1)
+  graph.delProcessor()
 
   this.drawAllGraph()
 }
 
-CRender.prototype.delAllGraphs = function () {
-  this.graphs = []
+/**
+ * @description        Delete all graph in render
+ * @return {Undefined} Void
+ */
+CRender.prototype.delAllGraph = function () {
+  this.graphs.forEach(graph => graph.delProcessor())
 
   this.drawAllGraph()
 }
 
+/**
+ * @description        Draw all the graphs in the render
+ * @return {Undefined} Void
+ */
 CRender.prototype.drawAllGraph = function () {
   this.clearArea()
 
   this.graphs.filter(graph => graph.visible).forEach(graph => graph.drawProcessor(this, graph))
 }
 
-CRender.prototype.animationProcessor = function () {
+/**
+ * @description      Animate the graph whose animation queue is not empty
+ *                   and the animationPause is equal to false
+ * @return {Promise} Animation Promise
+ */
+CRender.prototype.launchAnimation = function () {
   const { animationStatus } = this
 
   if (animationStatus) return
@@ -122,7 +176,7 @@ CRender.prototype.animationProcessor = function () {
   this.animationStatus = true
 
   return new Promise(resolve => {
-    this.animation(() => {
+    animation.call(this, () => {
       this.animationStatus = false
 
       resolve()
@@ -130,7 +184,12 @@ CRender.prototype.animationProcessor = function () {
   })
 }
 
-CRender.prototype.animation = function (callback) {
+/**
+ * @description Try to animate every graph
+ * @param {Function} callback Callback in animation end
+ * @return {Undefined} Void
+ */
+function animation (callback) {
   const { graphs } = this
 
   if (!animationAble(graphs)) {
@@ -143,13 +202,22 @@ CRender.prototype.animation = function (callback) {
 
   this.drawAllGraph()
 
-  requestAnimationFrame(this.animation.bind(this, callback))
+  requestAnimationFrame(animation.bind(this, callback))
 }
 
+/**
+ * @description Find if there are graph that can be animated
+ * @param {[Graph]} graphs
+ * @return {Boolean}
+ */
 function animationAble (graphs) {
   return graphs.find(graph => !graph.animationPause && graph.animationFrameState.length)
 }
 
+/**
+ * @description Handler of CRender mousedown event
+ * @return {Undefined} Void
+ */
 function mouseDown (e) {
   const { graphs } = this
 
@@ -160,6 +228,10 @@ function mouseDown (e) {
   hoverGraph.status = 'active'
 }
 
+/**
+ * @description Handler of CRender mousemove event
+ * @return {Undefined} Void
+ */
 function mouseMove (e) {
   const { offsetX, offsetY } = e
   const position = [offsetX, offsetY]
@@ -231,6 +303,10 @@ function mouseMove (e) {
   }
 }
 
+/**
+ * @description Handler of CRender mouseup event
+ * @return {Undefined} Void
+ */
 function mouseUp (e) {
   const { graphs } = this
 

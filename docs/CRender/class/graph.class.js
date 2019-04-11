@@ -10,20 +10,75 @@ import {
   checkPointIsInRect
 } from '../lib/util'
 
+/**
+ * @description Class Graph
+ * @param {Object} graph  Graph default configuration
+ * @param {Object} config Graph config
+ * @return {Graph} Instance of Graph
+ */
 export default class Graph {
   constructor (graph, config) {
     config = deepClone(config, true)
 
     const defaultConfig = {
+      /**
+       * @description Weather to render graph
+       * @type {Boolean}
+       * @default visible = true
+       */
       visible: true,
-      animationDelay: 0,
-      animationFrame: 30,
-      animationCurve: 'linear',
-      animationPause: false,
-      hoverRect: null,
+      /**
+       * @description Whether to enable drag
+       * @type {Boolean}
+       * @default drag = false
+       */
       drag: false,
+      /**
+       * @description Whether to enable hover
+       * @type {Boolean}
+       * @default hover = false
+       */
       hover: false,
-      index: 1
+      /**
+       * @description Graph rendering index
+       *  Give priority to index high graph in rendering
+       * @type {Number}
+       * @example index = 1
+       */
+      index: 1,
+      /**
+       * @description Animation delay time(ms)
+       * @type {Number}
+       * @default animationDelay = 0
+       */
+      animationDelay: 0,
+      /**
+       * @description Number of animation frames
+       * @type {Number}
+       * @default animationFrame = 30
+       */
+      animationFrame: 30,
+      /**
+       * @description Animation dynamic curve (Supported by transition)
+       * @type {String}
+       * @default animationCurve = 'linear'
+       * @link https://github.com/jiaming743/Transition
+       */
+      animationCurve: 'linear',
+      /**
+       * @description Weather to pause graph animation
+       * @type {Boolean}
+       * @default animationPause = false
+       */
+      animationPause: false,
+      /**
+       * @description Rectangular hover detection zone
+       *  Use this method for hover detection first
+       * @type {Null|Array}
+       * @default hoverRect = null
+       * @example hoverRect = [0, 0, 100, 100] // [Rect start x, y, Rect width, height]
+       */
+      hoverRect: null
     }
   
     const configAbleNot = {
@@ -50,7 +105,6 @@ export default class Graph {
   }
 }
 
-
 Graph.prototype.addedProcessor = function () {
   if (typeof this.setGraphCenter === 'function') this.setGraphCenter(null, this)
 
@@ -59,11 +113,17 @@ Graph.prototype.addedProcessor = function () {
 }
 
 Graph.prototype.drawProcessor = function (render, graph) {
-  graph.style.initStyle(render.ctx)
+  const { ctx } = render
+
+  graph.style.initStyle(ctx)
+
+  if (typeof this.beforeDraw === 'function') this.beforeDraw(this, render)
 
   graph.draw(render, graph)
 
-  graph.style.restoreTransform(render.ctx)
+  if (typeof this.drawed === 'function') this.drawed(this, render)
+
+  graph.style.restoreTransform(ctx)
 }
 
 Graph.prototype.hoverCheckProcessor = function (position, { hoverRect, style, hoverCheck }) {
@@ -90,6 +150,12 @@ Graph.prototype.moveProcessor = function (e) {
   if (typeof this.moved === 'function') this.moved(e, this)
 }
 
+/**
+ * @description Update graph state
+ * @param {String} attrName Updated attribute name
+ * @param {Any} change      Updated value
+ * @return {Undefined} Void
+ */
 Graph.prototype.attr = function (attrName, change = undefined) {
   if (!attrName || change === undefined) return false
 
@@ -107,11 +173,20 @@ Graph.prototype.attr = function (attrName, change = undefined) {
     this[attrName] = change
   }
 
-  if (attrName === 'index') render.rankGraphsByIndex()
+  if (attrName === 'index') render.sortGraphsByIndex()
 
   render.drawAllGraph()
 }
 
+/**
+ * @description Update graphics state (with animation)
+ *  Only shape and style attributes are supported
+ * @param {String} attrName Updated attribute name
+ * @param {Any} change      Updated value
+ * @param {Boolean} wait    Whether to store the animation waiting
+ *                          for the next animation request
+ * @return {Undefined} Void
+ */
 Graph.prototype.animation = async function (attrName, change, wait = false) {
   if (attrName !== 'shape' && attrName !== 'style') {
     console.error('Only supported shape and style animation!')
@@ -146,7 +221,7 @@ Graph.prototype.animation = async function (attrName, change, wait = false) {
   const { render } = this
 
   return new Promise(async reslove => {
-    await render.animationProcessor()
+    await render.launchAnimation()
 
     reslove()
   })
@@ -177,20 +252,63 @@ Graph.prototype.turnNextAnimationFrame = function () {
   this.animationKeys = animationKeys.filter(keys => keys)
 }
 
+/**
+ * @description Skip to the last frame of animation
+ * @return {Undefined} Void
+ */
+Graph.prototype.animationEnd = function () {
+  const { animationFrameState, animationKeys, animationRoot, render } = this
+
+  animationRoot.forEach((root, i) => {
+    const currentKeys = animationKeys[i]
+    const lastState = animationFrameState[i].pop()
+
+    currentKeys.forEach(key => (root[key] = lastState[key]))
+  })
+
+  this.animationFrameState = []
+  this.animationKeys = []
+  this.animationRoot = []
+
+  return render.drawAllGraph()
+}
+
+/**
+ * @description Pause animation behavior
+ * @return {Undefined} Void
+ */
 Graph.prototype.pauseAnimation = function () {
   this.attr('animationPause', true)
 }
 
+/**
+ * @description Try animation behavior
+ * @return {Undefined} Void
+ */
 Graph.prototype.playAnimation = function () {
   const { render } = this
 
   this.attr('animationPause', false)
 
   return new Promise(async reslove => {
-    await render.animationProcessor()
+    await render.launchAnimation()
 
     reslove()
   })
+}
+
+Graph.prototype.delProcessor = function (render) {
+  const { graphs } = render
+
+  const index = graphs.findIndex(graph => graph === this)
+
+  if (index === -1) return
+
+  if (typeof this.beforeDelete === 'function') this.beforeDelete(this)
+
+  graphs.splice(index, 1)
+
+  if (typeof this.deleted === 'function') this.deleted(this)
 }
 
 function delay (time) {

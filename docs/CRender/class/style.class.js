@@ -8,150 +8,164 @@ export default class Style {
       /**
        * @description Rgba value of graph fill color 
        * @type {Array}
-       * @example fill = [0, 0, 0, 1]
+       * @default fill = [0, 0, 0, 1]
        */
       fill: [0, 0, 0, 1],
       /**
        * @description Rgba value of graph stroke color 
        * @type {Array}
-       * @example stroke = [0, 0, 0, 1]
+       * @default stroke = [0, 0, 0, 1]
        */
       stroke: [0, 0, 0, 0],
       /**
        * @description Opacity of graph
        * @type {Number}
-       * @example opacity = 1
+       * @default opacity = 1
        */
       opacity: 1,
       /**
        * @description LineCap of Ctx
        * @type {String}
-       * @example opacity = 'butt'|'round'|'square'
+       * @default lineCap = null
+       * @example lineCap = 'butt'|'round'|'square'
        */
       lineCap: null,
       /**
        * @description Linejoin of Ctx
        * @type {String}
+       * @default lineJoin = null
        * @example lineJoin = 'round'|'bevel'|'miter'
        */
       lineJoin: null,
       /**
        * @description LineDash of Ctx
        * @type {Array}
+       * @default lineDash = null
        * @example lineDash = [10, 10]
        */
       lineDash: null,
       /**
        * @description LineDashOffset of Ctx
        * @type {Number}
+       * @default lineDashOffset = null
        * @example lineDashOffset = 10
        */
       lineDashOffset: null,
       /**
        * @description ShadowBlur of Ctx
        * @type {Number}
-       * @example shadowBlur = 10
+       * @default shadowBlur = 0
        */
       shadowBlur: 0,
       /**
        * @description Rgba value of graph shadow color 
        * @type {Array}
-       * @example shadowColor = [0, 0, 0, 1]
+       * @default shadowColor = [0, 0, 0, 0]
        */
       shadowColor: [0, 0, 0, 0],
       /**
        * @description ShadowOffsetX of Ctx
        * @type {Number}
-       * @example shadowOffsetX = 10
+       * @default shadowOffsetX = 0
        */
       shadowOffsetX: 0,
       /**
        * @description ShadowOffsetY of Ctx
        * @type {Number}
-       * @example shadowOffsetY = 10
+       * @default shadowOffsetY = 0
        */
       shadowOffsetY: 0,
       /**
        * @description LineWidth of Ctx
        * @type {Number}
-       * @example lineWidth = 10
+       * @default lineWidth = 0
        */
       lineWidth: 0,
       /**
        * @description Stroke width is not scaled
        * @type {Boolean}
-       * @example strokeNoScale = true
+       * @default strokeNoScale = false
        */
       strokeNoScale: false,
       /**
        * @description Center point of the graph
        * @type {Array}
+       * @default graphCenter = null
        * @example graphCenter = [10, 10]
        */
       graphCenter: null,
       /**
-       * @description Graph magnification
+       * @description Graph scale
        * @type {Array}
+       * @default scale = null
        * @example scale = [1.5, 1.5]
        */
       scale: null,
       /**
        * @description Graph rotation degree
        * @type {Number}
+       * @default rotate = null
        * @example rotate = 10
        */
       rotate: null,
       /**
        * @description Graph translate distance
        * @type {Array}
+       * @default translate = null
        * @example translate = [10, 10]
        */
       translate: null,
       /**
        * @description Cursor status when hover
        * @type {String}
-       * @example hoverCursor = 'default'|'pointer'
+       * @default hoverCursor = 'pointer'
+       * @example hoverCursor = 'default'|'pointer'|'auto'|'crosshair'|'move'|'wait'|...
        */
       hoverCursor: 'pointer',
       /**
        * @description Font style of Ctx
        * @type {String}
+       * @default fontStyle = 'normal'
        * @example fontStyle = 'normal'|'italic'|'oblique'
        */
       fontStyle: 'normal',
       /**
        * @description Font varient of Ctx
        * @type {String}
+       * @default fontVarient = 'normal'
        * @example fontVarient = 'normal'|'small-caps'
        */
       fontVarient: 'normal',
       /**
        * @description Font weight of Ctx
        * @type {String|Number}
+       * @default fontWeight = 'normal'
        * @example fontWeight = 'normal'|'bold'|'bolder'|'lighter'|Number
        */
       fontWeight: 'normal',
       /**
        * @description Font size of Ctx
        * @type {Number}
-       * @example fontSize = 10
+       * @default fontSize = 10
        */
       fontSize: 10,
       /**
        * @description Font family of Ctx
-       * @type {Number}
-       * @example fontFamily = 'Arial'
+       * @type {String}
+       * @default fontFamily = 'Arial'
        */
       fontFamily: 'Arial',
       /**
        * @description TextAlign of Ctx
        * @type {String}
+       * @default textAlign = 'center'
        * @example textAlign = 'start'|'end'|'left'|'right'|'center'
        */
       textAlign: 'center',
       /**
        * @description TextBaseline of Ctx
        * @type {String}
+       * @default textBaseline = 'middle'
        * @example textBaseline = 'top'|'bottom'|'middle'|'alphabetic'|'hanging'
        */
       textBaseline: 'middle'
@@ -164,9 +178,9 @@ export default class Style {
 const colorProcessorKeys = ['fill', 'stroke', 'shadowColor']
 
 /**
- * @description        Set colors to rgba value
- * @param {Object}     style style config
- * @return {Undefined} No return
+ * @description Set colors to rgba value
+ * @param {Object} style style config
+ * @return {Undefined} Void
  */
 Style.prototype.colorProcessor = function (style) {
   const allKeys = Object.keys(style)
