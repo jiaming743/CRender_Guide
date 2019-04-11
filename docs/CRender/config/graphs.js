@@ -1,4 +1,6 @@
-import { polylineToBezierCurve, bezierCurveToPolyline } from '@jiaminghi/bezier-curve'
+import beziercurve from '@jiaminghi/bezier-curve'
+
+const { polylineToBezierCurve, bezierCurveToPolyline } = beziercurve
 
 import {
   deepClone,
@@ -7,7 +9,8 @@ import {
   checkPointIsInSector,
   getRegularPolygonPoints,
   checkPointIsInPolygon,
-  checkPointIsNearPolyline
+  checkPointIsNearPolyline,
+  checkPointIsInRect
 } from '../lib/util'
 
 import {
@@ -163,16 +166,10 @@ export const rect = {
     ctx.closePath()
   },
 
-  hoverCheck ([px, py], { shape }) {
+  hoverCheck (position, { shape }) {
     let { x, y, w, h } = shape
 
-    if (px < x) return false
-    if (py < y) return false
-
-    if (px > x + w) return false
-    if (py > y + h) return false
-
-    return true
+    return checkPointIsInRect(position, x, y, w, h)
   },
 
   setGraphCenter (e, { shape, style }) {
@@ -691,6 +688,61 @@ export const bezierCurve = {
   }
 }
 
+export const text = {
+  shape: {
+    content: '',
+    position: [],
+    maxWidth: undefined
+  },
+
+  validator ({ shape }) {
+    const { content, position } = shape
+
+    if (typeof content !== 'string') {
+      console.error('Content should be a string!')
+
+      return false
+    }
+
+    if (!(position instanceof Array)) {
+      console.error('Position should be an array!')
+
+      return false
+    }
+
+    return true
+  },
+
+  draw ({ ctx }, { shape }) {
+    const { content, position, maxWidth } = shape
+
+    ctx.beginPath()
+
+    ctx.fillText(content, ...position, maxWidth)
+    ctx.strokeText(content, ...position, maxWidth)
+
+    ctx.closePath()
+  },
+
+  hoverCheck (position, { shape, style }) {
+    return false
+  },
+
+  setGraphCenter (e, { shape, style }) {
+    const { position } = shape
+
+    style.graphCenter = [...position]
+  },
+
+  move ({ movementX, movementY }, { shape }) {
+    const { position: [x, y] } = shape
+
+    this.attr('shape', {
+      position: [x + movementX, y + movementY]
+    })
+  }
+}
+
 const graphs = new Map([
   ['circle', circle],
   ['ellipse', ellipse],
@@ -701,14 +753,33 @@ const graphs = new Map([
   ['regPolygon', regPolygon],
   ['polyline', polyline],
   ['smoothline', smoothline],
-  ['bezierCurve', bezierCurve]
+  ['bezierCurve', bezierCurve],
+  ['text', text]
 ])
 
 export default graphs
 
 export function extendNewGraph (name, config) {
   if (!name || !config) {
-    console.error('extendNewGraph Missing Parameters!')
+    console.error('ExtendNewGraph Missing Parameters!')
+
+    return
+  }
+
+  if (!config.shape) {
+    console.error('Required attribute of shape to extendNewGraph!')
+
+    return
+  }
+
+  if (!config.validator) {
+    console.error('Required function of validator to extendNewGraph!')
+
+    return
+  }
+
+  if (!config.draw) {
+    console.error('Required function of draw to extendNewGraph!')
 
     return
   }
