@@ -109,6 +109,14 @@
 <<< @/docs/guide/graphData/bezierCurveClosed.js
 </fold-box>
 
+## 文本
+
+<demo :config="text" />
+
+<fold-box>
+<<< @/docs/guide/graphData/text.js
+</fold-box>
+
 <script>
 
 import circle from './graphData/circle.js'
@@ -124,6 +132,7 @@ import smoothline from './graphData/smoothline.js'
 import smoothlineClosed from './graphData/smoothlineClosed.js'
 import bezierCurve from './graphData/bezierCurve.js'
 import bezierCurveClosed from './graphData/bezierCurveClosed.js'
+import text from './graphData/text.js'
 
 export default {
   data () {
@@ -140,7 +149,8 @@ export default {
       smoothline,
       smoothlineClosed,
       bezierCurve,
-      bezierCurveClosed
+      bezierCurveClosed,
+      text
     }
   }
 }
