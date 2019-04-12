@@ -642,9 +642,9 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
-"@jiaminghi/bezier-curve@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@jiaminghi/bezier-curve/-/bezier-curve-0.0.3.tgz#e46c4d96a8d3fbaf3232010b18d836e18afa1c64"
+"@jiaminghi/bezier-curve@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@jiaminghi/bezier-curve/-/bezier-curve-0.0.4.tgz#2cc24cc47de00a670b18b83595d93f264cfc48c8"
 
 "@jiaminghi/color@^0.0.2":
   version "0.0.2"

@@ -25,7 +25,6 @@ export default {
       const render = new CRender(this.$refs['canvas'])
 
       if (!config) return
-      // console.error(render)
 
       const item = render.add(config(render))
     }

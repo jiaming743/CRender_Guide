@@ -759,6 +759,12 @@ const graphs = new Map([
 
 export default graphs
 
+/**
+ * @description Extend new graph
+ * @param {String} name   Name of Graph
+ * @param {Object} config Configuration of Graph
+ * @return {Undefined} Void
+ */
 export function extendNewGraph (name, config) {
   if (!name || !config) {
     console.error('ExtendNewGraph Missing Parameters!')
