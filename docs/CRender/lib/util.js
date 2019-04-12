@@ -200,6 +200,16 @@ export function checkPointIsNearPolyline (point, polyline, lineWidth) {
   return checkPointIsInPolygon(point, polygon)
 }
 
+export function checkPointIsInRect ([px, py], x, y, width, height) {
+  if (px < x) return false
+  if (py < y) return false
+
+  if (px > x + width) return false
+  if (py > y + height) return false
+
+  return true
+}
+
 export function filterNull (arr) {
   return arr.filter(v => (v || v === 0))
 }
