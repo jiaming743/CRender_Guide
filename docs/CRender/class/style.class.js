@@ -1,5 +1,10 @@
 import { getRgbaValue, getColorFromRgbValue } from '@jiaminghi/color'
 
+/**
+ * @description Class Style
+ * @param {Object} style  Style configuration
+ * @return {Style} Instance of Style
+ */
 export default class Style {
   constructor (style) {
     this.colorProcessor(style)
@@ -190,12 +195,23 @@ Style.prototype.colorProcessor = function (style) {
   colorKeys.forEach(key => (style[key] = getRgbaValue(style[key])))
 }
 
+/**
+ * @description Init graph style
+ * @param {Object} ctx Context of canvas
+ * @return {Undefined} Void
+ */
 Style.prototype.initStyle = function(ctx) {
   initTransform(ctx, this)
 
   initGraphStyle(ctx, this)
 }
 
+/**
+ * @description Init canvas transform
+ * @param {Object} ctx  Context of canvas
+ * @param {Style} style Instance of Style
+ * @return {Undefined} Void
+ */
 function initTransform (ctx, style) {
   ctx.save()
 
@@ -220,6 +236,12 @@ const autoSetStyleKeys = [
   'textAlign', 'textBaseline'
 ]
 
+/**
+ * @description Set the style of canvas ctx
+ * @param {Object} ctx  Context of canvas
+ * @param {Style} style Instance of Style
+ * @return {Undefined} Void
+ */
 function initGraphStyle (ctx, style) {
   let { fill, stroke, shadowColor, opacity } = style
 
@@ -250,10 +272,20 @@ function initGraphStyle (ctx, style) {
   ctx.font = fontStyle + ' ' + fontVarient + ' ' + fontWeight + ' ' + fontSize + 'px' + ' ' + fontFamily
 }
 
+/**
+ * @description Restore canvas ctx transform
+ * @param {Object} ctx  Context of canvas
+ * @return {Undefined} Void
+ */
 Style.prototype.restoreTransform = function (ctx) {
   ctx.restore()
 }
 
+/**
+ * @description Update style data
+ * @param {Object} change Changed data
+ * @return {Undefined} Void
+ */
 Style.prototype.update = function (change) {
   this.colorProcessor(change)
 

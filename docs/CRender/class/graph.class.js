@@ -80,7 +80,7 @@ export default class Graph {
        */
       hoverRect: null
     }
-  
+
     const configAbleNot = {
       status: 'static',
       animationRoot: [],
@@ -105,6 +105,10 @@ export default class Graph {
   }
 }
 
+/**
+ * @description Processor of added
+ * @return {Undefined} Void
+ */
 Graph.prototype.addedProcessor = function () {
   if (typeof this.setGraphCenter === 'function') this.setGraphCenter(null, this)
 
@@ -112,6 +116,12 @@ Graph.prototype.addedProcessor = function () {
   if (typeof this.added === 'function') this.added(this)
 }
 
+/**
+ * @description Processor of draw
+ * @param {CRender} render Instance of CRender
+ * @param {Graph} graph    Instance of Graph
+ * @return {Undefined} Void
+ */
 Graph.prototype.drawProcessor = function (render, graph) {
   const { ctx } = render
 
@@ -126,6 +136,12 @@ Graph.prototype.drawProcessor = function (render, graph) {
   graph.style.restoreTransform(ctx)
 }
 
+/**
+ * @description Processor of hover check
+ * @param {Array} position Mouse Position
+ * @param {Graph} graph    Instance of Graph
+ * @return {Boolean} Result of hover check
+ */
 Graph.prototype.hoverCheckProcessor = function (position, { hoverRect, style, hoverCheck }) {
   const { graphCenter, rotate, scale, translate } = style
 
@@ -140,6 +156,11 @@ Graph.prototype.hoverCheckProcessor = function (position, { hoverRect, style, ho
   return hoverCheck(position, this)
 }
 
+/**
+ * @description Processor of move
+ * @param {Event} e Mouse movement event
+ * @return {Undefined} Void
+ */
 Graph.prototype.moveProcessor = function (e) {
   this.move(e, this)
 
@@ -185,7 +206,7 @@ Graph.prototype.attr = function (attrName, change = undefined) {
  * @param {Any} change      Updated value
  * @param {Boolean} wait    Whether to store the animation waiting
  *                          for the next animation request
- * @return {Undefined} Void
+ * @return {Promise} Animation Promise
  */
 Graph.prototype.animation = async function (attrName, change, wait = false) {
   if (attrName !== 'shape' && attrName !== 'style') {
@@ -227,6 +248,11 @@ Graph.prototype.animation = async function (attrName, change, wait = false) {
   })
 }
 
+/**
+ * @description Extract the next frame of data from the animation queue
+ *              and update the graph state
+ * @return {Undefined} Void
+ */
 Graph.prototype.turnNextAnimationFrame = function () {
   const { animationRoot, animationKeys, animationFrameState, animationPause } = this
 
@@ -297,6 +323,11 @@ Graph.prototype.playAnimation = function () {
   })
 }
 
+/**
+ * @description Processor of delete
+ * @param {CRender} render Instance of CRender
+ * @return {Undefined} Void
+ */
 Graph.prototype.delProcessor = function (render) {
   const { graphs } = render
 
@@ -311,6 +342,11 @@ Graph.prototype.delProcessor = function (render) {
   if (typeof this.deleted === 'function') this.deleted(this)
 }
 
+/**
+ * @description Return a timed release Promise
+ * @param {Number} time Release time
+ * @return {Promise} A timed release Promise
+ */
 function delay (time) {
   return new Promise(reslove => {
     setTimeout(reslove, time)
