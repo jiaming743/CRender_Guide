@@ -4,17 +4,17 @@ function getPetalPoints (insideRadius, outsideRadius, petalNum, petalCenter) {
   const PI2Dived = Math.PI * 2 / (petalNum * 3)
 
   let points = new Array(petalNum * 3).fill('')
-  .map((foo, i) => 
-    getCircleRadianPoint(...petalCenter,
-      i % 3 === 0 ? insideRadius : outsideRadius,
-      PI2Dived * i)
-  )
+    .map((foo, i) => 
+      getCircleRadianPoint(...petalCenter,
+        i % 3 === 0 ? insideRadius : outsideRadius,
+        PI2Dived * i)
+    )
 
   const startPoint = points.shift()
   points.push(startPoint)
 
   points = new Array(petalNum).fill('')
-  .map(foo => points.splice(0, 3))
+    .map(foo => points.splice(0, 3))
 
   points.unshift(startPoint)
 

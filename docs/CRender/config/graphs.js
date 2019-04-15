@@ -53,7 +53,7 @@ export const circle = {
   hoverCheck (position, { shape }) {
     const { rx, ry, r } = shape
 
-    return checkPointIsInCircle(rx, ry, r, position)
+    return checkPointIsInCircle(position, rx, ry, r)
   },
 
   setGraphCenter (e, { shape, style }) {
