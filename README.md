@@ -1,29 +1,25 @@
-# CRender_Guide
+<h1 align="center"><a href="http://crender.jiaminghi.com">crender.jiaminghi.com</a></h1>
 
-## CRender文档
+<p align="center">
+    <a href="https://github.com/jiaming743/crender.jiaminghi.com/blob/master/LICENSE"><img src="https://img.shields.io/github/license/jiaming743/crender.jiaminghi.com.svg" alt="LICENSE" /> </a>
+</p>
 
-## CRender official documentation
+### Project setup
 
-## Project setup
-```
+```shell
 yarn
 ```
 
-## Compiles and hot-reloads for development
-```
+### Compiles and hot-reloads for development
+
+```shell
 yarn dev
 ```
 
-## Compiles and minifies for production
-```
+### Compiles and minifies for production
+
+```shell
 yarn build
 ```
 
-[文档官网](http://crender.jiaminghi.com/)
-
-[Document of official website](http://crender.jiaminghi.com/)
-
-[项目地址](https://github.com/jiaming743/CRender)
-
-[Project address](https://github.com/jiaming743/CRender)
-
+[CRender](https://github.com/jiaming743/crender)
