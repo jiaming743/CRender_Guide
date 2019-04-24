@@ -1,158 +1,226 @@
-## 基础图形
+---
+sidebarDepth: 2
+---
 
-插件内置了丰富的基础图形，在这里将一一为你展示
+# Graph
 
-<!-- ## 测试 -->
-<!-- <demo :config="circle" /> -->
+这里将介绍**Graph**类，例如实例属性、原型方法以及生命周期。
 
-## 圆形
+## 实例属性
 
-<demo :config="circle" />
+这里是**Graph**实例属性的介绍。
 
-<fold-box>
-<<< @/docs/guide/graphData/circle.js
-</fold-box>
+### visible
 
-## 椭圆形
+```js
+/**
+ * @description 是否绘制图形
+ * @type {Boolean}
+ * @default visible = true
+ */
+```
 
-<demo :config="ellipse" />
+### shape
 
-<fold-box>
-<<< @/docs/guide/graphData/ellipse.js
-</fold-box>
+```js
+/**
+ * @description Graph shape数据
+ * @type {Object}
+ */
 
-## 矩形
+```
 
-<demo :config="rect" />
+### [style](/guide/style.md)
 
-<fold-box>
-<<< @/docs/guide/graphData/rect.js
-</fold-box>
+```js
+/**
+ * @description Graph style数据 (Style实例)
+ * @type {Style}
+ */
 
-## 环形
+```
 
-<demo :config="ring" />
+### drag
 
-<fold-box>
-<<< @/docs/guide/graphData/ring.js
-</fold-box>
+```js
+/**
+ * @description 是否启用拖拽功能
+ * @type {Boolean}
+ * @default drag = false
+ */
 
-## 弧形
+```
 
-<demo :config="arc" />
+### hover
 
-<fold-box>
-<<< @/docs/guide/graphData/arc.js
-</fold-box>
+```js
+/**
+ * @description 是否启用hover检测
+ * @type {Boolean}
+ * @default hover = false
+ */
 
-## 扇形
+```
 
-<demo :config="sector" />
+### index
 
-<fold-box>
-<<< @/docs/guide/graphData/sector.js
-</fold-box>
+```js
+/**
+ * @description Graph 绘制层级（index高者优先绘制）
+ * @type {Number}
+ * @default index = 1
+ */
+```
 
-## 正多边形
+### animationDelay
 
-<demo :config="regPolygon" />
+```js
+/**
+ * @description 动画延迟时间(ms)
+ * @type {Number}
+ * @default animationDelay = 0
+ */
+```
 
-<fold-box>
-<<< @/docs/guide/graphData/regPolygon.js
-</fold-box>
+### animationFrame
 
-## 折线
+```js
+/**
+ * @description 动画持续帧数
+ * @type {Number}
+ * @default animationFrame = 30
+ */
+```
 
-<demo :config="polyline" />
+### [animationCurve](http://transition.jiaminghi.com/)
 
-<fold-box>
-<<< @/docs/guide/graphData/polyline.js
-</fold-box>
+```js
+/**
+ * @description 动画动态曲线（由transition提供动画状态）
+ * @type {String}
+ * @default animationCurve = 'linear'
+ */
+```
 
-## 折线（闭合）
+### animationPause
 
-<demo :config="polylineClosed" />
+```js
+/**
+ * @description 是否暂停图形动画
+ * @type {Boolean}
+ * @default animationPause = false
+ */
+```
 
-<fold-box>
-<<< @/docs/guide/graphData/polylineClosed.js
-</fold-box>
+### hoverRect
 
-## 光滑曲线
+```js
+/**
+ * @description 图形矩形hover检测区（优先级高于图形默认的hoverCheck方法）
+ * @type {Null|Array}
+ * @default hoverRect = null
+ * @example hoverRect = [0, 0, 100, 100] // [矩形起始x, y坐标, 矩形宽度, 高度]
+ */
+```
 
-<demo :config="smoothline" />
+## 原型方法
 
-<fold-box>
-<<< @/docs/guide/graphData/smoothline.js
-</fold-box>
+这里是**Graph**原型方法的介绍。
 
-## 光滑曲线（闭合）
 
-<demo :config="smoothlineClosed" />
+### attr
 
-<fold-box>
-<<< @/docs/guide/graphData/smoothlineClosed.js
-</fold-box>
-
-## 贝塞尔曲线
-
-<demo :config="bezierCurve" />
-
-<fold-box>
-<<< @/docs/guide/graphData/bezierCurve.js
-</fold-box>
-
-## 贝塞尔曲线（闭合）
-
-<demo :config="bezierCurveClosed" />
-
-<fold-box>
-<<< @/docs/guide/graphData/bezierCurveClosed.js
-</fold-box>
-
-## 文本
-
-<demo :config="text" />
-
-<fold-box>
-<<< @/docs/guide/graphData/text.js
-</fold-box>
-
-<script>
-
-import circle from './graphData/circle.js'
-import ellipse from './graphData/ellipse.js'
-import rect from './graphData/rect.js'
-import ring from './graphData/ring.js'
-import arc from './graphData/arc.js'
-import sector from './graphData/sector.js'
-import regPolygon from './graphData/regPolygon.js'
-import polyline from './graphData/polyline.js'
-import polylineClosed from './graphData/polylineClosed.js'
-import smoothline from './graphData/smoothline.js'
-import smoothlineClosed from './graphData/smoothlineClosed.js'
-import bezierCurve from './graphData/bezierCurve.js'
-import bezierCurveClosed from './graphData/bezierCurveClosed.js'
-import text from './graphData/text.js'
-
-export default {
-  data () {
-    return {
-      circle,
-      ellipse,
-      rect,
-      ring,
-      arc,
-      sector,
-      regPolygon,
-      polyline,
-      polylineClosed,
-      smoothline,
-      smoothlineClosed,
-      bezierCurve,
-      bezierCurveClosed,
-      text
-    }
-  }
+```js
+/**
+ * @description 更新图形状态
+ * @param {String} attrName 要更新的属性名
+ * @param {Any} change      属性值
+ * @return {Undefined} 无返回值
+ */
+Graph.prototype.attr = function (attrName, change = undefined) {
+	// ...
 }
+```
 
-</script>
+### animation
+
+```js
+/**
+ * @description 更新图形状态（伴随过渡动画），仅支持style和shape属性
+ * @param {String} attrName 要更新的属性名
+ * @param {Any} change      属性值
+ * @param {Boolean} wait    是否存储动画队列，等待下次动画请求
+ * @return {Promise} Animation Promise
+ */
+Graph.prototype.animation = async function (attrName, change, wait = false) {
+	// ...
+}
+```
+
+### animationEnd
+
+```js
+/**
+ * @description 跳至最后一帧动画
+ * @return {Undefined} 无返回值
+ */
+Graph.prototype.animationEnd = function () {
+    // ...
+}
+```
+
+### pauseAnimation
+
+```js
+/**
+ * @description 暂停图形动画
+ * @return {Undefined} 无返回值
+ */
+Graph.prototype.pauseAnimation = function () {
+    // ...
+}
+```
+
+### playAnimation
+
+```js
+/**
+ * @description 尝试动画行为
+ * @return {Undefined} 无返回值
+ */
+Graph.prototype.playAnimation = function () {
+    // ...
+}
+```
+
+## 生命周期
+
+当你向**render**中添加图形时，你可以配置下列方法，它们将在特定的时间被调用。
+
+::: tip
+图形实例以及其他相关数据将被作为参数传入这些方法。
+:::
+
+### added
+
+图形添加完成后被调用。
+
+### beforeDraw
+
+图形样式初始化之后，图形绘制之前被调用，**render**实例作为第二个参数被传入。可以针对需求，修改canvas的ctx样式。
+
+### drawed
+图形绘制之后被调用，**render**实例作为第二个参数被传入。
+
+### beforeMove
+
+移动图形之前被调用（drag行为发生前），鼠标事件作为第一个参数被传入。
+
+### moved
+移动图形之后被调用（drag行为发生后），鼠标事件作为第一个参数被传入。
+
+### beforeDelete
+删除图形之前被调用。
+
+### deleted
+图形删除之后被调用。

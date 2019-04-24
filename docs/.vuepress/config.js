@@ -33,20 +33,26 @@ module.exports = {
             link: '/extend/'
           },
           {
+            text: '支持',
+            link: '/support/'
+          },
+          {
             text: 'GitHub',
-            link: 'https://github.com/jiaming743/CRender_Guide'
+            link: 'https://github.com/jiaming743/crender.jiaminghi.com'
           }
         ],
         sidebar: {
           '/guide/': [
             '',
-            'prototype',
-            'instance',
-            'graph'
+            'crender',
+            'graph',
+            'style',
+            'graphs'
           ],
           '/extend/': [
             ''
-          ]
+          ],
+          '/support/': []
         }
       },
       '/EN/': {

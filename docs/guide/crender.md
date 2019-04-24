@@ -1,0 +1,170 @@
+---
+sidebarDepth: 2
+---
+
+# CRender
+
+这里将介绍**CRender**类，例如实例化、实例属性以及原型方法。
+
+## 类
+
+```js
+/**
+ * @description           CRender类
+ * @param {Object} canvas Canvas节点
+ * @return {CRender}      CRender实例
+ */
+class CRender {
+    // ...
+}
+```
+
+## 实例化
+
+```js
+import CRender from '@jiaminghi/c-render'
+
+const canvas = document.getElementById('canvas')
+
+const render = new CRender(canvas)
+```
+
+## 实例属性
+
+这里是**CRender**实例属性的介绍。
+
+### ctx
+
+```js
+/**
+ * @description Canvas context
+ * @type {Object}
+ * @example ctx = canvas.getContext('2d')
+ */
+```
+
+### area
+
+```js
+/**
+ * @description Canvas的宽高
+ * @type {Array}
+ * @example area = [300，100]
+ */
+```
+
+### animationStatus
+
+```js
+/**
+ * @description Render是否处于动画绘制状态
+ * @type {Boolean}
+ * @example animationStatus = true|false
+ */
+```
+
+### graphs
+
+```js
+/**
+ * @description 已添加的图形
+ * @type {[Graph]}
+ * @example graphs = [Graph, Graph, ...]
+ */
+```
+
+### [color](https://github.com/jiaming743/color)
+
+```js
+/**
+ * @description Color插件
+ * @type {Object}
+ */
+```
+
+### [bezierCurve](https://github.com/jiaming743/BezierCurve)
+
+```js
+/**
+ * @description BezierCurve插件
+ * @type {Object}
+ */
+```
+
+## 原型方法
+
+这里是**CRender**原型方法的介绍。
+
+### add
+
+```js
+/**
+ * @description           向render中添加图形
+ * @param {Object} config 图形配置
+ * @return {Graph}        图形实例
+ */
+CRender.prototype.add = function (config = {}) {
+	// ...
+}
+```
+
+### delGraph
+
+```js
+/**
+ * @description         从render中删除图形
+ * @param {Graph} graph 要被删除的图形
+ * @return {Undefined}  无返回值
+ */
+CRender.prototype.delGraph = function (graph) {
+	// ...
+}
+```
+
+### delAllGraph
+
+```js
+/**
+ * @description        删除render中所有的图形
+ * @return {Undefined} 无返回值
+ */
+CRender.prototype.delAllGraph = function () {
+	// ...
+}
+```
+
+### drawAllGraph
+
+```js
+/**
+ * @description        绘制render中所有的图形
+ * @return {Undefined} 无返回值
+ */
+CRender.prototype.drawAllGraph = function () {
+    // ...
+}
+```
+
+### clearArea
+
+```js
+/**
+ * @description        擦除canvas绘制区域
+ * @return {Undefined} 无返回值
+ */
+CRender.prototype.clearArea = function () {
+	// ...
+}
+```
+
+### launchAnimation
+
+```js
+/**
+ * @description      使动画队列不为空且animationPause为false的图形进行动画
+ * @return {Promise} Animation Promise
+ */
+CRender.prototype.launchAnimation = function () {
+	// ...
+}
+```
