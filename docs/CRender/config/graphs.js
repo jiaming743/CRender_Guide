@@ -691,7 +691,7 @@ export const bezierCurve = {
 export const text = {
   shape: {
     content: '',
-    position: [],
+    position: [0, 0],
     maxWidth: undefined
   },
 

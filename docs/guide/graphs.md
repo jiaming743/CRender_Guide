@@ -4,6 +4,16 @@
 
 ## 圆形
 
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| rx | `Number` | `0` | 圆心x轴坐标 |
+| ry | `Number` | `0` | 圆心y轴坐标 |
+| r | `Number` | `0` | 半径 |
+</full-width-table>
+
 <demo :config="circle" />
 
 <fold-box>
@@ -11,6 +21,17 @@
 </fold-box>
 
 ## 椭圆形
+
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| rx | `Number` | `0` | 中心点x轴坐标 |
+| ry | `Number` | `0` | 中心点y轴坐标 |
+| hr | `Number` | `0` | 横轴半径 |
+| vr | `Number` | `0` | 竖轴半径 |
+</full-width-table>
 
 <demo :config="ellipse" />
 
@@ -20,6 +41,17 @@
 
 ## 矩形
 
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| x | `Number` | `0` | 矩形左上角x轴坐标 |
+| y | `Number` | `0` | 矩形左上角y轴坐标 |
+| w | `Number` | `0` | 矩形宽度 |
+| h | `Number` | `0` | 矩形高度 |
+</full-width-table>
+
 <demo :config="rect" />
 
 <fold-box>
@@ -27,6 +59,16 @@
 </fold-box>
 
 ## 环形
+
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| rx | `Number` | `0` | 中心点x轴坐标 |
+| ry | `Number` | `0` | 中心点y轴坐标 |
+| r | `Number` | `0` | 环半径 |
+</full-width-table>
 
 <demo :config="ring" />
 
@@ -36,6 +78,19 @@
 
 ## 弧形
 
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| rx | `Number` | `0` | 中心点x轴坐标 |
+| ry | `Number` | `0` | 中心点y轴坐标 |
+| r | `Number` | `0` | 弧半径 |
+| startAngle | `Number` | `0` | 弧起始弧度值 |
+| endAngle | `Number` | `0` | 弧结束弧度值 |
+| clockWise | `Boolean` | `true` | 是否顺时针 |
+</full-width-table>
+
 <demo :config="arc" />
 
 <fold-box>
@@ -43,6 +98,19 @@
 </fold-box>
 
 ## 扇形
+
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| rx | `Number` | `0` | 中心点x轴坐标 |
+| ry | `Number` | `0` | 中心点y轴坐标 |
+| r | `Number` | `0` | 扇形半径 |
+| startAngle | `Number` | `0` | 扇形起始弧度值 |
+| endAngle | `Number` | `0` | 扇形结束弧度值 |
+| clockWise | `Boolean` | `true` | 是否顺时针 |
+</full-width-table>
 
 <demo :config="sector" />
 
@@ -52,6 +120,17 @@
 
 ## 正多边形
 
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| rx | `Number` | `0` | 中心点x轴坐标 |
+| ry | `Number` | `0` | 中心点y轴坐标 |
+| r | `Number` | `0` | 外接圆半径 |
+| side | `Number` | `0` | 边数 |
+</full-width-table>
+
 <demo :config="regPolygon" />
 
 <fold-box>
@@ -59,6 +138,15 @@
 </fold-box>
 
 ## 折线
+
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| points | `Array` | `[]` | 构成折线的点 |
+| close | `Boolean` | `false` | 是否闭合折线 |
+</full-width-table>
 
 <demo :config="polyline" />
 
@@ -76,6 +164,15 @@
 
 ## 光滑曲线
 
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| points | `Array` | `[]` | 构成光滑曲线的点 |
+| close | `Boolean` | `false` | 是否闭合光滑曲线 |
+</full-width-table>
+
 <demo :config="smoothline" />
 
 <fold-box>
@@ -91,6 +188,15 @@
 </fold-box>
 
 ## 贝塞尔曲线
+
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| points | `Array` | `[]` | 构成贝塞尔曲线的点 |
+| close | `Boolean` | `false` | 是否闭合贝塞尔曲线 |
+</full-width-table>
 
 <demo :config="bezierCurve" />
 
@@ -108,11 +214,25 @@
 
 ## 文本
 
+**shape属性表**
+
+<full-width-table>
+| 属性名 | 类型 | 默认值 | 注解 |
+| :---: | :---: | :---: | :---: |
+| content | `String` | `''` | 文本内容 |
+| position | `Array`  | `[0, 0]` | 文本起始位置 |
+| maxWidth | `Number` | `Undefined` | 文本最大宽度 |
+</full-width-table>
+
 <demo :config="text" />
 
 <fold-box>
 <<< @/docs/guide/graphData/text.js
 </fold-box>
+
+::: tip
+图形**text**的鼠标事件依赖`hoverRect`属性，如需鼠标事件生效请对其配置。
+:::
 
 <script>
 

@@ -8,7 +8,7 @@ sidebarDepth: 2
 
 ## 实例属性
 
-这里是**Graph**实例属性的介绍。
+这里是**Graph**实例属性的介绍，添加图形时，你可以对他们进行配置。
 
 ### visible
 
@@ -27,7 +27,6 @@ sidebarDepth: 2
  * @description Graph shape数据
  * @type {Object}
  */
-
 ```
 
 ### [style](/guide/style.md)
@@ -37,7 +36,6 @@ sidebarDepth: 2
  * @description Graph style数据 (Style实例)
  * @type {Style}
  */
-
 ```
 
 ### drag
@@ -48,7 +46,6 @@ sidebarDepth: 2
  * @type {Boolean}
  * @default drag = false
  */
-
 ```
 
 ### hover
@@ -59,7 +56,6 @@ sidebarDepth: 2
  * @type {Boolean}
  * @default hover = false
  */
-
 ```
 
 ### index
@@ -122,6 +118,40 @@ sidebarDepth: 2
  * @example hoverRect = [0, 0, 100, 100] // [矩形起始x, y坐标, 矩形宽度, 高度]
  */
 ```
+
+### mouseEnter
+
+```js
+/**
+ * @description Mouse enter事件处理器
+ * @type {Function|Null}
+ * @default mouseEnter = null
+ */
+```
+
+### mouseOuter
+
+```js
+/**
+ * @description Mouse outer事件处理器
+ * @type {Function|Null}
+ * @default mouseOuter = null
+ */
+```
+
+### click
+
+```js
+/**
+ * @description Mouse click事件处理器
+ * @type {Function|Null}
+ * @default click = null
+ */
+```
+
+::: tip
+启用图形的**mouseEnter**，**mouseOuter**，**click**等事件支持需要将`hover`属性配置为`true`。扩展的新图形需要配置**hoverCheck**方法以提供事件支持。
+:::
 
 ## 原型方法
 
