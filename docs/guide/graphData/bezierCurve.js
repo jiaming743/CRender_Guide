@@ -5,8 +5,11 @@ export default function (render) {
   const offsetY = h / 2
 
   const points = [
+    // 起始点
     [-100 + offsetX, -50 + offsetY],
+    // N组贝塞尔曲线数据
     [
+      // 贝塞尔曲线控制点1，控制点2，结束点
       [0  + offsetX, -50 + offsetY],
       [0  + offsetX, 50 + offsetY],
       [100  + offsetX, 50 + offsetY]
