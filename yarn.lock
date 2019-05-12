@@ -646,9 +646,10 @@
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@jiaminghi/bezier-curve/-/bezier-curve-0.0.4.tgz#2cc24cc47de00a670b18b83595d93f264cfc48c8"
 
-"@jiaminghi/color@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@jiaminghi/color/-/color-0.0.2.tgz#8c86ae9078659fed20daaf05be23b63c098dbd24"
+"@jiaminghi/color@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@jiaminghi/color/-/color-0.0.3.tgz#5931209c6341df99b610d9de98670c247f20dbbd"
+  integrity sha512-Ya8lHZwB6YTLGBKVpjHv2OubwrkMYrHr+vqap+2L5As/CYY5NHfPBCooJvl0J5i3qmV76gGODgdKkGMqiTLScw==
 
 "@jiaminghi/transition@^1.1.0":
   version "1.1.3"
@@ -2817,6 +2818,7 @@ global-dirs@^0.1.0:
 global@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/global/-/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
+  integrity sha1-52mJJopsdMOJCLEwWxD8DjlOnQ8=
   dependencies:
     min-document "^2.19.0"
     process "~0.5.1"
@@ -6290,9 +6292,10 @@ vuepress-html-webpack-plugin@^3.2.0:
     toposort "^1.0.0"
     util.promisify "1.0.0"
 
-vuepress@^0.14.9:
-  version "0.14.10"
-  resolved "https://registry.yarnpkg.com/vuepress/-/vuepress-0.14.10.tgz#070281ad0c9d48e7c848eb9511c96ceb106414ab"
+vuepress@^0.14.11:
+  version "0.14.11"
+  resolved "https://registry.yarnpkg.com/vuepress/-/vuepress-0.14.11.tgz#fc6ba0e609e3433a8070e95301b4d987712b2a08"
+  integrity sha512-5iB7iWeEG7GtEiNwmS2LOcifp2V93aZ4+oO9pq8OcUgOWay9/NqmNqzg7KQ7AJ0puZGg0tYwUKKjifIWIPE8jQ==
   dependencies:
     "@babel/core" "7.0.0-beta.47"
     "@vue/babel-preset-app" "3.0.0-beta.11"

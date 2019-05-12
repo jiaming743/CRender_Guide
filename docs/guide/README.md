@@ -5,6 +5,14 @@ sidebarDepth: 2
 # 介绍
 插件基于**Canvas**渲染图形，用法简单，极易上手。内置了较为丰富的基础图形，能够极大提升开发效率，在此基础上，你也可以十分容易的扩展新图形。
 
+<show-animation />
+
+点击以**重新**播放。
+
+<fold-box>
+<<< @/docs/.vuepress/components/showAnimation.vue
+</fold-box>
+
 ## 特点
 
 * 动效
