@@ -13,7 +13,7 @@ import Graph from './graph.class'
 export default class CRender {
   constructor (canvas) {
     if (!canvas) {
-      console.error('Missing parameters!')
+      console.error('CRender Missing parameters!')
 
       return
     }
@@ -141,7 +141,9 @@ CRender.prototype.sortGraphsByIndex = function () {
 CRender.prototype.delGraph = function (graph) {
   if (typeof graph.delProcessor !== 'function') return
 
-  graph.delProcessor()
+  graph.delProcessor(this)
+  
+  this.graphs = this.graphs.filter(graph => graph)
 
   this.drawAllGraph()
 }

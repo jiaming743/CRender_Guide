@@ -4,6 +4,7 @@ const { polylineToBezierCurve, bezierCurveToPolyline } = beziercurve
 
 import {
   deepClone,
+  eliminateBlur,
   checkPointIsInCircle,
   getTwoPointDistance,
   checkPointIsInSector,
@@ -461,10 +462,12 @@ export const polyline = {
     return true
   },
 
-  draw ({ ctx }, { shape }) {
+  draw ({ ctx }, { shape, style: { lineWidth } }) {
     ctx.beginPath()
 
     let { points, close } = shape
+
+    if (lineWidth === 1) points = eliminateBlur(points)
 
     drawPolylinePath(ctx, points)
 
@@ -691,7 +694,7 @@ export const bezierCurve = {
 export const text = {
   shape: {
     content: '',
-    position: [0, 0],
+    position: [],
     maxWidth: undefined
   },
 
