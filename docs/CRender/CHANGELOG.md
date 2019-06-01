@@ -1,4 +1,44 @@
-# 0.2.7-alpha (2019-05-19)
+# 0.3.0-alpha (2019-06-01)
+
+### Bug Fixes
+
+- **Graph:** Fixed an exception for Graph.prototype.`attr`.
+
+### CRender
+
+- **prototype:** Add the CRender.prototype.`clone` to clone the Graph instance.
+
+### Style
+
+- **gradient:** Support `linear` and `radial` gradient.
+- **prototype:** Add the Style.prototype.`getStyle` to get style configuration.
+
+
+# 0.2.11-alpha (2019-05-29)
+
+### Perfect
+
+- **dependencies:** Change dependent plugin version.
+
+# 0.2.10-alpha (2019-05-26)
+
+### Perfect
+
+- **core:** `animationDelay` Optimize animationDelay.
+
+# 0.2.9-alpha (2019-05-24)
+
+### Bug Fixes
+
+- **graphs:** `extendNewGraph` Exception.
+
+# 0.2.8-alpha (2019-05-21)
+
+### Perfect
+
+- **graph:** `draw` Remove unnecessary closepath (`polyline`,`smoothline`,`bezierCurve`).
+
+# 0.2.7-alpha (2019-05-20)
 
 ### Bug Fixes
 

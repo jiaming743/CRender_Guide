@@ -1,4 +1,3 @@
-import { deepClone } from '../lib/util'
 import color from '@jiaminghi/color'
 import bezierCurve from '@jiaminghi/bezier-curve'
 
@@ -188,16 +187,17 @@ CRender.prototype.launchAnimation = function () {
       this.animationStatus = false
 
       resolve()
-    })
+    }, Date.now())
   })
 }
 
 /**
  * @description Try to animate every graph
  * @param {Function} callback Callback in animation end
+ * @param {Number} timeStamp  Time stamp of animation start
  * @return {Undefined} Void
  */
-function animation (callback) {
+function animation (callback, timeStamp) {
   const { graphs } = this
 
   if (!animationAble(graphs)) {
@@ -206,11 +206,11 @@ function animation (callback) {
     return
   }
 
-  graphs.forEach(graph => graph.turnNextAnimationFrame())
+  graphs.forEach(graph => graph.turnNextAnimationFrame(timeStamp))
 
   this.drawAllGraph()
 
-  requestAnimationFrame(animation.bind(this, callback))
+  requestAnimationFrame(animation.bind(this, callback, timeStamp))
 }
 
 /**

@@ -228,7 +228,7 @@ export default class Style {
 
 /**
  * @description Set colors to rgba value
- * @param {Object} style    Style config
+ * @param {Object} style style config
  * @param {Boolean} reverse Whether to perform reverse operation
  * @return {Undefined} Void
  */
@@ -387,7 +387,7 @@ function gradientValidator (style) {
     (gradientType === 'linear' && gradientParamsLength !== 4) ||
     (gradientType === 'radial' && gradientParamsLength !== 6)
   ) {
-    console.warn('The expected length of gradientParams is ' + gradientType === 'linear' ? '4' : '6')
+    console.warn('The expected length of gradientParams is ' + (gradientType === 'linear' ? '4' : '6'))
 
     return false
   }
@@ -407,6 +407,11 @@ function gradientValidator (style) {
   return true
 }
 
+/**
+ * @description Get a uniform gradient color stop
+ * @param {Array} color Gradient color
+ * @return {Array} Gradient color stop
+ */
 function getAutoColorStops (color) {
   const stopGap = 1 / (color.length - 1)
 

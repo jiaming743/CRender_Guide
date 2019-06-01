@@ -26,10 +26,10 @@ export default {
       drag: true,
       style: {
         fill: '#666',
-        gradientColor: ['#111', '#fffbe5'],
-        gradientParams: [0, 0, 500, 0],
+        gradientColor: ['#111', '#888'],
+        gradientParams: [0, 0, 300, 0],
         gradientWith: 'fill'
-      }
+      },
     })
   }
 }
