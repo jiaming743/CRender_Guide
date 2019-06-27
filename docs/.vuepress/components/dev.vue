@@ -15,20 +15,50 @@ export default {
 
     const render = new CRender(canvas)
 
-    const graph = render.add({
-      name: 'circle',
+    const verticalLine = render.add({
+      name: 'polyline',
       shape: {
-        rx: 250,
-        ry: 100,
-        r: 100
+        points: [
+          [0, 150],
+          [740, 150]
+        ]
       },
-      hover: true,
-      drag: true,
       style: {
+        stroke: '#000'
+      }
+    })
+
+    const horizontal = render.add({
+      name: 'polyline',
+      shape: {
+        points: [
+          [370, 0],
+          [370, 300]
+        ]
+      },
+      style: {
+        stroke: '#000'
+      }
+    })
+
+    const graph = render.add({
+      name: 'text',
+      shape: {
+        // content: '这是第一行',
+        // content: '这是第一行\n这是第二行',
+        content: '这是第一行\n这是第二行\n这是第三行',
+        position: [370, 150],
+        rowGap: 10
+      },
+      style: {
+        fontSize: 20,
         fill: '#666',
-        gradientColor: ['#111', '#888'],
-        gradientParams: [0, 0, 300, 0],
-        gradientWith: 'fill'
+        // textAlign: 'left',
+        // textAlign: 'center',
+        // textAlign: 'right',
+        // textBaseline: 'top',
+        // textBaseline: 'middle',
+        // textBaseline: 'bottom',
       },
     })
   }

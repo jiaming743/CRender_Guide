@@ -1,4 +1,4 @@
-import { getCircleRadianPoint } from '../../CRender/lib/util'
+import { getCircleRadianPoint } from '../../CRender/plugin/util'
 
 function getPoints (radius, centerPoint, pointNum) {
   const PIDived = Math.PI * 2 / pointNum

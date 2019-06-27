@@ -1,6 +1,8 @@
 import color from '@jiaminghi/color'
 import bezierCurve from '@jiaminghi/bezier-curve'
 
+import { deepClone } from '../plugin/util'
+
 import allGraph from '../config/graphs'
 
 import Graph from './graph.class'
@@ -69,7 +71,6 @@ export default class CRender {
     canvas.addEventListener('mousemove', mouseMove.bind(this))
     canvas.addEventListener('mouseup', mouseUp.bind(this))
   }
-
 }
 
 /**
@@ -127,9 +128,9 @@ CRender.prototype.sortGraphsByIndex = function () {
   const { graphs } = this
 
   graphs.sort((a, b) => {
-    if (a.index > b.index) return -1
+    if (a.index > b.index) return 1
     if (a.index === b.index) return 0
-    if (a.index < b.index) return 1
+    if (a.index < b.index) return -1
   })
 }
 
@@ -142,7 +143,7 @@ CRender.prototype.delGraph = function (graph) {
   if (typeof graph.delProcessor !== 'function') return
 
   graph.delProcessor(this)
-  
+
   this.graphs = this.graphs.filter(graph => graph)
 
   this.drawAllGraph()
@@ -231,7 +232,7 @@ function mouseDown (e) {
 
   const hoverGraph = graphs.find(graph => graph.status === 'hover')
 
-  if (!hoverGraph || !hoverGraph.drag) return
+  if (!hoverGraph) return
 
   hoverGraph.status = 'active'
 }
@@ -249,6 +250,8 @@ function mouseMove (e) {
   const activeGraph = graphs.find(graph => (graph.status === 'active' || graph.status === 'drag'))
 
   if (activeGraph) {
+    if (!activeGraph.drag) return
+
     if (typeof activeGraph.move !== 'function') {
       console.error('No move method is provided, cannot be dragged!')
 
@@ -323,16 +326,16 @@ function mouseUp (e) {
 
   if (activeGraph && typeof activeGraph.click === 'function') activeGraph.click(e, activeGraph)
 
-  graphs.forEach(graph => (graph.status = 'static'))
+  graphs.forEach(graph => graph && (graph.status = 'static'))
 
   if (activeGraph) activeGraph.status = 'hover'
   if (dragGraph) dragGraph.status = 'hover'
 }
 
 /**
- * @description Clone Graph
+ * @description         Clone Graph
  * @param {Graph} graph The target to be cloned
- * @return {Graph} Cloned graph
+ * @return {Graph}      Cloned graph
  */
 CRender.prototype.clone = function (graph) {
   const style = graph.style.getStyle()

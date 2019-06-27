@@ -1,4 +1,4 @@
-import { deepClone } from '../../CRender/lib/util'
+import { deepClone } from '../../CRender/plugin/util'
 
 export default function (render) {
   const { area: [w, h] } = render

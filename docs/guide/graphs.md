@@ -222,6 +222,7 @@
 | content | `String` | `''` | 文本内容 |
 | position | `Array`  | `[0, 0]` | 文本起始位置 |
 | maxWidth | `Number` | `Undefined` | 文本最大宽度 |
+| rowGap | `Number` | `0` | 行间距 |
 </full-width-table>
 
 <demo :config="text" />
@@ -231,7 +232,7 @@
 </fold-box>
 
 ::: tip
-图形**text**的鼠标事件依赖`hoverRect`属性，如需鼠标事件生效请对其配置。
+图形**text**的鼠标事件依赖`hoverRect`属性，如需鼠标事件生效请对其配置。文本中插入`\n`可以进行换行。
 :::
 
 <script>

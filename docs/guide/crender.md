@@ -108,6 +108,18 @@ CRender.prototype.add = function (config = {}) {
 }
 ```
 
+### clone
+
+```js
+/**
+ * @description 克隆Graph实例
+ * @param {Graph} graph 将被克隆的Graph实例
+ * @return {Graph} 克隆的Graph实例
+ */
+CRender.prototype.clone = function (graph) {
+}
+```
+
 ### delGraph
 
 ```js

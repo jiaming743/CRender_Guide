@@ -1,7 +1,5 @@
 import beziercurve from '@jiaminghi/bezier-curve'
 
-const { polylineToBezierCurve, bezierCurveToPolyline } = beziercurve
-
 import {
   deepClone,
   eliminateBlur,
@@ -12,12 +10,14 @@ import {
   checkPointIsInPolygon,
   checkPointIsNearPolyline,
   checkPointIsInRect
-} from '../lib/util'
+} from '../plugin/util'
 
 import {
   drawPolylinePath,
   drawBezierCurvePath
-} from '../lib/canvas'
+} from '../plugin/canvas'
+
+const { polylineToBezierCurve, bezierCurveToPolyline } = beziercurve
 
 export const circle = {
   shape: {
@@ -43,7 +43,7 @@ export const circle = {
 
     const { rx, ry, r } = shape
 
-    ctx.arc(rx, ry, r, 0, Math.PI * 2)
+    ctx.arc(rx, ry, r > 0 ? r : 0.01, 0, Math.PI * 2)
 
     ctx.fill()
     ctx.stroke()
@@ -96,7 +96,7 @@ export const ellipse = {
 
     let { rx, ry, hr, vr } = shape
 
-    ctx.ellipse(rx, ry, hr, vr, 0, 0, Math.PI * 2)
+    ctx.ellipse(rx, ry, hr > 0 ? hr : 0.01, vr > 0 ? vr : 0.01, 0, 0, Math.PI * 2)
 
     ctx.fill()
     ctx.stroke()
@@ -211,7 +211,7 @@ export const ring = {
 
     const { rx, ry, r } = shape
 
-    ctx.arc(rx, ry, r, 0, Math.PI * 2)
+    ctx.arc(rx, ry, r > 0 ? r : 0.01, 0, Math.PI * 2)
 
     ctx.stroke()
 
@@ -274,7 +274,7 @@ export const arc = {
 
     const { rx, ry, r, startAngle, endAngle, clockWise } = shape
 
-    ctx.arc(rx, ry, r, startAngle, endAngle, !clockWise)
+    ctx.arc(rx, ry, r > 0 ? r : 0.001, startAngle, endAngle, !clockWise)
 
     ctx.stroke()
 
@@ -336,7 +336,7 @@ export const sector = {
 
     const { rx, ry, r, startAngle, endAngle, clockWise } = shape
 
-    ctx.arc(rx, ry, r, startAngle, endAngle, !clockWise)
+    ctx.arc(rx, ry, r > 0 ? r : 0.01, startAngle, endAngle, !clockWise)
 
     ctx.lineTo(rx, ry)
 
@@ -401,7 +401,7 @@ export const regPolygon = {
 
     const { rx, ry, r, side } = shape
 
-    if (!cache.points || cache.rx !== rx || cache.ry !== ry || cache.r !== r || cache.side !== side ) {
+    if (!cache.points || cache.rx !== rx || cache.ry !== ry || cache.r !== r || cache.side !== side) {
       const points = getRegularPolygonPoints(rx, ry, r, side)
 
       Object.assign(cache, { points, rx, ry, r, side })
@@ -689,11 +689,12 @@ export const text = {
   shape: {
     content: '',
     position: [],
-    maxWidth: undefined
+    maxWidth: undefined,
+    rowGap: 0
   },
 
   validator ({ shape }) {
-    const { content, position } = shape
+    const { content, position, rowGap } = shape
 
     if (typeof content !== 'string') {
       console.error('Text content should be a string!')
@@ -702,7 +703,13 @@ export const text = {
     }
 
     if (!(position instanceof Array)) {
-      console.error('Position should be an array!')
+      console.error('Text position should be an array!')
+
+      return false
+    }
+
+    if (typeof rowGap !== 'number') {
+      console.error('Text rowGap should be a number!')
 
       return false
     }
@@ -711,12 +718,40 @@ export const text = {
   },
 
   draw ({ ctx }, { shape }) {
-    const { content, position, maxWidth } = shape
+    let { content, position, maxWidth, rowGap } = shape
+
+    const { textBaseline, font } = ctx
+
+    const fontSize = parseInt(font.replace(/\D/g, ''))
+
+    let [x, y] = position
+
+    content = content.split('\n')
+    const rowNum = content.length
+
+    const lineHeight = fontSize + rowGap
+    const allHeight = rowNum * lineHeight - rowGap
+
+    let offset = 0
+
+    if (textBaseline === 'middle') {
+      offset = allHeight / 2
+      y += fontSize / 2
+    }
+
+    if (textBaseline === 'bottom') {
+      offset = allHeight
+      y += fontSize
+    }
+
+    position = new Array(rowNum).fill(0).map((foo, i) => [x, y + i * lineHeight - offset])
 
     ctx.beginPath()
 
-    ctx.fillText(content, ...position, maxWidth)
-    ctx.strokeText(content, ...position, maxWidth)
+    content.forEach((text, i) => {
+      ctx.fillText(text, ...position[i], maxWidth)
+      ctx.strokeText(text, ...position[i], maxWidth)
+    })
 
     ctx.closePath()
   },

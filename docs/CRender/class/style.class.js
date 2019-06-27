@@ -1,6 +1,6 @@
 import { getRgbaValue, getColorFromRgbValue } from '@jiaminghi/color'
 
-import { deepClone } from '../lib/util'
+import { deepClone } from '../plugin/util'
 
 /**
  * @description Class Style
@@ -13,13 +13,13 @@ export default class Style {
 
     const defaultStyle = {
       /**
-       * @description Rgba value of graph fill color 
+       * @description Rgba value of graph fill color
        * @type {Array}
        * @default fill = [0, 0, 0, 1]
        */
       fill: [0, 0, 0, 1],
       /**
-       * @description Rgba value of graph stroke color 
+       * @description Rgba value of graph stroke color
        * @type {Array}
        * @default stroke = [0, 0, 0, 1]
        */
@@ -65,7 +65,7 @@ export default class Style {
        */
       shadowBlur: 0,
       /**
-       * @description Rgba value of graph shadow color 
+       * @description Rgba value of graph shadow color
        * @type {Array}
        * @default shadowColor = [0, 0, 0, 0]
        */
@@ -259,7 +259,7 @@ Style.prototype.colorProcessor = function (style, reverse = false) {
  * @param {Object} ctx Context of canvas
  * @return {Undefined} Void
  */
-Style.prototype.initStyle = function(ctx) {
+Style.prototype.initStyle = function (ctx) {
   initTransform(ctx, this)
 
   initGraphStyle(ctx, this)
@@ -346,7 +346,17 @@ function initGraphStyle (ctx, style) {
 function initGradient (ctx, style) {
   if (!gradientValidator(style)) return
 
-  let { gradientColor, gradientParams, gradientType, gradientWith, gradientStops } = style
+  let { gradientColor, gradientParams, gradientType, gradientWith, gradientStops, opacity } = style
+
+  gradientColor = gradientColor.map(color => {
+    let colorOpacity = color[3] * opacity
+
+    let clonedColor = [...color]
+
+    clonedColor[3] = colorOpacity
+
+    return clonedColor
+  })
 
   gradientColor = gradientColor.map(c => getColorFromRgbValue(c))
 
