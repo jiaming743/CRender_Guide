@@ -1,6 +1,6 @@
 {
   "name": "CRender_Guide",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "author": "JiaMing <743192023@qq.com>",
   "scripts": {
     "build": "vuepress build docs",
@@ -14,7 +14,7 @@
     "global": "^4.3.2",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "vuepress": "^0.14.11"
+    "vuepress": "^1.0.0-rc.1"
   },
   "devDependencies": {},
   "keywords": [
