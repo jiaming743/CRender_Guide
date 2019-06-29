@@ -149,7 +149,7 @@ sidebarDepth: 2
  */
 ```
 
-::: tip
+::: tip TIP
 启用图形的**mouseEnter**，**mouseOuter**，**click**等事件支持需要将`hover`属性配置为`true`。扩展的新图形需要配置**hoverCheck**方法以提供事件支持。
 :::
 
@@ -227,7 +227,7 @@ Graph.prototype.playAnimation = function () {
 
 当你向**render**中添加图形时，你可以配置下列方法，它们将在特定的时间被调用。
 
-::: tip
+::: tip TIP
 图形实例以及其他相关数据将被作为参数传入这些方法。
 :::
 

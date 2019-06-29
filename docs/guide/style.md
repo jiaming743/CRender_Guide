@@ -341,7 +341,7 @@ sidebarDepth: 2
  */
 ```
 
-:::tip
+::: tip TIP
 配置`gradientColor`和`gradientParams`后，渐变将自动生效。
 :::
 

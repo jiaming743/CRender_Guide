@@ -231,7 +231,7 @@
 <<< @/docs/guide/graphData/text.js
 </fold-box>
 
-::: tip
+::: tip TIP
 图形**text**的鼠标事件依赖`hoverRect`属性，如需鼠标事件生效请对其配置。文本中插入`\n`可以进行换行。
 :::
 

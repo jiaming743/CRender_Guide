@@ -166,6 +166,6 @@ import { injectNewCurve } from '@jiaminghi/c-render'
 injectNewCurve('newCurve', curveData)
 ```
 
-::: tip
+::: tip TIP
 transition官网提供了缓动曲线绘制工具及扩展配置说明。
 :::
