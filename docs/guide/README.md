@@ -41,4 +41,4 @@ yarn add @jiaminghi/c-render
 
 ## 扩展
 
-要为**CRender**扩展新的图形或添加新的动效曲线请参阅[扩展](/extend/#扩展)
+要为**CRender**扩展新的图形请参阅[扩展](/extend/#扩展)

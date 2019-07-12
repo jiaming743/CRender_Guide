@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import canvasMixin from '../../mixins/canvasMixin.js'
+import canvasMixin from '../mixins/canvasMixin.js'
 
 import CRender from '../../CRender/index.js'
 

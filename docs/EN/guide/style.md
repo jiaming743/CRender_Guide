@@ -4,16 +4,15 @@ sidebarDepth: 2
 
 # Style
 
-这里将介绍**Style**类的实例属性。
+This section describes the instance properties of the **Style** class.
 
-## 实例属性
-
+## properties
 
 ### fill
 
 ```js
 /**
- * @description 图形填充颜色的Rgba值
+ * @description Rgba value of graph fill color 
  * @type {Array<Number>}
  * @default fill = [0, 0, 0, 1]
  */
@@ -23,7 +22,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 图形描边颜色的Rgba值
+ * @description Rgba value of graph stroke color 
  * @type {Array<Number>}
  * @default stroke = [0, 0, 0, 1]
  */
@@ -33,7 +32,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 图形透明度
+ * @description Opacity of graph
  * @type {Number}
  * @default opacity = 1
  */
@@ -43,7 +42,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的lineCap属性值
+ * @description LineCap of Ctx
  * @type {Null|String}
  * @default lineCap = null
  * @example lineCap = 'butt'|'round'|'square'
@@ -54,7 +53,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的lineJoin属性值
+ * @description Linejoin of Ctx
  * @type {Null|String}
  * @default lineJoin = null
  * @example lineJoin = 'round'|'bevel'|'miter'
@@ -65,7 +64,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的lineDash属性值
+ * @description LineDash of Ctx
  * @type {Null|Array<Number>}
  * @default lineDash = null
  * @example lineDash = [10, 10]
@@ -76,7 +75,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的lineDashOffset属性值
+ * @description LineDashOffset of Ctx
  * @type {Null|Number}
  * @default lineDashOffset = null
  * @example lineDashOffset = 10
@@ -87,7 +86,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的shadowBlur属性值
+ * @description ShadowBlur of Ctx
  * @type {Number}
  * @default shadowBlur = 0
  */
@@ -97,7 +96,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 图形阴影颜色的Rgba值
+ * @description Rgba value of graph shadow color 
  * @type {Array<Number>}
  * @default shadowColor = [0, 0, 0, 0]
  */
@@ -107,7 +106,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的shadowOffsetX属性值
+ * @description ShadowOffsetX of Ctx
  * @type {Number}
  * @default shadowOffsetX = 0
  */
@@ -117,7 +116,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的shadowOffsetY属性值
+ * @description ShadowOffsetY of Ctx
  * @type {Number}
  * @default shadowOffsetY = 0
  */
@@ -127,7 +126,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的lineWidth属性值
+ * @description LineWidth of Ctx
  * @type {Number}
  * @default lineWidth = 0
  */
@@ -137,7 +136,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 图形中心点
+ * @description Center point of the graph
  * @type {Null|Array<Number>}
  * @default graphCenter = null
  * @example graphCenter = [10, 10]
@@ -148,7 +147,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 图形缩放倍数
+ * @description Graph scale
  * @type {Null|Array<Number>}
  * @default scale = null
  * @example scale = [1.5, 1.5]
@@ -159,7 +158,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 图形旋转角度
+ * @description Graph rotation degree
  * @type {Null|Number}
  * @default rotate = null
  * @example rotate = 10
@@ -170,7 +169,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 图形位移距离
+ * @description Graph translate distance
  * @type {Null|Array<Number>}
  * @default translate = null
  * @example translate = [10, 10]
@@ -181,7 +180,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 鼠标悬浮在图形上时cursor的值
+ * @description Cursor status when hover
  * @type {String}
  * @default hoverCursor = 'pointer'
  * @example hoverCursor = 'default'|'pointer'|'auto'|'crosshair'|'move'|'wait'|...
@@ -192,7 +191,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的fontStyle属性值
+ * @description Font style of Ctx
  * @type {String}
  * @default fontStyle = 'normal'
  * @example fontStyle = 'normal'|'italic'|'oblique'
@@ -203,7 +202,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的fontVarient属性值
+ * @description Font varient of Ctx
  * @type {String}
  * @default fontVarient = 'normal'
  * @example fontVarient = 'normal'|'small-caps'
@@ -214,7 +213,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的fontWeight属性值
+ * @description Font weight of Ctx
  * @type {String|Number}
  * @default fontWeight = 'normal'
  * @example fontWeight = 'normal'|'bold'|'bolder'|'lighter'|Number
@@ -225,7 +224,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的fontSize属性值
+ * @description Font size of Ctx
  * @type {Number}
  * @default fontSize = 10
  */
@@ -235,7 +234,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的fontFamily属性值
+ * @description Font family of Ctx
  * @type {String}
  * @default fontFamily = 'Arial'
  */
@@ -245,7 +244,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的textAlign属性值
+ * @description TextAlign of Ctx
  * @type {String}
  * @default textAlign = 'center'
  * @example textAlign = 'start'|'end'|'left'|'right'|'center'
@@ -256,7 +255,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Ctx的textBaseline属性值
+ * @description TextBaseline of Ctx
  * @type {String}
  * @default textBaseline = 'middle'
  * @example textBaseline = 'top'|'bottom'|'middle'|'alphabetic'|'hanging'
@@ -267,7 +266,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 用于创建渐变色的颜色
+ * @description The color used to create the gradient
  * @type {Null|Array<String>}
  * @default gradientColor = null
  * @example gradientColor = ['#000', '#111', '#222']
@@ -278,7 +277,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 渐变类型
+ * @description Gradient type
  * @type {String}
  * @default gradientType = 'linear'
  * @example gradientType = 'linear' | 'radial'
@@ -289,11 +288,11 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 渐变参数
+ * @description Gradient params
  * @type {Array<Number>}
  * @default gradientParams = null
- * @example gradientParams = [x0, y0, x1, y1] (线性渐变)
- * @example gradientParams = [x0, y0, r0, x1, y1, r1] (径向渐变)
+ * @example gradientParams = [x0, y0, x1, y1] (Linear Gradient)
+ * @example gradientParams = [x0, y0, r0, x1, y1, r1] (Radial Gradient)
  */
 ```
 
@@ -301,7 +300,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 使用渐变色的属性
+ * @description When to use gradients
  * @type {String}
  * @default gradientWith = 'stroke'
  * @example gradientWith = 'stroke' | 'fill'
@@ -312,7 +311,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 渐变色位置
+ * @description Gradient color stops
  * @type {String|Array<Number>}
  * @default gradientStops = 'auto'
  * @example gradientStops = 'auto' | [0, .2, .3, 1]
@@ -323,7 +322,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 支持动画过渡的颜色容器
+ * @description Extended color that supports animation transition
  * @type {Array<String>|Object}
  * @default colors = null
  * @example colors = ['#000', '#111', '#222']
@@ -332,17 +331,17 @@ sidebarDepth: 2
 ```
 
 ::: tip TIP
-`gradientColor`和`gradientParams`被配置后将自动启用**渐变**。
+**Gradient** is automatically enabled when `gradientColor` and `gradientParams` are configured.
 :::
 
-## 原型方法
+## prototype
 
 ### getStyle
 
 ```js
 /**
- * @description 获取图形当前样式配置
- * @return {Object} 样式配置
+ * @description Get the current style configuration
+ * @return {Object} Style configuration
  */
 Style.prototype.getStyle = function () {
 }

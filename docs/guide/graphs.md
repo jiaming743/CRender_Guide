@@ -11,7 +11,7 @@
 | :---: | :---: | :---: | :---: |
 | rx | `Number` | `0` | 圆心x轴坐标 |
 | ry | `Number` | `0` | 圆心y轴坐标 |
-| r | `Number` | `0` | 半径 |
+| r | `Number` | `0` | 圆半径 |
 </full-width-table>
 
 <demo :config="circle" />
@@ -27,8 +27,8 @@
 <full-width-table>
 | 属性名 | 类型 | 默认值 | 注解 |
 | :---: | :---: | :---: | :---: |
-| rx | `Number` | `0` | 中心点x轴坐标 |
-| ry | `Number` | `0` | 中心点y轴坐标 |
+| rx | `Number` | `0` | 圆心x轴坐标 |
+| ry | `Number` | `0` | 圆心y轴坐标 |
 | hr | `Number` | `0` | 横轴半径 |
 | vr | `Number` | `0` | 竖轴半径 |
 </full-width-table>

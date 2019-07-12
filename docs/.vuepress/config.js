@@ -61,7 +61,15 @@ module.exports = {
         nav: [
           {
             text: 'Guide',
-            link: '/guide/'
+            link: '/EN/guide/'
+          },
+          {
+            text: 'Extend',
+            link: '/EN/extend/'
+          },
+          {
+            text: 'Support',
+            link: '/EN/support/'
           },
           {
             text: 'GitHub',
@@ -70,8 +78,16 @@ module.exports = {
         ],
         sidebar: {
           '/EN/guide/': [
+            '',
+            'crender',
+            'graph',
+            'style',
+            'graphs'
+          ],
+          '/EN/extend/': [
             ''
-          ]
+          ],
+          '/EN/support/': []
         }
       }
     }

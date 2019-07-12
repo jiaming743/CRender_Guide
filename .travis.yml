@@ -1,0 +1,11 @@
+os: osx
+language: node_js
+node_js:
+  - "10.13.0"
+install: yarn
+script: 
+  yarn build
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: node deploy/index.js host=${host} user=${user} pass=${pass}

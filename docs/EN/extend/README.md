@@ -2,111 +2,114 @@
 sidebarDepth: 2
 ---
 
-# 扩展
+# Extend
 
-CRender提供了一个方法去扩展新的图形，你可以**自定义**想要的图形。
+CRender provides a Function to extend new graph,you can **customize** the graphics you want.
 
 ## extendNewGraph
 
 ```javascript
 /**
- * @description 扩展新图形
- * @param {String} name   图形名称
- * @param {Object} config 图形配置
- * @return {Undefined} 无返回值
+ * @description Extend new graph
+ * @param {String} name   Name of Graph
+ * @param {Object} config Configuration of Graph
+ * @return {Undefined} Void
  */
 function extendNewGraph (name, config) {
     // ...
 }
 ```
 
-## 图形基础配置属性
+## Graph Configuration Properties
 
-图形基础配置是一个对象，它具有如下几个属性和方法需要配置。
+The graphics configuration is an object that has the following properties and methods to configure.
 
-### shape (必须)
+### shape (Required)
 
 ```js
 /**
  * @type {Object}
- * @description 图形形状数据
+ * @description Graph shape data
  */
 config = {
   // ...,
   shape: {
-    // 一些属性...
+    // some property...
   }
 }
 ```
 
-### validator (必须)
+### validator (Required)
 
 ```js
 /**
  * @type {Function}
- * @description 图形添加时将被调用，用于检测图形配置是否合法，
- *  若返回值为false则终止添加行为
- * @param {Graph} 当前图形实例
- * @return {Boolean} 配置是否合法
+ * @description Graph configuration check
+ * Automatically invoked when the graph is added,
+ * and when the return value is false,
+ * the add behavior is terminated.
+ * @param {Graph} Current graph instance
+ * @return {Boolean} Whether the configuration is legal
  */
 config = {
   // ...,
   validator ({ shape }) {
-    // 检查图形配置...
+    // check configuration...
     // return true | false
   }
 }
 ```
 
-### draw (必须)
+### draw (Required)
 
 ```js
 /**
  * @type {Function}
- * @description 图形绘制器
- * @param {CRender} 当前CRender实例
- * @param {Graph}   当前图形实例
- * @return {Undefined} 无返回值
+ * @description Graph plotter
+ * @param {CRender} Current CRender instance
+ * @param {Graph}   Current graph instance
+ * @return {Undefined} Void
  */
 config = {
   // ...,
   draw ({ ctx }, { shape }) {
-    // 绘制...
+    // drawing...
   }
 }
 ```
 
-### hoverCheck (可选)
+### hoverCheck (Optional)
 
 ```js
 /**
  * @type {Function}
- * @description 通过鼠标位置去判断当前图形是否处于鼠标悬浮状态，
- *  用于给mouseEnter, mouseOuter, drag, click事件提供支持。
- * @param {Array<Number>} 鼠标位置
- * @param {Graph}         当前图形实例
- * @return {Boolean} 是否处于鼠标悬浮状态
+ * @description According to the mouse event to detect
+ *  whether the current graphics are in the hover state,
+ *  support for mouseEnter, mouseOuter, drag, click.
+ * @param {Array<Number>} Position of mouse
+ * @param {Graph}         Current graph instance
+ * @return {Boolean} Whether it is in hover
  */
 config = {
   // ...,
   validator ([offsetX, offsetY], { shape }) {
-    // 检测是否处于鼠标悬浮状态...
+    // Check if it is in hover state...
     // return true | false
   }
 }
 ```
 
-### setGraphCenter (可选)
+### setGraphCenter (Optional)
 
 ```js
 /**
  * @type {Function}
- * @description 设置图形中心点
- *  提供rotate, scale and translate支持
- *  添加图形及图形被拖动后将被调用
- * @param {Event} 鼠标事件 (图形被添加时调用，该参数为null)
- * @param {Graph} 当前图形实例
- * @return {Undefined} 无返回值
+ * @description Set the center point of the graph to
+ *  support rotate, scale and translate.
+ *  Add graph and drag behavior will be called.
+ * @param {Event} Mouse move Event (Called when adding a graphic, the value is null)
+ * @param {Graph} Current graph instance
+ * @return {Undefined} Void
  */
 config = {
   // ...,
@@ -116,7 +119,7 @@ config = {
 }
 ```
 
-### move (可选)
+### move (Optional)
 
 ```js
 /**
@@ -129,12 +132,12 @@ config = {
 config = {
   // ...,
   move ([offsetX, offsetY], { shape }) {
-    // 一些操作...
+    // do something...
   }
 }
 ```
 
-## 扩展示例
+## example of extend new graph
 
 ```js
 import { extendNewGraph } from '@jiaminghi/c-render'

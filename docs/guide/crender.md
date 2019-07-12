@@ -37,7 +37,7 @@ const render = new CRender(canvas)
 
 ```js
 /**
- * @description Canvas context
+ * @description canvas context
  * @type {Object}
  * @example ctx = canvas.getContext('2d')
  */
@@ -47,8 +47,8 @@ const render = new CRender(canvas)
 
 ```js
 /**
- * @description Canvas的宽高
- * @type {Array}
+ * @description canvas宽高
+ * @type {Array<Number>}
  * @example area = [300，100]
  */
 ```
@@ -57,7 +57,7 @@ const render = new CRender(canvas)
 
 ```js
 /**
- * @description Render是否处于动画绘制状态
+ * @description render是否处于动画渲染中
  * @type {Boolean}
  * @example animationStatus = true|false
  */
@@ -68,7 +68,7 @@ const render = new CRender(canvas)
 ```js
 /**
  * @description 已添加的图形
- * @type {[Graph]}
+ * @type {Array<Graph>}
  * @example graphs = [Graph, Graph, ...]
  */
 ```
@@ -77,7 +77,7 @@ const render = new CRender(canvas)
 
 ```js
 /**
- * @description Color插件
+ * @description 颜色插件
  * @type {Object}
  */
 ```
@@ -86,7 +86,7 @@ const render = new CRender(canvas)
 
 ```js
 /**
- * @description BezierCurve插件
+ * @description 贝塞尔曲线插件
  * @type {Object}
  */
 ```
@@ -99,9 +99,9 @@ const render = new CRender(canvas)
 
 ```js
 /**
- * @description           向render中添加图形
+ * @description 向render中添加图形
  * @param {Object} config 图形配置
- * @return {Graph}        图形实例
+ * @return {Graph} 图形实例
  */
 CRender.prototype.add = function (config = {}) {
 	// ...
@@ -112,9 +112,9 @@ CRender.prototype.add = function (config = {}) {
 
 ```js
 /**
- * @description 克隆Graph实例
- * @param {Graph} graph 将被克隆的Graph实例
- * @return {Graph} 克隆的Graph实例
+ * @description 克隆一个图形
+ * @param {Graph} graph 将要被克隆的图形
+ * @return {Graph} 克隆的图形
  */
 CRender.prototype.clone = function (graph) {
 }
@@ -124,9 +124,9 @@ CRender.prototype.clone = function (graph) {
 
 ```js
 /**
- * @description         从render中删除图形
- * @param {Graph} graph 要被删除的图形
- * @return {Undefined}  无返回值
+ * @description 删除render中的一个图形
+ * @param {Graph} graph 将要删除的图形实例
+ * @return {Undefined} 无返回值
  */
 CRender.prototype.delGraph = function (graph) {
 	// ...
@@ -137,7 +137,7 @@ CRender.prototype.delGraph = function (graph) {
 
 ```js
 /**
- * @description        删除render中所有的图形
+ * @description 删除render中所有的图形
  * @return {Undefined} 无返回值
  */
 CRender.prototype.delAllGraph = function () {
@@ -149,7 +149,7 @@ CRender.prototype.delAllGraph = function () {
 
 ```js
 /**
- * @description        绘制render中所有的图形
+ * @description 渲染render中所有的图形
  * @return {Undefined} 无返回值
  */
 CRender.prototype.drawAllGraph = function () {
@@ -161,7 +161,7 @@ CRender.prototype.drawAllGraph = function () {
 
 ```js
 /**
- * @description        擦除canvas绘制区域
+ * @description 擦除canvas绘制区域
  * @return {Undefined} 无返回值
  */
 CRender.prototype.clearArea = function () {
@@ -173,7 +173,7 @@ CRender.prototype.clearArea = function () {
 
 ```js
 /**
- * @description      使动画队列不为空且animationPause为false的图形进行动画
+ * @description 使动画队列不为空且animationPause不为false的图形进行动画
  * @return {Promise} Animation Promise
  */
 CRender.prototype.launchAnimation = function () {

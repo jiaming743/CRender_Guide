@@ -14,7 +14,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 是否绘制图形
+ * @description 该图形是否可被渲染
  * @type {Boolean}
  * @default visible = true
  */
@@ -24,7 +24,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Graph shape数据
+ * @description 图形形状数据
  * @type {Object}
  */
 ```
@@ -33,7 +33,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Graph style数据 (Style实例)
+ * @description 图形样式数据 (Style实例)
  * @type {Style}
  */
 ```
@@ -52,7 +52,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 是否启用hover检测
+ * @description 是否启用悬浮检测
  * @type {Boolean}
  * @default hover = false
  */
@@ -62,7 +62,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Graph 绘制层级（index高者优先绘制）
+ * @description 图形渲染层级，层级高者优先渲染
  * @type {Number}
  * @default index = 1
  */
@@ -82,7 +82,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 动画持续帧数
+ * @description 动画帧数
  * @type {Number}
  * @default animationFrame = 30
  */
@@ -92,7 +92,7 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 动画动态曲线（由transition提供动画状态）
+ * @description 动画缓动曲线
  * @type {String}
  * @default animationCurve = 'linear'
  */
@@ -112,10 +112,10 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description 图形矩形hover检测区（优先级高于图形默认的hoverCheck方法）
- * @type {Null|Array}
+ * @description 矩形悬浮检测盒，配置该项则优先使用其进行鼠标悬浮检测
+ * @type {Null|Array<Number>}
  * @default hoverRect = null
- * @example hoverRect = [0, 0, 100, 100] // [矩形起始x, y坐标, 矩形宽度, 高度]
+ * @example hoverRect = [0, 0, 100, 100] // [矩形起始点 x, y 坐标, 矩形宽, 高]
  */
 ```
 
@@ -123,8 +123,8 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Mouse enter事件处理器
- * @type {Function|Null}
+ * @description 鼠标进入图形事件处理器
+ * @type {Null|Function}
  * @default mouseEnter = null
  */
 ```
@@ -133,8 +133,8 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Mouse outer事件处理器
- * @type {Function|Null}
+ * @description 鼠标移出图形事件处理器
+ * @type {Null|Function}
  * @default mouseOuter = null
  */
 ```
@@ -143,8 +143,8 @@ sidebarDepth: 2
 
 ```js
 /**
- * @description Mouse click事件处理器
- * @type {Function|Null}
+ * @description 鼠标点击图形事件处理器
+ * @type {Null|Function}
  * @default click = null
  */
 ```
@@ -157,14 +157,13 @@ sidebarDepth: 2
 
 这里是**Graph**原型方法的介绍。
 
-
 ### attr
 
 ```js
 /**
  * @description 更新图形状态
  * @param {String} attrName 要更新的属性名
- * @param {Any} change      属性值
+ * @param {Any} change      更新的值
  * @return {Undefined} 无返回值
  */
 Graph.prototype.attr = function (attrName, change = undefined) {
@@ -176,9 +175,9 @@ Graph.prototype.attr = function (attrName, change = undefined) {
 
 ```js
 /**
- * @description 更新图形状态（伴随过渡动画），仅支持style和shape属性
+ * @description 更新图形状态（伴随动画），仅支持shape和style属性
  * @param {String} attrName 要更新的属性名
- * @param {Any} change      属性值
+ * @param {Any} change      更新的值
  * @param {Boolean} wait    是否存储动画队列，等待下次动画请求
  * @return {Promise} Animation Promise
  */
@@ -203,7 +202,7 @@ Graph.prototype.animationEnd = function () {
 
 ```js
 /**
- * @description 暂停图形动画
+ * @description 暂停动画行为
  * @return {Undefined} 无返回值
  */
 Graph.prototype.pauseAnimation = function () {
@@ -225,32 +224,115 @@ Graph.prototype.playAnimation = function () {
 
 ## 生命周期
 
-当你向**render**中添加图形时，你可以配置下列方法，它们将在特定的时间被调用。
-
-::: tip TIP
-图形实例以及其他相关数据将被作为参数传入这些方法。
-:::
+当向**render**中添加图形时，你可以配置如下几个方法，它们将在特定时刻被调用。
 
 ### added
 
-图形添加完成后被调用。
+```javascript
+/**
+ * @description 图形添加时被调用
+ * @param {Graph} 图形实例
+ */
+config = {
+  //...,
+  added ({ shape, style }) {
+    // 一些操作...
+  }
+}
+```
 
 ### beforeDraw
 
-图形样式初始化之后，图形绘制之前被调用，**render**实例作为第二个参数被传入。可以针对需求，修改canvas的ctx样式。
+```javascript
+/**
+ * @description 图形绘制前被调用，图形样式已经初始化完毕
+ *  你可以在此时修改ctx属性
+ * @param {Graph} 图形实例
+ * @param {CRender} CRender实例
+ */
+config = {
+  //...,
+  beforeDraw ({ shape, style }, { ctx }) {
+    // 一些操作...
+    ctx.stroke = 'transparent'
+  }
+}
+```
 
 ### drawed
-图形绘制之后被调用，**render**实例作为第二个参数被传入。
+
+```javascript
+/**
+ * @description 图形绘制后被调用
+ * @param {Graph} 图形实例
+ * @param {CRender} CRender实例
+ */
+config = {
+  //...,
+  drawed ({ shape, style }, { ctx }) {
+    // 一些操作...
+  }
+}
+```
 
 ### beforeMove
 
-移动图形之前被调用（drag行为发生前），鼠标事件作为第一个参数被传入。
+```javascript
+/**
+ * @description 图形移动前被调用，移动行为发生前
+ * @param {Event} 鼠标事件
+ * @param {Graph} 图形实例
+ */
+config = {
+  //...,
+  beforeMove ({ offsetX, offsetY }, { shape, style }) {
+    // 一些操作...
+  }
+}
+```
 
 ### moved
-移动图形之后被调用（drag行为发生后），鼠标事件作为第一个参数被传入。
+
+```javascript
+/**
+ * @description 图形移动后被调用，移动行为发生后
+ * @param {Event} 鼠标事件
+ * @param {Graph} 图形实例
+ */
+config = {
+  //...,
+  moved ({ offsetX, offsetY }, { shape, style }) {
+    // 一些操作...
+  }
+}
+```
 
 ### beforeDelete
-删除图形之前被调用。
+
+```javascript
+/**
+ * @description 图形删除前被调用
+ * @param {Graph} 图形实例
+ */
+config = {
+  //...,
+  beforeDelete ({ shape, style }) {
+    // 一些操作...
+  }
+}
+```
 
 ### deleted
-图形删除之后被调用。
+
+```javascript
+/**
+ * @description 图形删除后被调用
+ * @param {Graph} 图形实例
+ */
+config = {
+  //...,
+  deleted ({ shape, style }) {
+    // 一些操作...
+  }
+}
+```
