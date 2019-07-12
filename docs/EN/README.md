@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: ./favicon.ico
+heroImage: ../favicon.ico
 actionText: Quick start →
 actionLink: /EN/guide/
 features:
