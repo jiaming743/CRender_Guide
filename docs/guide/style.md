@@ -326,7 +326,7 @@ sidebarDepth: 2
  * @description 支持动画过渡的颜色容器
  * @type {Array<String>|Object}
  * @default colors = null
- * @example colors = ['#000', '#111', '#222']
+ * @example colors = ['#000', '#111', '#222', 'red']
  * @example colors = { a: '#000', b: '#111' }
  */
 ```

@@ -325,7 +325,7 @@ This section describes the instance properties of the **Style** class.
  * @description Extended color that supports animation transition
  * @type {Array<String>|Object}
  * @default colors = null
- * @example colors = ['#000', '#111', '#222']
+ * @example colors = ['#000', '#111', '#222', 'red']
  * @example colors = { a: '#000', b: '#111' }
  */
 ```
