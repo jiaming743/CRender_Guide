@@ -40,6 +40,20 @@ npm install @jiaminghi/c-render
 yarn add @jiaminghi/c-render
 ```
 
+### Quick experience
+
+```html
+<!--Resources are located on personal servers for experience and testing only, do not use in production environments-->
+<!--Debug version-->
+<script src="http://lib.jiaminghi.com/crender/crender.map.js"></script>
+<!--Compression version-->
+<script src="http://lib.jiaminghi.com/crender/crender.min.js"></script>
+<script>
+  const { CRender, extendNewGraph } = window.CRender
+  // do something
+</script>
+```
+
 ## Extend
 
 To extend the new graphics for **CRender** see [Extend](/EN/extend/#extend)

@@ -39,6 +39,20 @@ npm install @jiaminghi/c-render
 yarn add @jiaminghi/c-render
 ```
 
+## 快速体验
+
+```html
+<!--资源位于个人服务器仅供体验和测试，请勿在生产环境使用-->
+<!--调试版-->
+<script src="http://lib.jiaminghi.com/crender/crender.map.js"></script>
+<!--压缩版-->
+<script src="http://lib.jiaminghi.com/crender/crender.min.js"></script>
+<script>
+  const { CRender, extendNewGraph } = window.CRender
+  // do something
+</script>
+```
+
 ## 扩展
 
 要为**CRender**扩展新的图形请参阅[扩展](/extend/#扩展)
