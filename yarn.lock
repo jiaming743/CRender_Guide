@@ -3150,6 +3150,14 @@ fsevents@^1.2.7:
     nan "^2.12.1"
     node-pre-gyp "^0.12.0"
 
+ftp@^0.3.10:
+  version "0.3.10"
+  resolved "https://registry.npm.taobao.org/ftp/download/ftp-0.3.10.tgz#9197d861ad8142f3e63d5a83bfe4c59f7330885d"
+  integrity sha1-kZfYYa2BQvPmPVqDv+TFn3MwiF0=
+  dependencies:
+    readable-stream "1.1.x"
+    xregexp "2.0.0"
+
 function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
@@ -4672,14 +4680,6 @@ node-forge@0.7.5:
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.5.tgz#6c152c345ce11c52f465c2abd957e8639cd674df"
   integrity sha512-MmbQJ2MTESTjt3Gi/3yG1wGpIMhUfcIypUCGtTizFR9IiccFwxSpfp0vtIZlkFclEqERemxfnSdZEMR9VqqEFQ==
-
-node-ftp@^0.3.10:
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/node-ftp/-/node-ftp-0.3.10.tgz#25e99609f501d53168f53817bd2c006bf523999c"
-  integrity sha512-MNuQo16on7Yv1hgJywy3GXCuGK9keA6m4KUMgNrMLk24bRBPFdtNUCRGVSlJYMS4dJp7lF/QIhetUWB8tMzVGg==
-  dependencies:
-    readable-stream "1.1.x"
-    xregexp "2.0.0"
 
 node-libs-browser@^2.0.0:
   version "2.2.1"

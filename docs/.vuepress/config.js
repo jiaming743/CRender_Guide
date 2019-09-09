@@ -38,7 +38,7 @@ module.exports = {
           },
           {
             text: 'GitHub',
-            link: 'https://github.com/jiaming743/crender.jiaminghi.com'
+            link: 'https://github.com/jiaming743/crender'
           }
         ],
         sidebar: {

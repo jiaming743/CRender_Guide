@@ -1,5 +1,5 @@
 const { fileForEach } = require('@jiaminghi/fs')
-const Client = require('node-ftp')
+const Client = require('ftp')
 const print = require('./plugin/print')
 const { emptyDir, put, mkDir } = require('./plugin/ftp')
 const getNodeParams = require('./plugin/nodeParams')
