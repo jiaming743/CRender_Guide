@@ -38,7 +38,7 @@ module.exports = {
           },
           {
             text: 'GitHub',
-            link: 'https://github.com/jiaming743/crender'
+            link: 'https://github.com/DataV-Team/Crender'
           }
         ],
         sidebar: {
@@ -73,7 +73,7 @@ module.exports = {
           },
           {
             text: 'GitHub',
-            link: 'https://github.com/jiaming743/CRender_Guide'
+            link: 'https://github.com/DataV-Team/Crender'
           }
         ],
         sidebar: {
