@@ -9,58 +9,70 @@ import CRender from '../../CRender'
 
 export default {
   name: 'DEV',
-  methods: {},
+  data () {
+    return {
+      render: null
+    }
+  },
+  methods: {
+    async start () {
+      const { render, randomNum } = this
+
+      const { area: [w, h] } = render
+
+      const graphs = new Array(20).fill(0).map(foo => render.add({
+        name: 'ring',
+        animationCurve: 'easeOutBack',
+        hover: true,
+        drag: true,
+        shape: {
+          rx: w / 2,
+          ry: h / 2,
+          r: 50
+        },
+        style: {
+          stroke: '#9ce5f4',
+          lineWidth: 20,
+          hoverCursor: 'pointer',
+          shadowBlur: 0,
+          shadowColor: '#66eece'
+        }
+      }))
+
+      for (let i = 0; i < 999; i++) {
+        await new Promise(resolve => setTimeout(resolve, 100))
+
+        graphs.forEach(graph => graph.animationEnd())
+
+        graphs.forEach(graph => graph.animation('shape', {
+          rx: randomNum(0, w),
+          ry: randomNum(0, h),
+          r: randomNum(10, 50)
+        }))
+      }
+
+      console.warn(graphs)
+    },
+    randomNum (minNum, maxNum) { 
+      switch(arguments.length) { 
+        case 1:
+          return parseInt(Math.random() * minNum + 1, 10)
+        break
+        case 2:
+          return parseInt(Math.random() * (maxNum - minNum + 1) + minNum,10)
+        break
+        default:
+            return 0
+        break
+      }
+    }
+  },
   mounted () {
     const canvas = this.$refs['canvas']
 
-    const render = new CRender(canvas)
+    this.render = new CRender(canvas)
 
-    const verticalLine = render.add({
-      name: 'polyline',
-      shape: {
-        points: [
-          [0, 150],
-          [740, 150]
-        ]
-      },
-      style: {
-        stroke: '#000'
-      }
-    })
-
-    const horizontal = render.add({
-      name: 'polyline',
-      shape: {
-        points: [
-          [370, 0],
-          [370, 300]
-        ]
-      },
-      style: {
-        stroke: '#000'
-      }
-    })
-
-    const graph = render.add({
-      name: 'text',
-      shape: {
-        // content: '这是第一行',
-        // content: '这是第一行\n这是第二行',
-        content: '这是第一行\n这是第二行\n这是第三行',
-        position: [370, 150],
-        rowGap: 10
-      },
-      style: {
-        fontSize: 20,
-        fill: '#666',
-        // textAlign: 'left',
-        // textAlign: 'center',
-        // textAlign: 'right',
-        // textBaseline: 'top',
-        // textBaseline: 'middle',
-        // textBaseline: 'bottom',
-      },
-    })
+    this.start()
   }
 }
 </script>
